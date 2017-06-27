@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package person;
+
+
+message  Person
+{
+	string name = 1;
+	string age = 2;
+}
+
+message Family
+{
+	repeated Person person = 1;
+}

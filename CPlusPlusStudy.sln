@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CPlusPlus11_01", "CPlusPlus11_01\CPlusPlus11_01.vcxproj", "{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3BA16D1B-BF83-4CFE-A07B-06B8A0BA5D6C}"
+	ProjectSection(SolutionItems) = preProject
+		Content.txt = Content.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C++11", "C++11", "{091446E8-EFBB-4607-8B72-320D27865E90}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LocalRef", "LocalRef\LocalRef.vcxproj", "{2B7D46E2-776A-4BC7-A450-B1AD00B75B4E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TempForTest", "TempForTest\TempForTest.vcxproj", "{14772DC6-7B95-47C4-BAB9-9D7A53D5F787}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eg01_ProtoBufBasic", "Eg01_ProtoBufBasic\Eg01_ProtoBufBasic.vcxproj", "{AFFEEA06-D704-4736-B981-538EBE61EBC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProtoBuf", "ProtoBuf", "{77D15DF6-BE42-448F-8489-8702B77D4B1C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20}.Debug|x64.ActiveCfg = Debug|x64
+		{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20}.Debug|x64.Build.0 = Debug|x64
+		{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20}.Debug|x86.ActiveCfg = Debug|Win32
+		{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20}.Debug|x86.Build.0 = Debug|Win32
+		{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20}.Release|x64.ActiveCfg = Release|x64
+		{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20}.Release|x64.Build.0 = Release|x64
+		{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20}.Release|x86.ActiveCfg = Release|Win32
+		{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20}.Release|x86.Build.0 = Release|Win32
+		{2B7D46E2-776A-4BC7-A450-B1AD00B75B4E}.Debug|x64.ActiveCfg = Debug|x64
+		{2B7D46E2-776A-4BC7-A450-B1AD00B75B4E}.Debug|x64.Build.0 = Debug|x64
+		{2B7D46E2-776A-4BC7-A450-B1AD00B75B4E}.Debug|x86.ActiveCfg = Debug|Win32
+		{2B7D46E2-776A-4BC7-A450-B1AD00B75B4E}.Debug|x86.Build.0 = Debug|Win32
+		{2B7D46E2-776A-4BC7-A450-B1AD00B75B4E}.Release|x64.ActiveCfg = Release|x64
+		{2B7D46E2-776A-4BC7-A450-B1AD00B75B4E}.Release|x64.Build.0 = Release|x64
+		{2B7D46E2-776A-4BC7-A450-B1AD00B75B4E}.Release|x86.ActiveCfg = Release|Win32
+		{2B7D46E2-776A-4BC7-A450-B1AD00B75B4E}.Release|x86.Build.0 = Release|Win32
+		{14772DC6-7B95-47C4-BAB9-9D7A53D5F787}.Debug|x64.ActiveCfg = Debug|x64
+		{14772DC6-7B95-47C4-BAB9-9D7A53D5F787}.Debug|x64.Build.0 = Debug|x64
+		{14772DC6-7B95-47C4-BAB9-9D7A53D5F787}.Debug|x86.ActiveCfg = Debug|Win32
+		{14772DC6-7B95-47C4-BAB9-9D7A53D5F787}.Debug|x86.Build.0 = Debug|Win32
+		{14772DC6-7B95-47C4-BAB9-9D7A53D5F787}.Release|x64.ActiveCfg = Release|x64
+		{14772DC6-7B95-47C4-BAB9-9D7A53D5F787}.Release|x64.Build.0 = Release|x64
+		{14772DC6-7B95-47C4-BAB9-9D7A53D5F787}.Release|x86.ActiveCfg = Release|Win32
+		{14772DC6-7B95-47C4-BAB9-9D7A53D5F787}.Release|x86.Build.0 = Release|Win32
+		{AFFEEA06-D704-4736-B981-538EBE61EBC4}.Debug|x64.ActiveCfg = Debug|x64
+		{AFFEEA06-D704-4736-B981-538EBE61EBC4}.Debug|x64.Build.0 = Debug|x64
+		{AFFEEA06-D704-4736-B981-538EBE61EBC4}.Debug|x86.ActiveCfg = Debug|Win32
+		{AFFEEA06-D704-4736-B981-538EBE61EBC4}.Debug|x86.Build.0 = Debug|Win32
+		{AFFEEA06-D704-4736-B981-538EBE61EBC4}.Release|x64.ActiveCfg = Release|x64
+		{AFFEEA06-D704-4736-B981-538EBE61EBC4}.Release|x64.Build.0 = Release|x64
+		{AFFEEA06-D704-4736-B981-538EBE61EBC4}.Release|x86.ActiveCfg = Release|Win32
+		{AFFEEA06-D704-4736-B981-538EBE61EBC4}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2CAE95E6-1A40-44CF-8866-CE3EF65FEC20} = {091446E8-EFBB-4607-8B72-320D27865E90}
+		{AFFEEA06-D704-4736-B981-538EBE61EBC4} = {77D15DF6-BE42-448F-8489-8702B77D4B1C}
+	EndGlobalSection
+EndGlobal
