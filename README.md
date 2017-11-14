@@ -19,5 +19,16 @@ ProtoBuf的使用
 1. Json01_Test01: JSON for Modern C++的使用 https://github.com/nlohmann/json
 
 
+## Ceres
+1. Ceres01_HelloWorld	
+	find the minimum of the function $\frac{1}{2}(10 - x)^2$, using auto diff, numerical diff and analytic diff method.
+	Ref: http://www.ceres-solver.org/nnls_tutorial.html#hello-world
+2. Ceres02_Powell
+	find the minimun of a function with 4 parameters
+	http://www.ceres-solver.org/nnls_tutorial.html#powell-s-function
+3. Ceres03_CurveFitting
+	curve fit $y = e^(0.3x + 0.1)$, include robust curve fitting
+
+
 ## Others
 1. LocalRef: 局部变量作引用时的一些问题...搞错,没问题
