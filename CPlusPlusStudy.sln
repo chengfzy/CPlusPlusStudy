@@ -44,6 +44,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ceres02_Powell", "Ceres02_P
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ceres03_CurveFitting", "Ceres03_CurveFitting\Ceres03_CurveFitting.vcxproj", "{8EF1D1E4-9479-4C90-9D9D-9D59BDC0575B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ceres04_BundleAdjustment", "Ceres04_BundleAdjustment\Ceres04_BundleAdjustment.vcxproj", "{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -148,6 +150,14 @@ Global
 		{8EF1D1E4-9479-4C90-9D9D-9D59BDC0575B}.Release|x64.Build.0 = Release|x64
 		{8EF1D1E4-9479-4C90-9D9D-9D59BDC0575B}.Release|x86.ActiveCfg = Release|Win32
 		{8EF1D1E4-9479-4C90-9D9D-9D59BDC0575B}.Release|x86.Build.0 = Release|Win32
+		{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D}.Debug|x64.ActiveCfg = Debug|x64
+		{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D}.Debug|x64.Build.0 = Debug|x64
+		{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D}.Debug|x86.ActiveCfg = Debug|Win32
+		{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D}.Debug|x86.Build.0 = Debug|Win32
+		{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D}.Release|x64.ActiveCfg = Release|x64
+		{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D}.Release|x64.Build.0 = Release|x64
+		{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D}.Release|x86.ActiveCfg = Release|Win32
+		{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,5 +173,6 @@ Global
 		{D56026DD-FC96-4989-BC17-EA43768F4CD3} = {4C3CDDAC-A69E-4AFA-B54F-6B4A52D6B45A}
 		{6FED4245-C945-4FD4-80E4-D420D4C03AFF} = {4C3CDDAC-A69E-4AFA-B54F-6B4A52D6B45A}
 		{8EF1D1E4-9479-4C90-9D9D-9D59BDC0575B} = {4C3CDDAC-A69E-4AFA-B54F-6B4A52D6B45A}
+		{89BC4DF4-2A9E-47B2-940F-E28818FFFB3D} = {4C3CDDAC-A69E-4AFA-B54F-6B4A52D6B45A}
 	EndGlobalSection
 EndGlobal

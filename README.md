@@ -25,10 +25,13 @@ ProtoBuf的使用
 	Ref: http://www.ceres-solver.org/nnls_tutorial.html#hello-world
 2. Ceres02_Powell
 	find the minimun of a function with 4 parameters
-	http://www.ceres-solver.org/nnls_tutorial.html#powell-s-function
+	Ref: http://www.ceres-solver.org/nnls_tutorial.html#powell-s-function
 3. Ceres03_CurveFitting
 	curve fit $y = e^(0.3x + 0.1)$, include robust curve fitting
-
+	Ref: http://ceres-solver.org/nnls_tutorial.html#curve-fitting
+4. Ceres04_BundleAdjustment
+	using ceres to solve large scale bundle adjustment problem.
+	Ref: http://ceres-solver.org/nnls_tutorial.html#bundle-adjustment
 
 ## Others
 1. LocalRef: 局部变量作引用时的一些问题...搞错,没问题
