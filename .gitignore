@@ -244,3 +244,8 @@ ModelManifest.xml
 
 # user defined
 # TempForTest
+
+# clion file
+.idea
+cmake-build-debug
+cmake-build-release
