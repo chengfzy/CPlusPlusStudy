@@ -53,6 +53,7 @@ void writeYaml(const string &file) {
     node1["children"].push_back(node3);
     node1["children"].push_back(node4);
 
+    // user-defined class
     Point pos;
     pos.x = 100.1;
     pos.y = -200.2;
@@ -60,11 +61,19 @@ void writeYaml(const string &file) {
     YAML::Node node5;
     pos.write(node5);
 
+    // write sequences
+    vector<int> vec{1, 2, 3, 4, 5};
+    YAML::Node node6;
+    //node6["vec"] = vec;
+
+    // write all to file
     node["family"] = node1;
     node["pos"] = node5;
+    node["vec"] = vec;
 
-    fstream fs(file);
+    fstream fs(file, ios::out);
     fs << node;
+    fs.close();
 }
 
 // yaml emitter
@@ -91,17 +100,31 @@ void useEmitter() {
 void readYaml(const string &file) {
     cout << "read from yaml..." << endl;
     YAML::Node node = YAML::LoadFile(file);
-    node = node["family"];
+    YAML::Node node1 = node["family"];
 
     string name;
     unsigned int age;
-    name = node["name"].as<string>();
-    age = node["age"].as<unsigned int>();
-
+    name = node1["name"].as<string>();
+    age = node1["age"].as<unsigned int>();
     cout << "name = " << name << ", age = " << age << endl;
+
+    // read pos
+    YAML::Node posNode = node["pos"];
+    Point pos;
+    pos.read(posNode);
+    cout << "Pos = [" << pos.x << ", " << pos.y << ", " << pos.z << "]" << endl;
+
+    // read vector
+    vector<int> vec = node["vec"].as<vector<int>>();
+    cout << "vec = [";
+    for (auto it = vec.begin(); it!= vec.end(); ++it){
+        if (it != vec.begin()){
+            cout << ", ";
+        }
+        cout << *it;
+    }
+    cout << "]" << endl;
 }
-
-
 
 
 int main(int argc, char *argv[]) {
