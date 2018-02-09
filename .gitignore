@@ -249,3 +249,11 @@ ModelManifest.xml
 .idea
 cmake-build-debug
 cmake-build-release
+
+# Qt Creator file
+CMakeLists.txt.user
+build-Default
+build-Debug
+build-Release
+build-Release with Debug Information
+build-Minimum Size Release
