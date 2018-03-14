@@ -1,11 +1,11 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include "yaml-cpp/yaml.h"
 
 using namespace std;
 
 class Point {
-public:
+   public:
     float x, y, z;
 
     // write to yaml
@@ -15,7 +15,7 @@ public:
         node.push_back(z);
     }
 
-    //read from yaml
+    // read from yaml
     bool read(const YAML::Node &node) {
         if (!node.IsSequence() || node.size() < 3)
             return false;
@@ -26,7 +26,6 @@ public:
         return true;
     }
 };
-
 
 // write yaml
 void writeYaml(const string &file) {
@@ -55,16 +54,16 @@ void writeYaml(const string &file) {
 
     // user-defined class
     Point pos;
-    pos.x = 100.1;
-    pos.y = -200.2;
-    pos.z = 3.1415926;
+    pos.x = 100.1f;
+    pos.y = -200.2f;
+    pos.z = 3.1415926f;
     YAML::Node node5;
     pos.write(node5);
 
     // write sequences
     vector<int> vec{1, 2, 3, 4, 5};
     YAML::Node node6;
-    //node6["vec"] = vec;
+    // node6["vec"] = vec;
 
     // write all to file
     node["family"] = node1;
@@ -117,15 +116,14 @@ void readYaml(const string &file) {
     // read vector
     vector<int> vec = node["vec"].as<vector<int>>();
     cout << "vec = [";
-    for (auto it = vec.begin(); it!= vec.end(); ++it){
-        if (it != vec.begin()){
+    for (auto it = vec.begin(); it != vec.end(); ++it) {
+        if (it != vec.begin()) {
             cout << ", ";
         }
         cout << *it;
     }
     cout << "]" << endl;
 }
-
 
 int main(int argc, char *argv[]) {
     string file = "../../YamlStudy/config.yaml";

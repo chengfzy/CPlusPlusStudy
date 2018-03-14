@@ -1,3 +1,4 @@
+#include <time.h>
 #include <chrono>
 #include <iostream>
 #include "boost/date_time/posix_time/posix_time.hpp"
@@ -6,6 +7,30 @@ using namespace std;
 using namespace boost;
 
 int main(int argc, char* argv[]) {
+    // time_t and tm
+    {
+        cout << "========================= time_t and tm =========================" << endl;
+
+        // convert time_t to tm
+        time_t t0 = time(nullptr);
+        cout << "t0 = " << t0 << endl;
+        tm* t1 = gmtime(&t0);
+        cout << "t1 = " << asctime(t1);
+        //        delete t1;
+
+        // convert tm to time_t
+        tm t3;
+        t3.tm_year = 118;
+        t3.tm_mon = 0;
+        t3.tm_mday = 1;
+        t3.tm_hour = 0;
+        t3.tm_min = 0;
+        t3.tm_sec = 0;
+        time_t t4 = mktime(&t3);
+        cout << "t3 = " << asctime(&t3);
+        cout << "t4 = " << t4 << endl;
+    }
+
     // Chrono Time
     cout << "========================= Chrono-Time =========================" << endl;
     chrono::steady_clock::time_point t0 = chrono::steady_clock::now();

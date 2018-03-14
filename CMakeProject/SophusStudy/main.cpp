@@ -47,6 +47,12 @@ int main(int argc, char* argv[]) {
     cout << "perturb on R = " << endl << R1 << endl;
     Sophus::SO3 R1_SO3 = R_SO3 * Sophus::SO3::exp(deltaPhi);
     cout << "perturb on R_SO3 = " << endl << R1_SO3.matrix() << endl;
+    // perturbation product
+    // plase note cannot construct with (v[0], v[1], v[2]), it's like Euler angle XYZ, not rotation angle
+    SO3 deltaR = SO3::exp(deltaPhi);
+    SO3 R1_product = R_SO3 * deltaR;
+    cout << "01: perturb product on R_SO3 = " << endl << R1_product.matrix() << endl;
+
     // so(3)
     Vector3d so3 = R1_SO3.log();
     Matrix3d so3_hat = Sophus::SO3::hat(so3);

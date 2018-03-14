@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
-project(BoostTimeStudy)
+project(BoostFileSystem)
 
 # boost
-find_package(Boost COMPONENTS date_time REQUIRED)
+find_package(Boost COMPONENTS filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 add_executable(${PROJECT_NAME} main.cpp)
