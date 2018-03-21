@@ -13,22 +13,13 @@ find_path(SOPHUS_INCLUDE_DIR NAMES sophus/so3.h
     DOC "Sophus include directory"
     )
 
-find_library(SOPHUS_LIBRARY NAMES libSophus.so
-    PATHS
-    /usr/lib
-    /usr/local/lib
-    /opt/local/lib
-    DOC "Sophus library"
-    )
-
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(SOPHUS DEFAULT_MSG
-    SOPHUS_INCLUDE_DIR SOPHUS_LIBRARY)
+    SOPHUS_INCLUDE_DIR)
 
 if (SOPHUS_FOUND)
     set(SOPHUS_INCLUDE_DIRS ${SOPHUS_INCLUDE_DIR})
-    set(SOPHUS_LIBRARIES ${SOPHUS_LIBRARY})
     set(SOPHUS_DEFINITIONS)
 endif()
 
-mark_as_advanced(SOPHUS_INCLUDE_DIR SOPHUS_LIBRARY)
+mark_as_advanced(SOPHUS_INCLUDE_DIR)
