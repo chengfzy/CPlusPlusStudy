@@ -16,7 +16,8 @@ add_subdirectory(BoostFileSystem)
 add_subdirectory(YamlStudy)
 
 # Eigen Study
-add_subdirectory(EigenStudy)
+add_subdirectory(Eigen01_Basic)
+add_subdirectory(Eigen02_LinearEquationSolver)
 
 # Sophus Study
 add_subdirectory(SophusStudy)

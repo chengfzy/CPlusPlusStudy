@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(EigenStudy)
+project(Eigen02_LinearEquationSolver)
 
 # Eigen
 find_package(Eigen3 REQUIRED)

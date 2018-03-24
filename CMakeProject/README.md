@@ -3,7 +3,10 @@
 1. BoostTimeStudy: study code about chrono time and boost time
 1. BoostFileSystem: study code about boost filesystem: list file and folder, create folder
 1. YamlStudy: write and read yaml file using yaml-cpp.
-1. EigenStudy: study about Eigen library
+
+1. Eigen01_Basic: basic using about Eigen library
+1. Eigen02_LinearEquationSolver: solve linear system equations use Eigen
+
 1. SophusStudy: study code about Sophus library
 
 1. Ceres01_HelloWorld
