@@ -11,6 +11,7 @@ using namespace Eigen;
  *  Solve Linear System Equation Ax = B
  *      (1) nonSquareEqn: When A is not square, data from Matlab pinv help
  *      (2) singularEqn: When A is singular, data from Matlab mldivide help
+ *      (3) illCondEqn: When A is an ill-conditioned matrix, data from TrajectorEstimation smoother
  */
 
 /*
@@ -119,9 +120,58 @@ void singularEqn() {
     }
 }
 
+// Solve equation when A is ill-conditioned matrix
+void illCondEqn() {
+    cout << "================================ When A is Ill-Conditioned ================================" << endl;
+    Matrix<double, 2, 2> A;
+    Vector2d B;
+    A << 2, 1, 2.01, 1.0;
+    B << 3, 4;
+
+    cout << "A = " << endl << A << endl;
+    cout << "B = " << B.transpose() << endl;
+
+    // define error function
+    auto errFunc = [&](const Matrix<double, 2, 1>& x) { return (A * x - B).norm(); };
+
+    // solve equation with different method
+    cout << "Solve Method:" << endl
+         << "\t(1) colPivHouseholderQr()" << endl
+         << "\t(2) fullPivHouseholderQr() " << endl
+         << "\t(3) householderQr(ComputeThinU | ComputeThinV)" << endl
+         << "\t(4) jacobiSvd(ComputeFullU | ComputeFullV)" << endl
+         << "\t(5) jacobiSvd(ComputeThinU | ComputeThinV)" << endl
+         << "\t(6) pinv(A) * B" << endl
+         << "\t(7) llt()" << endl
+         << "\t(8) ldlt()" << endl
+         << "\t(9) partialPivLu()" << endl
+         << "\t(10) fullPivLu()" << endl
+         << "\t(11) inv(A) * B" << endl;
+    vector<Matrix<double, 2, 1>> x;  // solve result
+    x.emplace_back(A.colPivHouseholderQr().solve(B));
+    x.emplace_back(A.fullPivHouseholderQr().solve(B));
+    x.emplace_back(A.householderQr().solve(B));
+    x.emplace_back(A.jacobiSvd(ComputeFullU | ComputeFullV).solve(B));
+    JacobiSVD<MatrixXd> svd(A, ComputeThinU | ComputeThinV);
+    x.emplace_back(svd.solve(B));
+    x.emplace_back(pseudoinverse(A) * B);
+    //    x.emplace_back(A.inverse() * B);  //cannot calculated
+    x.emplace_back(A.llt().solve(B));
+    x.emplace_back(A.ldlt().solve(B));
+    x.emplace_back(A.partialPivLu().solve(B));
+    x.emplace_back(A.fullPivLu().solve(B));
+    x.emplace_back(A.inverse() * B);
+
+    for (size_t i = 0; i < x.size(); ++i) {
+        cout << "x" << i + 1 << " = " << x[i].transpose() << "\t, |x| = " << x[i].norm()
+             << ",\tError = " << errFunc(x[i]) << endl;
+    }
+}
+
 int main(int argc, char* argv[]) {
     nonSquareEqn();
     singularEqn();
+    illCondEqn();
 
     return 0;
 }
