@@ -9,6 +9,9 @@
 
 1. SophusStudy: study code about Sophus library
 
+1. GeometryTransform: Transform among rotation matrix, euler angle, rotation vector and SO3, include Matlab Script
+    Ref: [1] https://blog.csdn.net/mulinb/article/details/51227597
+
 1. Ceres01_HelloWorld
     ceres tutorials, hello world, http://ceres-solver.org/nnls_tutorial.html#hello-world
 1. Ceres02_Powell

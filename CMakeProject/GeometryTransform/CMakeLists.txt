@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(SophusStudy)
+project(GeometryTransform)
 
 # Eigen
 find_package(Eigen3 REQUIRED)

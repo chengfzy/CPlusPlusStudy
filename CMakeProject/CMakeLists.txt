@@ -22,6 +22,9 @@ add_subdirectory(Eigen02_LinearEquationSolver)
 # Sophus Study
 add_subdirectory(SophusStudy)
 
+# Geometry Transform
+add_subdirectory(GeometryTransform)
+
 # Ceres Study
 add_subdirectory(Ceres01_HelloWorld)
 add_subdirectory(Ceres02_Powell)
