@@ -56,5 +56,10 @@ int main(int argc, char* argv[]) {
     time += boost::posix_time::milliseconds(56);
     cout << "time = " << time << endl;
 
+    // 1970 time
+    boost::posix_time::ptime t1970(boost::gregorian::date(1970, 1, 1));
+    double clockFrom1970 = (dateTime0 - t1970).total_milliseconds() / 1000.0;  // ms
+    cout << "tick from 1970 = " << clockFrom1970 << " ms";
+
     return 0;
 }

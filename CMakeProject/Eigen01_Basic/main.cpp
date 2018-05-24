@@ -16,6 +16,8 @@ int main(int argc, char* argv[]) {
         cout << "vec with default init = " << vec01.transpose() << endl;
         cout << "vec with explicit init = " << vec02.transpose() << endl;
 
+        cout << "x = " << Vector3d::Constant(3) << endl;
+
         // matrix
         Matrix3d mat01;
         mat01 << 1, 2, 3, 4, 5, 6, 7, 8, 9;

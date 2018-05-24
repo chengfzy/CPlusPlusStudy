@@ -23,8 +23,7 @@ const double kData[] = {
 };
 
 struct ExponentialResidual {
-    ExponentialResidual(double x, double y) : _x(x), _y(y) {
-    }
+    ExponentialResidual(double x, double y) : _x(x), _y(y) {}
 
     template <typename T>
     bool operator()(const T* const m, const T* const c, T* residual) const {

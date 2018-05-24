@@ -53,11 +53,63 @@ int main(int argc, char* argv[]) {
     SO3d R1_product = R_SO3 * deltaR;
     cout << "01: perturb product on R_SO3 = " << endl << R1_product.matrix() << endl;
 
+    cout << "R = " << R_SO3.matrix() << endl;
+    cout << "|R| = " << R_SO3.matrix().norm() << endl;
+    cout << "R1 = " << R1_SO3.matrix() << endl;
+    cout << "|R1| = " << R1_SO3.matrix().norm() << endl;
+
+    Matrix3d R1Mat = R1_SO3.matrix().normalized();
+    cout << "R1Mat = " << R1Mat << endl;
+    cout << "|R1Mat| = " << R1Mat.norm() << endl;
+
+    R1_SO3.normalize();
+    cout << "R1 = " << R1_SO3.matrix() << endl;
+    cout << "|R1| = " << R1_SO3.matrix().norm() << endl;
+
     // so(3)
     Vector3d so3 = R1_SO3.log();
     Matrix3d so3_hat = Sophus::SO3d::hat(so3);
     cout << "so3 = " << so3.transpose() << endl;
     cout << "so3^ = " << endl << so3_hat << endl;
 
+    double x = 3;
+    Matrix3d y = Matrix3d::Zero();
+    y.diagonal() = Vector3d::Ones() * x;
+    cout << "y = " << y << endl;
+
+    // exp
+    {
+        Eigen::Vector3d x(10, 20, 30);
+        double dt = 0.01;
+        SO3d R0;
+        SO3d R1 = R0 * SO3d::exp(x * dt);
+        cout << "x^ = " << SO3d::hat(x) << endl;
+        cout << "R0 = " << R0.matrix() << endl;
+        cout << "R1 = " << R1.matrix() << endl;
+        cout << "x1 = " << R1.log() << endl;
+    }
+
+    // test
+    {
+        double z0 = -158 * M_PI / 180;
+        double z1 = 160 * M_PI / 180;
+        Vector3d a0(0, 0, z0);
+        Vector3d a1(0, 0, z1);
+        SO3d R0 = SO3d::exp(a0);
+        SO3d R1 = SO3d::exp(a1);
+        SO3d dR0 = SO3d::exp(a0) * R1;
+        SO3d dR1 = SO3d::exp(-a0) * R1;
+        SO3d dR2 = R1 * SO3d::exp(a0);
+        SO3d dR3 = R1 * SO3d::exp(-a0);
+        Vector3d da0 = dR0.log();
+        Vector3d da1 = dR1.log();
+        Vector3d da2 = dR2.log();
+        Vector3d da3 = dR3.log();
+
+        cout << "da0 = " << da0.transpose() * 180 / M_PI << endl;
+        cout << "da1 = " << da1.transpose() * 180 / M_PI << endl;
+        cout << "da2 = " << da2.transpose() * 180 / M_PI << endl;
+        cout << "da0 = " << da3.transpose() * 180 / M_PI << endl;
+    }
     return 0;
 }
