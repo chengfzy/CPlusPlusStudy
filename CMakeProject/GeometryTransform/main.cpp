@@ -63,10 +63,7 @@ void test02() {
     cout << "R1 = " << endl << R1 << endl;
     cout << "x1b = " << x1b.transpose() << endl;
     cout << "x1c = " << x1c.angle() << ".\t" << x1c.axis().transpose() << endl;
-    cout << "angle of q = " <<
-
-        cout << endl
-         << endl;
+    cout << "angle of q = " << Sophus::SO3d(q1).log().transpose() << endl;
     Matrix3d R2;
     R2 = AngleAxisd(x1[0], Vector3d::UnitX()) * AngleAxisd(x1[1], Vector3d::UnitY()) *
          AngleAxisd(x1[2], Vector3d::UnitZ());
