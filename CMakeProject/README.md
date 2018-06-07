@@ -23,6 +23,14 @@
 
     Use unique_lock
     Ref: http://www.cnblogs.com/haippy/p/3237213.html, http://www.cnblogs.com/haippy/p/3346477.html
+1. thread07_ConditionVariable01
+
+    Use condition variable
+    Ref: http://www.cnblogs.com/haippy/p/3252041.html
+1. thread08_ConditionVariable02
+
+    Use condition variable
+    Ref: http://www.cnblogs.com/haippy/p/3252041.html
 
 
 1. Boost01_FileSystem
