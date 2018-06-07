@@ -35,6 +35,9 @@
 
     Use async, and some comparison
     Ref: https://blog.csdn.net/lijinqi1987/article/details/78909479
+1. thread20_ComplexProject
+
+    One complex project, class have 2 thread, and the child thread has some callback in class main thread
 
 
 
