@@ -15,6 +15,7 @@ add_subdirectory(thread05_LockGuard)
 add_subdirectory(thread06_UniqueLock)
 add_subdirectory(thread07_ConditionVariable01)
 add_subdirectory(thread08_ConditionVariable02)
+add_subdirectory(thread09_Async01)
 
 
 # Boost Study
