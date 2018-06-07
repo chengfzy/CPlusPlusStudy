@@ -6,6 +6,15 @@ set(CMAKE_CXX_STANDARD 14)
 # cmake modules
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
+# Thread Study: C++11 thread
+add_subdirectory(thread01_HelloWorld)
+add_subdirectory(thread02_Basic)
+add_subdirectory(thread03_Mutex)
+add_subdirectory(thread04_TimeMutex)
+add_subdirectory(thread05_LockGuard)
+add_subdirectory(thread06_UniqueLock)
+
+
 # Boost Study
 # Time
 add_subdirectory(Boost01_FileSystem)        # fileSystem
@@ -16,7 +25,7 @@ add_subdirectory(Boost05_LexicalCast)       # lexical cast
 add_subdirectory(Boost06_Serialization)     # serialization
 
 # YAML Study: conflict with boost in /usr/local
-#add_subdirectory(YamlStudy)
+add_subdirectory(YamlStudy)
 
 # Eigen Study
 add_subdirectory(Eigen01_Basic)
