@@ -26,12 +26,13 @@ class Track {
     }
 
     void finish(function<void(int)> fetcher) {
-       while(!data.empty()){
-           cout << "[Tracker] begin fetch retained data " << *data.begin() << endl;
-           fetcher(*data.begin());
-           cout << "[Tracker] erase retained data..." << endl;
-           data.erase(data.begin());
-       }
+        while (!data.empty()) {
+            cout << "[Tracker] begin fetch retained data " << *data.begin() << endl;
+            future<void> result = async(launch::async, fetcher, *data.begin());
+            result.get();
+            cout << "[Tracker] erase retained data..." << endl;
+            data.erase(data.begin());
+        }
     }
 
    public:
