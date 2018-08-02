@@ -124,9 +124,19 @@ void test03() {
     //    Vector3d x2b = R2.eulerAngles(2, 1, 0);
     //    cout << "R2 = " << endl << R2 << endl;
     //    cout << "x2b = " << x2b.transpose() << endl;
+
+
+    cout << endl << "---------------------- SO3 and Rotation Vector (Rodrigues Formula) ----------------------" << endl;
+    // to SO3
+    Sophus::SO3d SO3(R1);
+    cout << "SO3 = " << endl << SO3.matrix() << endl;
+    // Rotation Vector
+    cout << "so3 = " << SO3.log().transpose() << endl;
+
 }
 
 int main(int argc, char* argv[]) {
+    //basic01();
     test03();
 
     return 0;

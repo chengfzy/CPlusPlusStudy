@@ -1,4 +1,3 @@
-#define GOOGLE_GLOG_DLL_DECL
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
