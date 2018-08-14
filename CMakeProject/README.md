@@ -62,9 +62,6 @@
 ## Sophus
 1. SophusStudy  \
     study code about Sophus library
-1. GeometryTransform    \
-    Transform among rotation matrix, euler angle, rotation vector and SO3, include Matlab Script
-    Ref: [1] https://blog.csdn.net/mulinb/article/details/51227597
 
 
 ## Ceres
@@ -96,3 +93,9 @@
     Multiple display.
     Ref:https://github.com/stevenlovegrove/Pangolin/blob/master/examples/SimpleMultiDisplay/main.cpp
 
+## Others
+1. DataSize\
+    print the data size and give a reference when to use const& and value parameters in function
+1. GeometryTransform    \
+    Transform among rotation matrix, euler angle, rotation vector and SO3, include Matlab Script
+    Ref: https://blog.csdn.net/mulinb/article/details/51227597

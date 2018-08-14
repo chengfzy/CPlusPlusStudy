@@ -150,7 +150,7 @@ void RotMatAngleConversion() {
             R04.at<double>(i, j) = R1(i, j);
         }
     }
-    cout << "R01 = " << endl << R04 << endl;
+    cout << "R04 = " << endl << R04 << endl;
     Mat x04;
     Rodrigues(R04, x04);
     cout << "x04 = " << x04.t() << endl;

@@ -23,7 +23,7 @@ void solveUseAutoDiff() {
     // build the problem
     ceres::Problem problem;
 
-    // set up the only cost function (residual), this used auto-differentiation to obtain the derivative(jacobian)
+    // set up the only cost function (residual), this used auto-differentiation to obtain the derivative(Jacobian)
     ceres::CostFunction* costFunction = new ceres::AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
     problem.AddResidualBlock(costFunction, nullptr, &x);
 
@@ -39,7 +39,7 @@ void solveUseAutoDiff() {
     cout << "x : " << initialX << " -> " << x << endl << endl;
 }
 
-// numberic cost functor
+// numeric cost functor
 struct NumericDiffCostFunctor {
     bool operator()(const double* const x, double* residual) const {
         residual[0] = 10.0 - x[0];
