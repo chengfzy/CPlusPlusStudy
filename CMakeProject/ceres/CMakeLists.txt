@@ -1,5 +1,0 @@
-# Ceres Study
-add_subdirectory(Ceres01_HelloWorld)
-add_subdirectory(Ceres02_Powell)
-add_subdirectory(Ceres03_CurveFitting)
-add_subdirectory(Ceres04_BundleAdjustment)

@@ -1,0 +1,22 @@
+family:
+  name: jeffery
+  age: 20
+  spouse:
+    name: Jane
+    age: 25
+  children:
+    - name: John
+      age: 5
+    - name: Jenny
+      age: 3
+pos:
+  - 100.1
+  - -200.2
+  - 3.141593
+vec:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+isOk: True
