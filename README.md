@@ -83,8 +83,11 @@
     end of the hallway. By fusing the noisy odometry and sensor readings this example demonstrates how to compute the
     maximum likelihood estimate (MLE) of the robot's pose at each timestamp.
     https://github.com/ceres-solver/ceres-solver/blob/master/examples/robot_pose_mle.cc
-
-
+1. Ceres07_PoseGraph2D \
+    An example of solving a graph-based formulation of SLAM. It reads a 2D pose graph problem definition file in the g2o
+    format, formulates and solves the Ceres optimization problem, and outputs the original and optimized poses to file
+    for plotting.
+    https://github.com/ceres-solver/ceres-solver/tree/master/examples/slam/pose_graph_2d
 
 
 ## Alglib
