@@ -1,7 +1,7 @@
 # Plot the results from the 2D pose graph optimization.
 # It will draw a line between consecutive vertices, the command line expects two optional filenames:
 #
-#   ./plot_results.py --initial_poses file1 --optimized_poses file2 --ground_truth file3
+#   ./plot_slam_2d.py --initial_poses file1 --optimized_poses file2 --ground_truth file3
 #
 # The initial pose and optimized pose file have the following format:
 #   ID x y yaw
@@ -13,10 +13,11 @@ import matplotlib.pyplot as plot
 from optparse import OptionParser
 
 parser = OptionParser()
-parser.add_option('--initial_poses', dest='initial_poses', default='../../cmake-build-debug/bin/poses_original.txt',
+parser.add_option('--initial_poses', dest='initial_poses',
+                  default='../../cmake-build-release/bin/poses_2d_original.txt',
                   help='the filename that contains the original poses')
 parser.add_option('--optimized_poses', dest='optimized_poses',
-                  default='../../cmake-build-debug/bin/poses_optimized.txt',
+                  default='../../cmake-build-release/bin/poses_2d_optimized.txt',
                   help='the filename that contains the optimized poses')
 parser.add_option('--ground_truth', dest='ground_truth',
                   default='/home/jeffery/Documents/Code/dataset/openslam_vertigo-master/datasets/manhattan/groundTruth/manhattanOlson3500_nodes_groundTruth.dat',

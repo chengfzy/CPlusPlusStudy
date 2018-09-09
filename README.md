@@ -88,7 +88,10 @@
     format, formulates and solves the Ceres optimization problem, and outputs the original and optimized poses to file
     for plotting.
     https://github.com/ceres-solver/ceres-solver/tree/master/examples/slam/pose_graph_2d
-
+1. Ceres08_PoseGraph3D  \
+    An example formulate the pose graph based SLAM problem in 3-Dimensions with relative pose constraints. The example
+    also illustrates how to use Eigen’s geometry module with Ceres’s automatic differentiation functionality.
+    https://github.com/ceres-solver/ceres-solver/tree/master/examples/slam/pose_graph_3d
 
 ## Alglib
 1. Alglib01_Interpolation   \
