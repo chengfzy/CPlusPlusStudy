@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
                            ModelViewLookAt(0, 0, 5, 0, 0, 0, pangolin::AxisY));  // loop at XY plane
     // ModelViewLookAt(2, -2, 2, 0, 0, 0, pangolin::AxisZ));
 
-    // create interactive view in windo
+    // create interactive view in window
     Handler3D handler(sCam);
     View& dCam = CreateDisplay().SetBounds(0.0, 1.0, 0.0, 1.0, -640.0 / 480.0).SetHandler(&handler);
 

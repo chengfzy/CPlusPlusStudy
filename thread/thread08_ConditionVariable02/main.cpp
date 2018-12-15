@@ -17,8 +17,9 @@ void consume(int n) {
     for (int i = 0; i < n; ++i) {
         unique_lock<mutex> lck(mtx);
         cv.wait(lck, shipmentAvailable);
-        cout << "cargo = " << cargo << endl;
+        cout << "customer: cargo = " << cargo << endl;
         cargo = 0;
+        cout << "customer reset: cargo = " << cargo << endl;
     }
 }
 
@@ -34,6 +35,7 @@ int main(int argc, char* argv[]) {
 
         unique_lock<mutex> lck(mtx);
         cargo = i + 1;
+        cout << "produces: cargo = " << cargo << endl;
         cv.notify_one();
     }
 

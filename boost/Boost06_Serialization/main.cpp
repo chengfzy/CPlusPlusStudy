@@ -24,7 +24,9 @@ class Animal {
     template <typename Archive>
     friend void serialize(Archive& ar, Animal& a, const unsigned int version) {
         ar& a.legs_;
-        if (version > 0) ar& a.name_;
+        if (version > 0) {
+            ar& a.name_;
+        }
     }
 
    private:

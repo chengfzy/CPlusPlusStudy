@@ -42,3 +42,6 @@ add_subdirectory(ceres)
 
 # Pangolin Study
 add_subdirectory(Pangolin)
+
+# SQLite Study
+add_subdirectory(Sqlite)

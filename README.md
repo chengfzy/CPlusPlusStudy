@@ -92,6 +92,8 @@
     An example formulate the pose graph based SLAM problem in 3-Dimensions with relative pose constraints. The example
     also illustrates how to use Eigen’s geometry module with Ceres’s automatic differentiation functionality.
     https://github.com/ceres-solver/ceres-solver/tree/master/examples/slam/pose_graph_3d
+1. Ceres09_SophusPoseGraph3D    \
+    Same as Ceres08_PoseGraph3D, but use Sophus::SO3 to represent the rotation.
 
 ## Alglib
 1. Alglib01_Interpolation   \

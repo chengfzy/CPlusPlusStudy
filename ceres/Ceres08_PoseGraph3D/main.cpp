@@ -8,10 +8,7 @@
 using namespace ceres;
 using namespace std;
 
-DEFINE_string(
-    inputFile,
-    "/home/jeffery/Documents/Code/dataset/openslam_vertigo-master/datasets/sphere2500/originalDataset/sphere2500.g2o",
-    "pose graph definition filename in g2o format");
+DEFINE_string(inputFile, "../../ceres/data/sphere2500.g2o", "pose graph definition filename in g2o format");
 
 // save poses to the file with format: ID x y yaw
 bool savePose(const string& filename, const MapOfPoses& poses) {
@@ -21,8 +18,8 @@ bool savePose(const string& filename, const MapOfPoses& poses) {
         return false;
     }
     for (auto& p : poses) {
-        fs << p.first << " " << p.second.p.transpose() << " " << p.second.q.x() << " " << p.second.q.y()
-           << p.second.q.z() << p.second.q.w() << endl;
+        fs << p.first << " " << p.second.p.transpose() << " " << p.second.q.x() << " " << p.second.q.y() << " "
+           << p.second.q.z() << " " << p.second.q.w() << endl;
     }
     fs.close();
     return true;
