@@ -3,29 +3,32 @@
 1. thread01_HelloWorld  \
     Ref: http://www.cnblogs.com/haippy/p/3235560.html
 1. thread02_Basic   \
-    Basic use of thread
+    Basic use of thread.
     Ref: http://www.cnblogs.com/haippy/p/3236136.html
 1. thread03_Mutex   \
     Use mutex
     Ref: http://www.cnblogs.com/haippy/p/3237213.html
 1. thread04_TimeMutex   \
-    Use timed_mutex
+    Use timed_mutex.
     Ref: http://www.cnblogs.com/haippy/p/3237213.html
 1. thread05_LockGuard   \
-    Use lock_guard
+    Use lock_guard.
     Ref: http://www.cnblogs.com/haippy/p/3237213.html
 1. thread06_UniqueLock  \
-    Use unique_lock
+    Use unique_lock.
     Ref: http://www.cnblogs.com/haippy/p/3237213.html, http://www.cnblogs.com/haippy/p/3346477.html
 1. thread07_ConditionVariable01 \
-    Use condition variable
+    Use condition variable.
     Ref: http://www.cnblogs.com/haippy/p/3252041.html
 1. thread08_ConditionVariable02 \
-    Use condition variable
+    Use condition variable.
     Ref: http://www.cnblogs.com/haippy/p/3252041.html
 1. thread09_Async01 \
-    Use async, and some comparison
+    Use async, and some comparison.
     Ref: https://blog.csdn.net/lijinqi1987/article/details/78909479
+1. thread10_JobQueue    \
+    A job queue for the producer-consumer paradigm.
+    Ref: https://github.com/colmap/colmap/blob/dev/src/util/threading.h 
 1. thread20_ComplexProject  \
     One complex project, class have 2 thread, and the child thread has some callback in class main thread
 
@@ -38,7 +41,7 @@
 1. Boost03_Interpolation    \
     Rational interpolation and cubic B-spline interpolation
 1. Boost04_Tokenizer    \
-    Boost Tokenizer, seperate string with specified seperator
+    Boost Tokenizer, separate string with specified separator
 1. Boost05_LexicalCast  \
     Convert string to int/long/double and vice verse
 1. Boost06_Serialization    \

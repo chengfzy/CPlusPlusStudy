@@ -10,7 +10,7 @@ using namespace std;
 class Track {
    public:
    public:
-    void track(int x, function<void(int)> fetcher) {
+    void track(int x, const function<void(int)>& fetcher) {
         // should taken 1s to finish track method
         this_thread::sleep_for(chrono::seconds(1));
 
@@ -25,7 +25,7 @@ class Track {
         }
     }
 
-    void finish(function<void(int)> fetcher) {
+    void finish(const function<void(int)>& fetcher) {
         while (!data.empty()) {
             cout << "[Tracker] begin fetch retained data " << *data.begin() << endl;
             future<void> result = async(launch::async, fetcher, *data.begin());
@@ -76,7 +76,7 @@ class System {
     }
 
     void fetch(int x) {
-        cout << "[System] featch data " << x << endl;
+        cout << "[System] fetch data " << x << endl;
         // should taken 0.5 seconds to fetch data
         this_thread::sleep_for(chrono::milliseconds(500));
         data.emplace_back(x);

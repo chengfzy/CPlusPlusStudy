@@ -56,9 +56,9 @@ int main(int argc, char* argv[]) {
         cout << "min(mat4b, mat4b) = " << endl << mat4c << endl;
     }
 
-    // diagnal matrix
+    // diagonal matrix
     {
-        cout << endl << "================================ Diagnal Matrix ================================" << endl;
+        cout << endl << "================================ Diagonal Matrix ================================" << endl;
         Vector3d diagVec(1, 2, 3);
         Matrix3d diagMat = diagVec.asDiagonal();
         diagMat.diagonal() << 4, 5, 6;
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
 
     // matrix condition number and ill-conditioned matrix
     {
-        cout << endl << "============================== Matrix Contition Number =============================" << endl;
+        cout << endl << "============================== Matrix Condition Number =============================" << endl;
         Matrix2d matA;
         matA << 4.1, 2.8, 9.7, 6.1;
         //    Matrix2d invMatA = matA.inverse();

@@ -3,10 +3,11 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include "Common.hpp"
 
 using namespace std;
 
-// featch data from database
+// fetch data from database
 string fetchDataFromDb(const string& data) {
     // should taken 5 seconds to fetch data
     this_thread::sleep_for(chrono::seconds(5));
@@ -14,7 +15,7 @@ string fetchDataFromDb(const string& data) {
     return "DB_" + data;
 }
 
-// featch data from file
+// fetch data from file
 string fetchDataFromFile(const string& data) {
     // should taken 5 seconds to fetch data
     this_thread::sleep_for(chrono::seconds(5));
@@ -34,6 +35,7 @@ struct DdbFetcher {
 
 // sequence execute task
 void sequence() {
+    cout << section("Sequence Execution") << endl;
     // start time
     auto t0 = chrono::system_clock::now();
 
@@ -52,13 +54,14 @@ void sequence() {
 
 // async parallel task
 void asyncTask() {
+    cout << section("Async Task") << endl;
     // start time
     auto t0 = chrono::system_clock::now();
 
     // fetch data from database and file
     future<string> resultFromDb = async(launch::async, fetchDataFromDb, "Data");
     string fileData = fetchDataFromFile("Data");
-    string dbData = resultFromDb.get();
+    string dbData = resultFromDb.get();  // wait until get data
 
     // end time
     auto t1 = chrono::system_clock::now();
@@ -71,6 +74,7 @@ void asyncTask() {
 
 // async parallel task, using operator() and lambda
 void asyncTaskUsingLambda() {
+    cout << section("Async Task with lambda Function") << endl;
     // start time
     auto t0 = chrono::system_clock::now();
 
@@ -96,7 +100,7 @@ void asyncTaskUsingLambda() {
 }
 
 int main(int argc, char* argv[]) {
-    // sequence();  // sequence execute, normal one
+    sequence();  // sequence execute, normal one
 
     asyncTask();  // parallel task, async
 

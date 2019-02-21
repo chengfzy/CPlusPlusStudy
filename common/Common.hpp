@@ -48,7 +48,7 @@ std::string subSection(const std::string& title, bool breakLine = true) {
  */
 std::string paragraph(const std::string& title) {
     if (title.empty()) {
-        return str + std::string(20, '-');
+        return std::string(20, '-');
     }
     std::string fillStr((25 - title.size()) / 2, '=');
     return fillStr + " " + title + " " + fillStr;

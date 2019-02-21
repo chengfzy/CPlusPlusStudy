@@ -107,7 +107,7 @@ void RotMatAngleConversion() {
     cout << subSection("Rotation Matrix") << endl;
     Matrix3d R1 = (AngleAxisd(x0[2], Vector3d::UnitZ()) * AngleAxisd(x0[1], Vector3d::UnitY()) *
                    AngleAxisd(x0[0], Vector3d::UnitX()))
-                      .toRotationMatrix();
+        .toRotationMatrix();
     Vector3d x1 = R1.eulerAngles(2, 1, 0);
     cout << "R1 = " << endl << R1 << endl;
     cout << "x1 = " << x1.transpose() << endl;
@@ -160,7 +160,7 @@ void RotMatAngleConversion() {
 void rotationBetween2Vector() {
     cout << section("Rotation between 2 Vector") << endl;
     Vector3d a0(1, 0, 0);
-    Vector3d a1(1, 2, 3);
+    Vector3d a1(1, 2, 0);
 
     // calculate using axis angle
     cout << subSection("Axis Angle") << endl;
@@ -177,11 +177,12 @@ void rotationBetween2Vector() {
     Matrix3d R2 = q.toRotationMatrix();
     cout << "q = " << q.coeffs().transpose() << endl;
     cout << "R2 = " << endl << R2 << endl;
+    cout << "theta = " << Sophus::SO3d(q).log().transpose() << endl;
 }
 
 int main(int argc, char* argv[]) {
-    basic01();
-    RotMatAngleConversion();
+    //basic01();
+    //RotMatAngleConversion();
     rotationBetween2Vector();
 
     return 0;
