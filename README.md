@@ -46,6 +46,10 @@
     Convert string to int/long/double and vice verse
 1. Boost06_Serialization    \
     Serialization class
+1. Boost07_MulticastSender  \
+    Multicast UDP sender using asio, based on boost1.58.
+1. Boost08_MulticastReceiver    \
+    Multicast UDP receiver using asio, based on boost1.58.
 
 
 ## YAML

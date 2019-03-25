@@ -5,3 +5,5 @@ add_subdirectory(Boost03_Interpolation)     # interpolation, should use boost 1.
 add_subdirectory(Boost04_Tokenizer)         # tokenizer
 add_subdirectory(Boost05_LexicalCast)       # lexical cast
 add_subdirectory(Boost06_Serialization)     # serialization
+add_subdirectory(Boost07_MulticastSender)   # multicast sender
+add_subdirectory(Boost08_MulticastReceiver) # multicast receiver
