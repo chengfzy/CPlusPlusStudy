@@ -4,14 +4,16 @@
 #include "boost/math/tools/roots.hpp"
 #include "boost/random/uniform_real_distribution.hpp"
 #include "boost/range/adaptors.hpp"
+#include "common/common.hpp"
 
 using namespace std;
 using namespace boost;
+using namespace common;
 
 // simple rational interpolation.
 // Ref: https://www.boost.org/doc/libs/1_67_0/libs/math/doc/html/math_toolkit/barycentric.html
 void simpleRationalInterpolate() {
-    cout << "================================ Simple Rational Interpolation ================================" << endl;
+    cout << section("Simple Rational Interpolation") << endl;
     // create data
     vector<double> r(45);
     vector<double> mrV(45);
@@ -119,7 +121,7 @@ void simpleRationalInterpolate() {
 // more complex rational interpolation
 // Ref: https://www.boost.org/doc/libs/1_67_0/libs/math/doc/html/math_toolkit/barycentric.html
 void rationalInterpolate() {
-    cout << "================================ Complex Rational Interpolation ================================" << endl;
+    cout << section("Complex Rational Interpolation") << endl;
     // could equally use and unordered map, a list of tuples or pairs, or 2-dimensional array
     map<double, double> r;
     r[0.02] = 5.727;
@@ -193,7 +195,7 @@ void rationalInterpolate() {
 // cubic B-spline interpolation.
 // Ref: https://www.boost.org/doc/libs/1_67_0/libs/math/doc/html/math_toolkit/cubic_b.html
 void cubicBSpline() {
-    cout << "================================ Cubic B-Spline Interpolation ================================" << endl;
+    cout << section("Cubic B-Spline Interpolation") << endl;
 
     // initialize the vector with a function we'd like to interpolate
     vector<double> v(500);

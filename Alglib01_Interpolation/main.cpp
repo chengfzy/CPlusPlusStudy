@@ -16,6 +16,7 @@ void cubicInterp() {
     double v = spline1dcalc(s, t);
     cout << "v(t = " << t << ") = " << v << endl;
 }
+
 int main(int argc, char* argv[]) {
     cubicInterp();
 

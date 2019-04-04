@@ -1,4 +1,8 @@
 # Thread Study: C++11 thread
+
+# depend libs
+list(APPEND PRIVATE_DEPEND_LIBS pthread)
+
 add_subdirectory(thread01_HelloWorld)
 add_subdirectory(thread02_Basic)
 add_subdirectory(thread03_Mutex)

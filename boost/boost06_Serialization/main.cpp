@@ -10,15 +10,15 @@ using namespace boost::archive;
 
 // Animal class
 class Animal {
-   public:
+  public:
     Animal() = default;
     Animal(int legs, const string& name) : legs_(legs), name_(name) {}
 
-   public:
+  public:
     int legs() const { return legs_; }
     const string& name() const { return name_; }
 
-   private:
+  private:
     friend class boost::serialization::access;
 
     template <typename Archive>
@@ -29,8 +29,8 @@ class Animal {
         }
     }
 
-   private:
-    int legs_;
+  private:
+    int legs_ = 0;
     string name_;
 };
 

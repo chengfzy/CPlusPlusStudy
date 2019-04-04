@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 
     t2.join();
     t4.join();
-    cout << "Finnal value of n is " << n << endl;
+    cout << "Final value of n is " << n << endl;
 
     return 0;
 }

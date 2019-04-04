@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
         cout << "(" << x << ", " << spline(scaleX(x, xVec.minCoeff(), xVec.maxCoeff())) << ")" << endl;
     }
 
-    // spline without scaled opeartion, will be something error
+    // spline without scaled operation, will be something error
     cout << "unscaled..." << endl;
     spline = SplineFitting<Spline<double, 1>>::Interpolate(yVec.transpose(), 3, xVec.transpose());
     for (double x = 1.0; x < 6 + 0.5 * 0.1; x += 0.1) {

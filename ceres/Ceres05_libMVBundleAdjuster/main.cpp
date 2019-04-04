@@ -3,7 +3,7 @@
  * and runs the bundle adjuster on the problem.
  */
 #include <fstream>
-#include "Common.hpp"
+#include "common/common.hpp"
 #include "ceres/ceres.h"
 #include "ceres/rotation.h"
 #include "gflags/gflags.h"
@@ -12,6 +12,7 @@
 using namespace std;
 using namespace ceres;
 using namespace Eigen;
+using namespace common;
 
 DEFINE_string(fileName, "../../ceres/data/libmv-ba-problems/problem_02.bin", "Input file name");
 DEFINE_string(refineInstrinsics, "all", "camera intrinsics to be refined. Options are: '', 'none', 'radial', 'all'");

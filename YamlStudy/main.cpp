@@ -1,13 +1,14 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-#include "Common.hpp"
+#include "common/common.hpp"
 #include "yaml-cpp/yaml.h"
 
 using namespace std;
+using namespace common;
 
 class Point {
-   public:
+  public:
     float x, y, z;
 
     // write to yaml

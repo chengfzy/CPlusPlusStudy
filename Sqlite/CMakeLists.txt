@@ -1,11 +1,15 @@
-cmake_minimum_required(VERSION 3.2)
-project(Sqlite01_Basic)
+# SQLite Study
 
-# SQLiteCpp
-find_package(SQLiteCpp REQUIRED)
-include_directories(${SQLiteCpp_INCLUDE_DIRS})
+# find package
+find_package(SQLiteCpp)
 
-# build the target
-aux_source_directory(./ DIR_SRCS)
-add_executable(${PROJECT_NAME} ${DIR_SRCS})
-target_link_libraries(${PROJECT_NAME} ${SQLiteCpp_LIBRARIES})
+if (${SQLiteCpp_FOUND})
+    list(APPEND PRIVATE_DEPEND_INCLUDES ${SQLiteCpp_INCLUDE_DIRS})
+    list(APPEND PRIVATE_DEPEND_LIBS ${SQLiteCpp_LIBRARIES} ${PRJ_LIB_COMMON})
+
+    # build project
+    project(Sqlite01_Basic)
+    add_executable(${PROJECT_NAME} main.cpp)
+    target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_INCLUDES})
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_LIBS})
+endif ()

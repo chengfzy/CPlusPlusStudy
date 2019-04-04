@@ -1,6 +1,8 @@
 #include <iostream>
+#include "common/common.hpp"
 
 using namespace std;
+using namespace common;
 
 class MyStr {
   public:
@@ -15,28 +17,28 @@ class MyStr {
 
 int main(int argc, char* argv[]) {
     {
-        cout << "========================= Test 01 =========================" << endl;
+        cout << section("Test 01") << endl;
         string a{"data"};
         string&& b = move(a);
         cout << "a: " << a << ", b: " << b << endl;
     }
 
     {
-        cout << "========================= Test 02 =========================" << endl;
+        cout << section("Test 02") << endl;
         string a{"data"};
         string b{move(a)};
         cout << "a: " << a << ", b: " << b << endl;
     }
 
     {
-        cout << "========================= Test 03 =========================" << endl;
+        cout << section("Test 03") << endl;
         string a{"data"};
         MyStr myStr(a);
         cout << "a: " << a << ", myStr: " << myStr.str() << endl;
     }
 
     {
-        cout << "========================= Test 04 =========================" << endl;
+        cout << section("Test 04") << endl;
         MyStr myStr("data");
         cout << "myStr: " << myStr.str() << endl;
     }

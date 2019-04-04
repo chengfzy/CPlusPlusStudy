@@ -15,10 +15,10 @@ constexpr int kMaxMessageCount{100};
  */
 class Sender {
   public:
-    Sender(boost::asio::io_service& ioService, const ip::address& multicastAddress)
+    Sender(boost::asio::io_context& ioContext, const ip::address& multicastAddress)
         : endpoint_(multicastAddress, kMulticastPort),
-          socket_(ioService, endpoint_.protocol()),
-          timer_(ioService),
+          socket_(ioContext, endpoint_.protocol()),
+          timer_(ioContext),
           messageCount_(0) {
         doSend();
     }
@@ -37,7 +37,7 @@ class Sender {
     }
 
     void doTimeout() {
-        timer_.expires_from_now(boost::posix_time::seconds(1));
+        timer_.expires_after(std::chrono::seconds(1));
         timer_.async_wait([this](boost::system::error_code ec) {
             if (!ec) {
                 doSend();
@@ -48,7 +48,7 @@ class Sender {
   private:
     ip::udp::endpoint endpoint_;
     ip::udp::socket socket_;
-    deadline_timer timer_;
+    steady_timer timer_;
     int messageCount_;
     std::string message_;
 };
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
     cout << "\tFor IPv6: try: Sender ff31::8000:1234" << endl;
 
     io_service ioService;
-    Sender sender(ioService, ip::address::from_string("239.255.0.1"));
+    Sender sender(ioService, ip::make_address("239.255.0.1"));
     ioService.run();
 
     return 0;

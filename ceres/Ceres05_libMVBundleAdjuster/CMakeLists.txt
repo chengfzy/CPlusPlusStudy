@@ -1,11 +1,6 @@
-cmake_minimum_required(VERSION 3.2)
 project(Ceres05_libMVBundleAdjuster)
 
-# Ceres
-find_package(Ceres REQUIRED)
-include_directories(${CERES_INCLUDE_DIRS})
-
-# build the target
-aux_source_directory(./ DIR_SRCS)
-add_executable(${PROJECT_NAME} ${DIR_SRCS})
-target_link_libraries(${PROJECT_NAME} ${CERES_LIBRARIES})
+# build project
+add_executable(${PROJECT_NAME} main.cpp)
+target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_INCLUDES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_LIBS})

@@ -1,10 +1,6 @@
-cmake_minimum_required(VERSION 3.2)
-set(CMAKE_CXX_STANDARD 14)
 project(Pangolin01_HelloPangolin)
 
-# library
-find_package(Pangolin REQUIRED)                 # Pangolin
-include_directories(${Pangolin_INCLUDE_DIRS})
-
+# build project
 add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} ${Pangolin_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_INCLUDES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_LIBS})

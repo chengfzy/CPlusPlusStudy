@@ -1,13 +1,15 @@
 #include <iostream>
 #include "boost/filesystem.hpp"
+#include "common/common.hpp"
 
 using namespace std;
 using namespace boost::filesystem;
+using namespace common;
 
 int main(int argc, char* argv[]) {
     // open and list files
     {
-        cout << "========================= List Folder and File =========================" << endl;
+        cout << section("List Folder and File") << endl;
         string folder{"/"};
         path folderPath(folder);
 
@@ -31,7 +33,7 @@ int main(int argc, char* argv[]) {
 
     // create folder and files
     {
-        cout << "========================= Create Folder =========================" << endl;
+        cout << section("Create Folder") << endl;
         string fileName{"/home/jeffery/Downloads/new/new1.gps"};
         path filePath(fileName);
         string folderName = filePath.parent_path().string();

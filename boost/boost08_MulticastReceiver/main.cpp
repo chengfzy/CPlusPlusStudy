@@ -14,8 +14,8 @@ constexpr int kMulticastPort{30001};
  */
 class Receiver {
   public:
-    Receiver(boost::asio::io_service& ioService, const ip::address& listenAddress, const ip::address& multicastAddress)
-        : socket_(ioService) {
+    Receiver(boost::asio::io_context& ioContext, const ip::address& listenAddress, const ip::address& multicastAddress)
+        : socket_(ioContext) {
         // create the socket so that multiple may be bound to the same address
         ip::udp::endpoint listenEndpoint(listenAddress, kMulticastPort);
         socket_.open(listenEndpoint.protocol());
@@ -51,9 +51,9 @@ int main(int argc, char* argv[]) {
     cout << "\tFor IPv4: try: Receiver 0.0.0.0 239.255.0.1" << endl;
     cout << "\tFor IPv6: try: Receiver 0::0 ff31::8000:1234" << endl;
 
-    io_service ioService;
-    Receiver receiver(ioService, ip::address::from_string("0.0.0.0"), ip::address::from_string("239.255.0.1"));
-    ioService.run();
+    io_context ioContext;
+    Receiver receiver(ioContext, ip::make_address("0.0.0.0"), ip::make_address("239.255.0.1"));
+    ioContext.run();
 
     return 0;
 }

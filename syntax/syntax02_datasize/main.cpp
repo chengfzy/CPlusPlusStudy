@@ -1,6 +1,7 @@
-// Print the data size and give a reference when to use const& and value parameters in function
-// If size(type) > size(void*) then use const &, otherwise use value directly
-
+/**
+ * @brief Print the data size and give a reference when to use const& and value parameters in function.
+ * If size(type) > size(void*) then use const &, otherwise use value directly
+ */
 #include <iostream>
 #include <memory>
 using namespace std;

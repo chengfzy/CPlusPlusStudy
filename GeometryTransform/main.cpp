@@ -1,9 +1,9 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
-#include "Common.hpp"
 #include "Eigen/Core"
 #include "Eigen/Geometry"
+#include "common/common.hpp"
 #include "opencv2/calib3d.hpp"
 #include "sophus/so3.hpp"
 #include "unsupported/Eigen/EulerAngles"
@@ -11,6 +11,7 @@
 using namespace std;
 using namespace Eigen;
 using namespace cv;
+using namespace common;
 
 void basic01() {
     // euler angle
@@ -19,7 +20,7 @@ void basic01() {
     cout << "angle = [Rx, Ry, Rz] = [roll, pitch, yaw] = " << angle.transpose() << endl;
 
     // rotation sequence ZYX, R = Rz * Ry * Rx, Matlab's default
-    cout << endl << "================== Rotation Sequence: ZYX, R = Rz * Ry * Rx ==================" << endl;
+    cout << endl << section("Rotation Sequence: ZYX, R = Rz * Ry * Rx") << endl;
     // Euler Angle => Rotation Matrix
     Matrix3d R1;
     R1 = AngleAxisd(angle[2], Vector3d::UnitZ()) * AngleAxisd(angle[1], Vector3d::UnitY()) *
@@ -29,7 +30,7 @@ void basic01() {
     cout << "euler1 = " << euler1.transpose() << endl;
 
     // rotation sequence XYZ, R = Rx * Ry * Rz
-    cout << endl << "================== Rotation Sequence: XYZ, R = Rx * Ry * Rz ==================" << endl;
+    cout << endl << section("Rotation Sequence: XYZ, R = Rx * Ry * Rz") << endl;
     // Euler Angle => Rotation Matrix
     Matrix3d R2;
     R2 = AngleAxisd(angle[0], Vector3d::UnitX()) * AngleAxisd(angle[1], Vector3d::UnitY()) *
@@ -40,7 +41,7 @@ void basic01() {
     cout << "euler2 = " << euler2.transpose() << endl;
 
     // SO3
-    cout << endl << "================== SO3 and Rotation Vector(Rodrigues Formula) ==================" << endl;
+    cout << endl << section("SO3 and Rotation Vector(Rodrigues Formula)") << endl;
     // to SO3
     Sophus::SO3d SO3(R1);
     cout << "SO3 = " << endl << SO3.matrix() << endl;
@@ -49,7 +50,7 @@ void basic01() {
 }
 
 void test02() {
-    cout << endl << "================== Test ==================" << endl;
+    cout << endl << section("Test") << endl;
     Matrix3d tempR = Matrix3d::Identity();
     cout << "tempR = " << endl << tempR << endl;
     Vector3d tempAngle = tempR.eulerAngles(2, 1, 0);
@@ -77,7 +78,7 @@ void test02() {
 }
 
 /**
- * @brief Calculate euler anglur from rotation matrix. [Rx, Ry, Rz] = [roll, pitch, yaw]
+ * @brief Calculate euler angle from rotation matrix. [Rx, Ry, Rz] = [roll, pitch, yaw]
  * @param R Rotation matrix
  * @return  Euler angle
  */
@@ -107,7 +108,7 @@ void RotMatAngleConversion() {
     cout << subSection("Rotation Matrix") << endl;
     Matrix3d R1 = (AngleAxisd(x0[2], Vector3d::UnitZ()) * AngleAxisd(x0[1], Vector3d::UnitY()) *
                    AngleAxisd(x0[0], Vector3d::UnitX()))
-        .toRotationMatrix();
+                      .toRotationMatrix();
     Vector3d x1 = R1.eulerAngles(2, 1, 0);
     cout << "R1 = " << endl << R1 << endl;
     cout << "x1 = " << x1.transpose() << endl;
@@ -181,8 +182,8 @@ void rotationBetween2Vector() {
 }
 
 int main(int argc, char* argv[]) {
-    //basic01();
-    //RotMatAngleConversion();
+    basic01();
+    RotMatAngleConversion();
     rotationBetween2Vector();
 
     return 0;

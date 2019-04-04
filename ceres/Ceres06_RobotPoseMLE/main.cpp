@@ -6,13 +6,14 @@
 
 #include <iostream>
 #include <random>
-#include "Common.hpp"
 #include "ceres/ceres.h"
+#include "common/common.hpp"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 
 using namespace std;
 using namespace ceres;
+using namespace common;
 
 DEFINE_double(corridorLength, 30.0, "length of the corridor that the robot is travelling down");
 DEFINE_double(poseSeparation, 0.5, "the distance that the robot traverse between successive odometry update");

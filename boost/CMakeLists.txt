@@ -1,9 +1,16 @@
 # Boost Study
-add_subdirectory(Boost01_FileSystem)        # fileSystem
-add_subdirectory(Boost02_TimeStudy)         # time
-add_subdirectory(Boost03_Interpolation)     # interpolation, should use boost 1.6
-add_subdirectory(Boost04_Tokenizer)         # tokenizer
-add_subdirectory(Boost05_LexicalCast)       # lexical cast
-add_subdirectory(Boost06_Serialization)     # serialization
-add_subdirectory(Boost07_MulticastSender)   # multicast sender
-add_subdirectory(Boost08_MulticastReceiver) # multicast receiver
+find_package(Boost 1.65 COMPONENTS filesystem date_time serialization system)
+
+if (${Boost_FOUND})
+    list(APPEND PRIVATE_DEPEND_INCLUDES ${Boost_INCLUDE_DIRS})
+    list(APPEND PRIVATE_DEPEND_LIBS ${Boost_LIBRARIES} ${PRJ_LIB_COMMON} pthread)
+
+    add_subdirectory(boost01_FileSystem)        # fileSystem
+    add_subdirectory(boost02_TimeStudy)         # time
+    add_subdirectory(boost03_Interpolation)     # interpolation, should use boost 1.6
+    add_subdirectory(boost04_Tokenizer)         # tokenizer
+    add_subdirectory(boost05_LexicalCast)       # lexical cast
+    add_subdirectory(boost06_Serialization)     # serialization
+    add_subdirectory(boost07_MulticastSender)   # multicast sender
+    add_subdirectory(boost08_MulticastReceiver) # multicast receiver
+endif ()

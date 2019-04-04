@@ -1,36 +1,41 @@
 # Contents
 
+## common
+Some common library, especially for debug info.
+
 ## syntax
 Some C++ syntax demo
 1. syntax01_move    \
-    Some code for std::move
+    Some code for `std::move`.
+1. syntax02_dataSize\
+    print the data size and give a reference when to use `const&` and value parameters in function
 
 ## std::thread
 1. thread01_HelloWorld  \
     Ref: http://www.cnblogs.com/haippy/p/3235560.html
 1. thread02_Basic   \
-    Basic use of thread.
+    Basic use of `thread`.
     Ref: http://www.cnblogs.com/haippy/p/3236136.html
 1. thread03_Mutex   \
-    Use mutex
+    Use `mutex`
     Ref: http://www.cnblogs.com/haippy/p/3237213.html
 1. thread04_TimeMutex   \
-    Use timed_mutex.
+    Use `timed_mutex`.
     Ref: http://www.cnblogs.com/haippy/p/3237213.html
 1. thread05_LockGuard   \
-    Use lock_guard.
+    Use `lock_guard`.
     Ref: http://www.cnblogs.com/haippy/p/3237213.html
 1. thread06_UniqueLock  \
-    Use unique_lock.
+    Use `unique_lock`.
     Ref: http://www.cnblogs.com/haippy/p/3237213.html, http://www.cnblogs.com/haippy/p/3346477.html
 1. thread07_ConditionVariable01 \
-    Use condition variable.
+    Use `condition variable`.
     Ref: http://www.cnblogs.com/haippy/p/3252041.html
 1. thread08_ConditionVariable02 \
-    Use condition variable.
+    Use `condition variable`.
     Ref: http://www.cnblogs.com/haippy/p/3252041.html
 1. thread09_Async01 \
-    Use async, and some comparison.
+    Use `async`, and some comparison.
     Ref: https://blog.csdn.net/lijinqi1987/article/details/78909479
 1. thread10_JobQueue    \
     A job queue for the producer-consumer paradigm.
@@ -39,29 +44,24 @@ Some C++ syntax demo
     One complex project, class have 2 thread, and the child thread has some callback in class main thread
 
 
-## Boost
-1. Boost01_FileSystem   \
-    Study code about boost filesystem: list file and folder, create folder
-1. Boost02_TimeStudy    \
-    Study code about chrono time and boost time
-1. Boost03_Interpolation    \
+## boost
+1. boost01_FileSystem   \
+    Study code about `boost filesystem`: list file and folder, create folder
+1. boost02_TimeStudy    \
+    Study code about `chrono` time and boost time
+1. boost03_Interpolation    \
     Rational interpolation and cubic B-spline interpolation
-1. Boost04_Tokenizer    \
-    Boost Tokenizer, separate string with specified separator
-1. Boost05_LexicalCast  \
+1. boost04_Tokenizer    \
+    Boost tokenizer, separate string with specified separator
+1. boost05_LexicalCast  \
     Convert string to int/long/double and vice verse
-1. Boost06_Serialization    \
+1. boost06_Serialization    \
     Serialization class
-1. Boost07_MulticastSender  \
-    Multicast UDP sender using asio, based on boost1.58.
-1. Boost08_MulticastReceiver    \
-    Multicast UDP receiver using asio, based on boost1.58.
-
-
-## YAML
-1. YamlStudy    \
-    Write and read yaml file using yaml-cpp.
-
+1. boost07_MulticastSender  \
+    Multicast UDP sender using `asio`, based on boost1.58.
+1. boost08_MulticastReceiver    \
+    Multicast UDP receiver using `asio`, based on boost1.58.
+    
 
 ## Eigen
 1. Eigen01_Basic    \
@@ -70,12 +70,7 @@ Some C++ syntax demo
     Solve linear system equations use Eigen
 1. Eigen03_Interpolation    \
     Use interpolation method in Eigen
-
-
-## Sophus
-1. SophusStudy  \
-    study code about Sophus library
-
+    
 
 ## Ceres
 1. Ceres01_HelloWorld  \
@@ -108,11 +103,8 @@ Some C++ syntax demo
 1. Ceres09_SophusPoseGraph3D    \
     Same as Ceres08_PoseGraph3D, but use Sophus::SO3 to represent the rotation.
 
-## Alglib
-1. Alglib01_Interpolation   \
-    Study interpolation method in alglib
 
-## Panoglin
+## Pangolin
 1. Pangolin01_HelloPangolin \
     Draw and show cube using pangolin.
     Ref: https://github.com/stevenlovegrove/Pangolin/blob/master/examples/HelloPangolin/main.cpp
@@ -124,11 +116,23 @@ Some C++ syntax demo
     Ref: https://github.com/stevenlovegrove/Pangolin/blob/master/examples/SimpleDisplay/main.cpp
 1. Pangolin04_MultiDisplay  \
     Multiple display.
-    Ref:https://github.com/stevenlovegrove/Pangolin/blob/master/examples/SimpleMultiDisplay/main.cpp
+    Ref: https://github.com/stevenlovegrove/Pangolin/blob/master/examples/SimpleMultiDisplay/main.cpp
+    
+    
+## Sophus
+1. SophusStudy  \
+    study code about `Sophus` library
+    
+## YAML
+1. YamlStudy    \
+    Write and read yaml file using `yaml-cpp`.
+
+## Sqlite
+Basic `SQLiteCpp` usage.
 
 ## Others
-1. DataSize\
-    print the data size and give a reference when to use const& and value parameters in function
+1. Alglib01_Interpolation   \
+    Study interpolation method in `alglib`.
 1. GeometryTransform    \
     Transform among rotation matrix, euler angle, rotation vector and SO3, include Matlab Script
     Ref: https://blog.csdn.net/mulinb/article/details/51227597

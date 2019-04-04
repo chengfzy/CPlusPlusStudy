@@ -1,11 +1,12 @@
 /*
  * using ceres to find the minimum of function 0.5 * (10 - x)^2
  */
-#include "Common.hpp"
 #include "ceres/ceres.h"
+#include "common/common.hpp"
 #include "glog/logging.h"
 
 using namespace std;
+using namespace common;
 
 // A templated cost functor that will evaluate residual r = 10 - x
 struct CostFunctor {
@@ -81,7 +82,7 @@ void solveUseNumericDiff() {
 
 // analytic derivatives
 class QuadraticCostFunction : public ceres::SizedCostFunction<1, 1> {
-   public:
+  public:
     QuadraticCostFunction() = default;
     ~QuadraticCostFunction() override = default;
 

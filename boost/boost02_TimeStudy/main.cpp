@@ -2,14 +2,16 @@
 #include <chrono>
 #include <iostream>
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include "common/common.hpp"
 
 using namespace std;
+using namespace common;
 using namespace boost;
 
 int main(int argc, char* argv[]) {
     // time_t and tm
     {
-        cout << "========================= time_t and tm =========================" << endl;
+        cout << section("time_t and tm") << endl;
 
         // convert time_t to tm
         time_t t0 = time(nullptr);
@@ -31,22 +33,22 @@ int main(int argc, char* argv[]) {
         cout << "t4 = " << t4 << endl;
     }
 
-    // Chrono Time
-    cout << "========================= Chrono-Time =========================" << endl;
+    // chrono Time
+    cout << section("chrono Time") << endl;
     chrono::steady_clock::time_point t0 = chrono::steady_clock::now();
     double sum{0};
     for (int i = 0; i < 100000; ++i) {
         sum += i * 8;
     }
     chrono::steady_clock::time_point t1 = chrono::steady_clock::now();
-    auto runTime = chrono::duration_cast<chrono::milliseconds>(t1 - t0);
+    auto runTime = chrono::duration_cast<chrono::microseconds>(t1 - t0);
     cout << "Run Time = " << runTime.count() << endl;
     chrono::microseconds d1(10);
     cout << "duration = " << d1.count() << endl;
 
     // Boost-Time
-    cout << "========================= Boost-Time =========================" << endl;
-    boost::posix_time::ptime dateTime0 = boost::posix_time::microsec_clock::universal_time();
+    cout << section("boost Time") << endl;
+    boost::posix_time::ptime dateTime0 = boost::posix_time::microsec_clock::local_time();
     cout << "dateTime0 = " << dateTime0 << endl;
     boost::posix_time::time_duration time(10, 20, 12, 134);
     boost::gregorian::date date(2018, 1, 18);
