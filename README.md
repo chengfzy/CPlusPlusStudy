@@ -1,4 +1,10 @@
 # Contents
+
+## syntax
+Some C++ syntax demo
+1. syntax01_move    \
+    Some code for std::move
+
 ## std::thread
 1. thread01_HelloWorld  \
     Ref: http://www.cnblogs.com/haippy/p/3235560.html

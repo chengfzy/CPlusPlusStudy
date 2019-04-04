@@ -21,6 +21,8 @@ add_subdirectory(GeometryTransform)
 # alglib
 add_subdirectory(Alglib01_Interpolation)
 
+# c++ syntax
+add_subdirectory(syntax)
 
 # Thread Study: C++11 thread
 add_subdirectory(thread)
