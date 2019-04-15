@@ -9,7 +9,7 @@ using namespace std;
 #define printSize(type) cout << #type << " = " << sizeof(type) << endl
 
 int main(int argc, char* argv[]) {
-    printSize(void);
+    // printSize(void);
     printSize(void*);
     printSize(nullptr);
 

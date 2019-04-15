@@ -54,8 +54,8 @@ int main(int argc, char* argv[]) {
     // safe and efficient binding of named variables, specialisations mean no conversions take place for exact types and
     // conversions between scalar types are cheap
     Var<bool> aButton("ui.AButton", false, false);
-    Var<double> aDouble("ui.ADouble", 3, 0.5);
-    Var<int> anInt("ui.AnInt", 2, 0.5);
+    Var<double> aDouble("ui.ADouble", 3, 0, 5);
+    Var<int> anInt("ui.AnInt", 2, 0, 5);
     Var<double> aDoubleLog("ui.logScaleVar", 3, 1, 1e4, true);
     Var<bool> aCheckbox("ui.ACheckbox", false, true);
     Var<int> anIntNoInput("ui.AnIntNoInput", 2);

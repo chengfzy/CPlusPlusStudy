@@ -3,9 +3,10 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include "Common.hpp"
+#include "common/common.hpp"
 
 using namespace std;
+using namespace common;
 
 // fetch data from database
 string fetchDataFromDb(const string& data) {
