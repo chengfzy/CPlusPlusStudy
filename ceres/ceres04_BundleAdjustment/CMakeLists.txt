@@ -1,4 +1,4 @@
-project(Ceres06_RobotPoseMLE)
+project(ceres04_BundleAdjustment)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)

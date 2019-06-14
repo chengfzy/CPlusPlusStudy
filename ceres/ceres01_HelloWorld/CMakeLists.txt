@@ -1,7 +1,6 @@
-project(Ceres09_SophusPoseGraph3D)
+project(ceres01_HelloWorld)
 
 # build project
-file(GLOB_RECURSE FILE_SRCS ./*.*)
-add_executable(${PROJECT_NAME} ${FILE_SRCS})
+add_executable(${PROJECT_NAME} main.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_INCLUDES})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_LIBS})

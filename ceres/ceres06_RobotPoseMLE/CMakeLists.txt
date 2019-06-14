@@ -1,4 +1,4 @@
-project(Ceres01_HelloWorld)
+project(ceres06_RobotPoseMLE)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)

@@ -73,35 +73,35 @@ Some C++ syntax demo
     
 
 ## Ceres
-1. Ceres01_HelloWorld  \
+1. ceres01_HelloWorld  \
     ceres tutorials, hello world. http://ceres-solver.org/nnls_tutorial.html#hello-world
-1. Ceres02_Powell   \
+1. ceres02_Powell   \
     ceres tutorials, powell function.a http://ceres-solver.org/nnls_tutorial.html#powell-s-function
-1. Ceres03_CurveFitting \
+1. ceres03_CurveFitting \
     ceres tutorials, curve fitting, with robust to reduce outliers.
     http://ceres-solver.org/nnls_tutorial.html#curve-fitting
-1. Ceres04_BundleAdjustment \
+1. ceres04_BundleAdjustment \
     ceres tutorials, bundle adjustment.
     http://ceres-solver.org/nnls_tutorial.html#bundle-adjustment
-1. Ceres05_libMVBundleAdjuster    \
+1. ceres05_libMVBundleAdjuster    \
     ceres tutorials, bundle adjustment algorithm used by Blender/libmv.
     https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/libmv_bundle_adjuster.cc
-1. Ceres06_RobotPoseMLE \
+1. ceres06_RobotPoseMLE \
     Simulate a robot traversing down a 1-dimension hallway with noise odometry readings and noise range readings of the
     end of the hallway. By fusing the noisy odometry and sensor readings this example demonstrates how to compute the
     maximum likelihood estimate (MLE) of the robot's pose at each timestamp.
     https://github.com/ceres-solver/ceres-solver/blob/master/examples/robot_pose_mle.cc
-1. Ceres07_PoseGraph2D \
+1. ceres07_PoseGraph2D \
     An example of solving a graph-based formulation of SLAM. It reads a 2D pose graph problem definition file in the g2o
     format, formulates and solves the Ceres optimization problem, and outputs the original and optimized poses to file
     for plotting.
     https://github.com/ceres-solver/ceres-solver/tree/master/examples/slam/pose_graph_2d
-1. Ceres08_PoseGraph3D  \
+1. ceres08_PoseGraph3D  \
     An example formulate the pose graph based SLAM problem in 3-Dimensions with relative pose constraints. The example
     also illustrates how to use Eigen’s geometry module with Ceres’s automatic differentiation functionality.
     https://github.com/ceres-solver/ceres-solver/tree/master/examples/slam/pose_graph_3d
-1. Ceres09_SophusPoseGraph3D    \
-    Same as Ceres08_PoseGraph3D, but use Sophus::SO3 to represent the rotation.
+1. ceres09_SophusPoseGraph3D    \
+    Same as ceres08_PoseGraph3D, but use Sophus::SO3 to represent the rotation.
 
 
 ## Pangolin
@@ -122,7 +122,10 @@ Some C++ syntax demo
 ## Sophus
 1. SophusStudy  \
     study code about `Sophus` library
-    
+   
+## json
+some usage for `nlohmann json` library. TODO: not finished.
+
 ## YAML
 1. YamlStudy    \
     Write and read yaml file using `yaml-cpp`.

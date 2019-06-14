@@ -1,4 +1,4 @@
-project(Ceres04_BundleAdjustment)
+project(ceres05_libMVBundleAdjuster)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)

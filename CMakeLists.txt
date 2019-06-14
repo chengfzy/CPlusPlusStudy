@@ -6,6 +6,23 @@ project(CPlusPlusStudy)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 ###############################################################################
+# Libraries
+###############################################################################
+# find packages for basic libraries
+find_package(Gflags REQUIRED)                                   # gflags
+find_package(Glog REQUIRED)                                     # glog
+
+# prive dependency include directories and libraries
+list(APPEND PRIVATE_DEPEND_INCLUDES
+        ${GFLAGS_INCLUDE_DIRS}
+        ${GLOG_INCLUDE_DIRS}
+        )
+list(APPEND PRIVATE_DEPEND_LIBS
+        ${GFLAGS_LIBRARIES}
+        ${GLOG_LIBRARIES}
+        )
+
+###############################################################################
 # Project Setting
 ###############################################################################
 # default build type
@@ -38,6 +55,7 @@ add_subdirectory(Pangolin)      # Pangolin Study
 
 add_subdirectory(SophusStudy)   # Sophus Study
 add_subdirectory(YamlStudy)     # YAML Study
+add_subdirectory(json)          # json Study
 add_subdirectory(Sqlite)        # SQLite Study
 add_subdirectory(GeometryTransform)         # Geometry Transform
 add_subdirectory(Alglib01_Interpolation)    # alglib

@@ -1,4 +1,4 @@
-project(Ceres03_CurveFitting)
+project(ceres03_CurveFitting)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)
