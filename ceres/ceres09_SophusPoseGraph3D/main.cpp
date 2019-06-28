@@ -48,7 +48,6 @@ int main(int argc, char* argv[]) {
     // build problem
     Problem problem;
     LossFunction* lossFunction = nullptr;
-    LocalParameterization* quaternionLocalParameterization = new EigenQuaternionParameterization;
     LocalParameterization* poseLocalParameterization = new PoseLocalParameterization;
     for (auto& c : constraints) {
         auto itPoseBegin = poses.find(c.idBegin);

@@ -102,7 +102,9 @@ Some C++ syntax demo
     https://github.com/ceres-solver/ceres-solver/tree/master/examples/slam/pose_graph_3d
 1. ceres09_SophusPoseGraph3D    \
     Same as ceres08_PoseGraph3D, but use Sophus::SO3 to represent the rotation.
-
+1. ceres10_CovarianceEstimation \
+    Calculate the covariance of estimated value. Here we only take 1 parameter as example, more parameters and complex problem(have information matrix in problem, local parameterization) could also be calculated.
+    Ref: http://ceres-solver.org/nnls_covariance.html#covariance
 
 ## Pangolin
 1. Pangolin01_HelloPangolin \
