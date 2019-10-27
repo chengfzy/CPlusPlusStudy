@@ -7,8 +7,10 @@ Some common library, especially for heading info.
 Some C++ syntax demo
 1. syntax01_move    \
     Some code for `std::move`.
-1. syntax02_dataSize\
-    print the data size and give a reference when to use `const&` and value parameters in function
+1. syntax02_dataSize    \
+    Print the data size and give a reference when to use `const&` and value parameters in function
+1. syntax03_stringSplit \
+    Split string using C++11.
 
 ## std::thread
 1. thread01_HelloWorld  \
