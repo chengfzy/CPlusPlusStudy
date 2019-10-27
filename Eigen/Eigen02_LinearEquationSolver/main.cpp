@@ -44,7 +44,7 @@ Eigen::Matrix<typename MatT::Scalar, MatT::ColsAtCompileTime, MatT::RowsAtCompil
 
 // Solve non-square equation when A is non square
 void nonSquareEqn() {
-    cout << section("When A is not Square") << endl;
+    cout << Section("When A is not Square") << endl;
     Matrix<double, 8, 6> A;
     Matrix<double, 8, 1> B = 260 * Matrix<double, 8, 1>::Ones();
     A << 64, 2, 3, 61, 60, 6, 9, 55, 54, 12, 13, 51, 17, 47, 46, 20, 21, 43, 40, 26, 27, 37, 36, 30, 32, 34, 35, 29, 28,
@@ -80,7 +80,7 @@ void nonSquareEqn() {
 
 // Solve singular equation when A is singular
 void singularEqn() {
-    cout << section("When A is Singular") << endl;
+    cout << Section("When A is Singular") << endl;
     Matrix<double, 4, 4> A;
     Matrix<double, 4, 1> B = 34 * Matrix<double, 4, 1>::Ones();
     A << 16, 2, 3, 13, 5, 11, 10, 8, 9, 7, 6, 12, 4, 14, 15, 1;
@@ -124,7 +124,7 @@ void singularEqn() {
 
 // Solve equation when A is ill-conditioned matrix
 void illCondEqn() {
-    cout << section("When A is Ill-Conditioned") << endl;
+    cout << Section("When A is Ill-Conditioned") << endl;
     Matrix<double, 2, 2> A;
     Vector2d B;
     A << 2, 1, 2.01, 1.0;

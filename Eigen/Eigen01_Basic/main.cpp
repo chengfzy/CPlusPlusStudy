@@ -11,7 +11,7 @@ using namespace common;
 int main(int argc, char* argv[]) {
     // basic
     {
-        cout << section("Basic") << endl;
+        cout << Section("Basic") << endl;
         // Eigen create variable with default initialization, e.g, Vector3d = 0
         Vector3d vec01;
         Vector3d vec02(0, 0, 0);
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 
     // diagonal matrix
     {
-        cout << section("Diagonal Matrix") << endl;
+        cout << Section("Diagonal Matrix") << endl;
         Vector3d diagVec(1, 2, 3);
         Matrix3d diagMat = diagVec.asDiagonal();
         diagMat.diagonal() << 4, 5, 6;
@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
 
     // random matrix
     {
-        cout << section("Random Matrix") << endl;
+        cout << Section("Random Matrix") << endl;
         Vector3d randVec = Vector3d::Random();
         Vector3d randCov(4, 5, 6);
         randVec = randVec.cwiseProduct(randCov);
@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
 
     // solve linear equations
     {
-        cout << section("Solve Linear Equations") << endl;
+        cout << Section("Solve Linear Equations") << endl;
         Matrix3f A;
         Vector3f b;
         A << 1, 2, 3, 4, 5, 6, 7, 8, 10;
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
 
     // matrix condition number and ill-conditioned matrix
     {
-        cout << section("Matrix Condition Number") << endl;
+        cout << Section("Matrix Condition Number") << endl;
         Matrix2d matA;
         matA << 4.1, 2.8, 9.7, 6.1;
         //    Matrix2d invMatA = matA.inverse();
@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
 
     // matrix mean and variance
     {
-        cout << section("Matrix Mean and Variance") << endl;
+        cout << Section("Matrix Mean and Variance") << endl;
         const int N{10};
 
         // Case 01: calculate mean and variance for 1D vector data
@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
 
     // matrix norm
     {
-        cout << section("Matrix Norm") << endl;
+        cout << Section("Matrix Norm") << endl;
         Vector3d vec01 = Vector3d::Random();
         cout << "vec01 = " << vec01.transpose() << endl;
         cout << "norm-2 of vec01 = " << vec01.squaredNorm() << endl;

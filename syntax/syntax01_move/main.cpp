@@ -17,28 +17,28 @@ class MyStr {
 
 int main(int argc, char* argv[]) {
     {
-        cout << section("Test 01") << endl;
+        cout << Section("Test 01") << endl;
         string a{"data"};
         string&& b = move(a);
         cout << "a: " << a << ", b: " << b << endl;
     }
 
     {
-        cout << section("Test 02") << endl;
+        cout << Section("Test 02") << endl;
         string a{"data"};
         string b{move(a)};
         cout << "a: " << a << ", b: " << b << endl;
     }
 
     {
-        cout << section("Test 03") << endl;
+        cout << Section("Test 03") << endl;
         string a{"data"};
         MyStr myStr(a);
         cout << "a: " << a << ", myStr: " << myStr.str() << endl;
     }
 
     {
-        cout << section("Test 04") << endl;
+        cout << Section("Test 04") << endl;
         MyStr myStr("data");
         cout << "myStr: " << myStr.str() << endl;
     }

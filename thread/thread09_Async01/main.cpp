@@ -36,7 +36,7 @@ struct DdbFetcher {
 
 // sequence execute task
 void sequence() {
-    cout << section("Sequence Execution") << endl;
+    cout << Section("Sequence Execution") << endl;
     // start time
     auto t0 = chrono::system_clock::now();
 
@@ -55,7 +55,7 @@ void sequence() {
 
 // async parallel task
 void asyncTask() {
-    cout << section("Async Task") << endl;
+    cout << Section("Async Task") << endl;
     // start time
     auto t0 = chrono::system_clock::now();
 
@@ -75,7 +75,7 @@ void asyncTask() {
 
 // async parallel task, using operator() and lambda
 void asyncTaskUsingLambda() {
-    cout << section("Async Task with lambda Function") << endl;
+    cout << Section("Async Task with lambda Function") << endl;
     // start time
     auto t0 = chrono::system_clock::now();
 

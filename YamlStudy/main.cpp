@@ -80,7 +80,7 @@ void writeYaml(const string &file) {
 
 // yaml emitter
 void useEmitter() {
-    cout << section("Use Yaml Emitter") << endl;
+    cout << Section("Use Yaml Emitter") << endl;
 
     YAML::Emitter out;
 

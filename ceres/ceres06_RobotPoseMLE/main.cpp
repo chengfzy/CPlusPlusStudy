@@ -141,7 +141,7 @@ int main(int argc, char* argv[]) {
     simulateRobot(odometryValues, rangeReadings);
 
     // print initial values
-    cout << section("Initial Values") << endl;
+    cout << Section("Initial Values") << endl;
     printStates(odometryValues, rangeReadings);
 
     // build problem
@@ -164,7 +164,7 @@ int main(int argc, char* argv[]) {
     Solve(options, &problem, &summary);
 
     cout << summary.FullReport() << endl;
-    cout << section("Final Values") << endl;
+    cout << Section("Final Values") << endl;
     printStates(odometryValues, rangeReadings);
 
     google::ShutdownGoogleLogging();

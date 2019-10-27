@@ -19,7 +19,7 @@ struct CostFunctor {
 
 // solve using auto-differentiation
 void solveUseAutoDiff() {
-    cout << section("Use Auto Diff") << endl;
+    cout << Section("Use Auto Diff") << endl;
 
     // the variable to solve for with its initial value
     double initialX = 5.0;
@@ -54,7 +54,7 @@ struct NumericDiffCostFunctor {
 
 // solve using numeric derivatives
 void solveUseNumericDiff() {
-    cout << section("Use Numeric Diff") << endl;
+    cout << Section("Use Numeric Diff") << endl;
 
     // the variable to solve for with its initial value
     double initialX = 5.0;
@@ -101,7 +101,7 @@ class QuadraticCostFunction : public ceres::SizedCostFunction<1, 1> {
 
 // solve using analytic derivatives
 void solveUseAnalyticDiff() {
-    cout << section("Use Analytic Diff") << endl;
+    cout << Section("Use Analytic Diff") << endl;
 
     // the variable to solve for with its initial value
     double initialX = 5.0;

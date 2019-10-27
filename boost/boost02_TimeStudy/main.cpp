@@ -11,7 +11,7 @@ using namespace boost;
 int main(int argc, char* argv[]) {
     // time_t and tm
     {
-        cout << section("time_t and tm") << endl;
+        cout << Section("time_t and tm") << endl;
 
         // convert time_t to tm
         time_t t0 = time(nullptr);
@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     }
 
     // chrono Time
-    cout << section("chrono Time") << endl;
+    cout << Section("chrono Time") << endl;
     chrono::steady_clock::time_point t0 = chrono::steady_clock::now();
     double sum{0};
     for (int i = 0; i < 100000; ++i) {
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
     cout << "duration = " << d1.count() << endl;
 
     // Boost-Time
-    cout << section("boost Time") << endl;
+    cout << Section("boost Time") << endl;
     boost::posix_time::ptime dateTime0 = boost::posix_time::microsec_clock::local_time();
     cout << "dateTime0 = " << dateTime0 << endl;
     boost::posix_time::time_duration time(10, 20, 12, 134);

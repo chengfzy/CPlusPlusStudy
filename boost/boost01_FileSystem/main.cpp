@@ -9,7 +9,7 @@ using namespace common;
 int main(int argc, char* argv[]) {
     // open and list files
     {
-        cout << section("List Folder and File") << endl;
+        cout << Section("List Folder and File") << endl;
         string folder{"/"};
         path folderPath(folder);
 
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 
     // create folder and files
     {
-        cout << section("Create Folder") << endl;
+        cout << Section("Create Folder") << endl;
         string fileName{"/home/jeffery/Downloads/new/new1.gps"};
         path filePath(fileName);
         string folderName = filePath.parent_path().string();

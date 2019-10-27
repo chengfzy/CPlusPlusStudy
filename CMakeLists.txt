@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 project(CPlusPlusStudy)
 
 # cmake modules
@@ -14,21 +14,21 @@ find_package(Glog REQUIRED)                                     # glog
 
 # prive dependency include directories and libraries
 list(APPEND PRIVATE_DEPEND_INCLUDES
-        ${GFLAGS_INCLUDE_DIRS}
-        ${GLOG_INCLUDE_DIRS}
-        )
+     ${GFLAGS_INCLUDE_DIRS}
+     ${GLOG_INCLUDE_DIRS}
+     )
 list(APPEND PRIVATE_DEPEND_LIBS
-        ${GFLAGS_LIBRARIES}
-        ${GLOG_LIBRARIES}
-        )
+     ${GFLAGS_LIBRARIES}
+     ${GLOG_LIBRARIES}
+     )
 
 ###############################################################################
 # Project Setting
 ###############################################################################
 # default build type
-IF (NOT CMAKE_BUILD_TYPE)
-    SET(CMAKE_BUILD_TYPE RELEASE)
-ENDIF ()
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif ()
 message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
 
 # projects build setting
@@ -52,7 +52,6 @@ add_subdirectory(boost)         # boost Study
 add_subdirectory(Eigen)         # Eigen Study
 add_subdirectory(ceres)         # Ceres Study
 add_subdirectory(Pangolin)      # Pangolin Study
-
 add_subdirectory(SophusStudy)   # Sophus Study
 add_subdirectory(YamlStudy)     # YAML Study
 add_subdirectory(json)          # json Study

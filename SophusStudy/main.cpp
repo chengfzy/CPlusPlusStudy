@@ -11,7 +11,7 @@ using namespace common;
 
 int main(int argc, char* argv[]) {
     // rotation conversion
-    cout << section("Rotation Conversion") << endl;
+    cout << Section("Rotation Conversion") << endl;
     double angle = M_PI / 6;
     Vector3d axis(0.5, 1, 2);
     axis.normalize();
@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
     cout << "q.matrix = " << q.matrix() << endl;
 
     // perturbation
-    cout << endl << section("Rotation Perturbation") << endl;
+    cout << endl << Section("Rotation Perturbation") << endl;
     Vector3d deltaPhi(0.01 * M_PI, 0.15 * M_PI, 0.2 * M_PI);
     Matrix3d deltaPhiSkew;
     deltaPhiSkew << 0, -deltaPhi[2], deltaPhi[1], deltaPhi[2], 0, -deltaPhi[0], -deltaPhi[1], deltaPhi[0], 0;

@@ -7,7 +7,7 @@ using namespace common;
 
 // use char separator
 void teste01_basic() {
-    cout << endl << section("Use Char Separator") << endl;
+    cout << endl << Section("Use Char Separator") << endl;
     using tokenizer = boost::tokenizer<boost::char_separator<char>>;
     string s = "Boost C++ Libraries; My CSV Code";
     boost::char_separator<char> sep(" ", "+", boost::keep_empty_tokens);  // specify char separator
@@ -19,7 +19,7 @@ void teste01_basic() {
 
 // parse CSV files
 void test02_parseCsv() {
-    cout << endl << section("Parse CSV Files") << endl;
+    cout << endl << Section("Parse CSV Files") << endl;
     using tokenizer = boost::tokenizer<boost::escaped_list_separator<char>>;
     string s = "Boost, \"C++ Libraries\", My CSV Code";
     boost::char_separator<char> sep(" ", "+", boost::keep_empty_tokens);  // specify char separator
@@ -31,7 +31,7 @@ void test02_parseCsv() {
 
 // parse CSV files
 void test03_offsetSeparator() {
-    cout << endl << section("Offset Separator") << endl;
+    cout << endl << Section("Offset Separator") << endl;
     using tokenizer = boost::tokenizer<boost::offset_separator>;
     string s = "Boost_C++_Libraries";
     int offsets[] = {5, 5, 9};

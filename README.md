@@ -1,7 +1,7 @@
 # Contents
 
 ## common
-Some common library, especially for debug info.
+Some common library, especially for heading info.
 
 ## syntax
 Some C++ syntax demo

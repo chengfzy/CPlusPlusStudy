@@ -20,7 +20,7 @@ void basic01() {
     cout << "angle = [Rx, Ry, Rz] = [roll, pitch, yaw] = " << angle.transpose() << endl;
 
     // rotation sequence ZYX, R = Rz * Ry * Rx, Matlab's default
-    cout << endl << section("Rotation Sequence: ZYX, R = Rz * Ry * Rx") << endl;
+    cout << endl << Section("Rotation Sequence: ZYX, R = Rz * Ry * Rx") << endl;
     // Euler Angle => Rotation Matrix
     Matrix3d R1;
     R1 = AngleAxisd(angle[2], Vector3d::UnitZ()) * AngleAxisd(angle[1], Vector3d::UnitY()) *
@@ -30,7 +30,7 @@ void basic01() {
     cout << "euler1 = " << euler1.transpose() << endl;
 
     // rotation sequence XYZ, R = Rx * Ry * Rz
-    cout << endl << section("Rotation Sequence: XYZ, R = Rx * Ry * Rz") << endl;
+    cout << endl << Section("Rotation Sequence: XYZ, R = Rx * Ry * Rz") << endl;
     // Euler Angle => Rotation Matrix
     Matrix3d R2;
     R2 = AngleAxisd(angle[0], Vector3d::UnitX()) * AngleAxisd(angle[1], Vector3d::UnitY()) *
@@ -41,7 +41,7 @@ void basic01() {
     cout << "euler2 = " << euler2.transpose() << endl;
 
     // SO3
-    cout << endl << section("SO3 and Rotation Vector(Rodrigues Formula)") << endl;
+    cout << endl << Section("SO3 and Rotation Vector(Rodrigues Formula)") << endl;
     // to SO3
     Sophus::SO3d SO3(R1);
     cout << "SO3 = " << endl << SO3.matrix() << endl;
@@ -50,7 +50,7 @@ void basic01() {
 }
 
 void test02() {
-    cout << endl << section("Test") << endl;
+    cout << endl << Section("Test") << endl;
     Matrix3d tempR = Matrix3d::Identity();
     cout << "tempR = " << endl << tempR << endl;
     Vector3d tempAngle = tempR.eulerAngles(2, 1, 0);
@@ -95,7 +95,7 @@ Vector3d eulerAngleFromRotationMatrix(const Matrix3d& R) {
  */
 void RotMatAngleConversion() {
     // XYZ in extrinsic coordinates, R = Rz * Ry * Rx
-    cout << section("Geometry using Eigen::EulerAngles") << endl;
+    cout << Section("Geometry using Eigen::EulerAngles") << endl;
 
     // euler angle = [Rx, Ry, Rz] = [roll, pitch, yaw], below 2 angles result same rotation matrix
     Vector3d x0a(-0.0104279, -0.0143366, -0.00132262);
@@ -105,7 +105,7 @@ void RotMatAngleConversion() {
     cout << "raw angle x0b = " << x0b.transpose() << endl;
 
     // Rotation matrix
-    cout << subSection("Rotation Matrix") << endl;
+    cout << SubSection("Rotation Matrix") << endl;
     Matrix3d R1 = (AngleAxisd(x0[2], Vector3d::UnitZ()) * AngleAxisd(x0[1], Vector3d::UnitY()) *
                    AngleAxisd(x0[0], Vector3d::UnitX()))
                       .toRotationMatrix();
@@ -114,37 +114,37 @@ void RotMatAngleConversion() {
     cout << "x1 = " << x1.transpose() << endl;
 
     // Euler angle A: constructed from angle
-    cout << subSection("Euler Angles") << endl;
-    cout << paragraph("02a") << endl;
+    cout << SubSection("Euler Angles") << endl;
+    cout << Paragraph("02a") << endl;
     EulerAnglesZYXd x02a(x0[2], x0[1], x0[0]);
     cout << "R = " << x02a.matrix() << endl;
     cout << "x = " << x02a.angles().transpose() << endl;
 
     // Euler angle B: constructed from rotation matrix
-    cout << paragraph("02b") << endl;
+    cout << Paragraph("02b") << endl;
     EulerAnglesZYXd x02b(R1);
     cout << "R = " << x02b.matrix() << endl;
     cout << "x = " << x02b.angles().transpose() << endl;
 
     // Euler angle C: constructed from rotation matrix
-    cout << paragraph("02c") << endl;
+    cout << Paragraph("02c") << endl;
     EulerAnglesZYXd x02c = EulerAnglesZYXd::FromRotation<false, false, false>(R1);
     cout << "R = " << x02c.toRotationMatrix() << endl;
     cout << "x = " << x02c.angles().transpose() << endl;
 
     // user-define function
-    cout << subSection("User-Defined Function") << endl;
+    cout << SubSection("User-Defined Function") << endl;
     Vector3d x03a = eulerAngleFromRotationMatrix(R1);
     cout << "x03a = " << x03a.transpose() << endl;
 
     // lie groups and lie algebra
-    cout << subSection("SO3 and so3") << endl;
+    cout << SubSection("SO3 and so3") << endl;
     Sophus::SO3d SO3(R1);
     cout << "SO3 = " << endl << SO3.matrix() << endl;
     cout << "so3 = " << SO3.log().transpose() << endl;
 
     // OpenCV:
-    cout << subSection("Rodrigues Formula(OpenCV)") << endl;
+    cout << SubSection("Rodrigues Formula(OpenCV)") << endl;
     Mat R04(3, 3, CV_64FC1);
     for (Index i = 0; i < 3; ++i) {
         for (Index j = 0; j < 3; ++j) {
@@ -159,12 +159,12 @@ void RotMatAngleConversion() {
 
 // rotation between 2 vector
 void rotationBetween2Vector() {
-    cout << section("Rotation between 2 Vector") << endl;
+    cout << Section("Rotation between 2 Vector") << endl;
     Vector3d a0(1, 0, 0);
     Vector3d a1(1, 2, 0);
 
     // calculate using axis angle
-    cout << subSection("Axis Angle") << endl;
+    cout << SubSection("Axis Angle") << endl;
     double angle = acos(a0.dot(a1) / a0.norm() / a1.norm());
     Vector3d axis = a0.cross(a1).normalized();  // should normalized, or normalize a0 and a1 at first
     AngleAxisd angleAxisd(angle, axis);
@@ -173,7 +173,7 @@ void rotationBetween2Vector() {
     cout << "a1 = " << (R1 * a0).transpose() << endl;
 
     // calculate using quaternion
-    cout << subSection("Quaternion") << endl;
+    cout << SubSection("Quaternion") << endl;
     Quaterniond q = Quaterniond::FromTwoVectors(a0, a1);
     Matrix3d R2 = q.toRotationMatrix();
     cout << "q = " << q.coeffs().transpose() << endl;

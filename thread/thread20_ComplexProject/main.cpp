@@ -1,4 +1,5 @@
 #include <chrono>
+#include <functional>
 #include <future>
 #include <iostream>
 #include <string>
@@ -8,8 +9,8 @@
 using namespace std;
 
 class Track {
-   public:
-   public:
+  public:
+  public:
     void track(int x, const function<void(int)>& fetcher) {
         // should taken 1s to finish track method
         this_thread::sleep_for(chrono::seconds(1));
@@ -35,16 +36,16 @@ class Track {
         }
     }
 
-   public:
+  public:
     vector<int> data;
 };
 
 class System {
-   public:
+  public:
     System() = default;
     ~System() = default;
 
-   public:
+  public:
     void run() {
         cout << "[System] System run..." << endl;
 
@@ -65,7 +66,7 @@ class System {
         cout << endl;
     }
 
-   public:
+  public:
     void trackFunc() {
         for (int i = 0; i < 10; ++i) {
             cout << "[System] begin track data " << i << endl;
@@ -83,7 +84,7 @@ class System {
         cout << "[System] finished fetch" << endl;
     }
 
-   private:
+  private:
     Track track;
     vector<int> data;
 };

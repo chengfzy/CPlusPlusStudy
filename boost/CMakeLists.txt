@@ -1,5 +1,5 @@
 # Boost Study
-find_package(Boost 1.65 COMPONENTS filesystem date_time serialization system)
+find_package(Boost COMPONENTS filesystem date_time serialization system)
 
 if (${Boost_FOUND})
     list(APPEND PRIVATE_DEPEND_INCLUDES ${Boost_INCLUDE_DIRS})
@@ -11,6 +11,8 @@ if (${Boost_FOUND})
     add_subdirectory(boost04_Tokenizer)         # tokenizer
     add_subdirectory(boost05_LexicalCast)       # lexical cast
     add_subdirectory(boost06_Serialization)     # serialization
-    add_subdirectory(boost07_MulticastSender)   # multicast sender
-    add_subdirectory(boost08_MulticastReceiver) # multicast receiver
+    if (${Boost_VERSION} VERSION_GREATER_EQUAL 106901)
+        add_subdirectory(boost07_MulticastSender)   # multicast sender
+        add_subdirectory(boost08_MulticastReceiver) # multicast receiver
+    endif ()
 endif ()

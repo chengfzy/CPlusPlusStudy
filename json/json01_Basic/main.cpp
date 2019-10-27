@@ -34,7 +34,7 @@ void from_json(const json& j, Person& p) {
 }  // namespace cc
 
 void createJason() {
-    cout << section("Create Json", false) << endl;
+    cout << Section("Create Json", false) << endl;
 
     // create json step by step
     json j1;
@@ -59,7 +59,7 @@ void createJason() {
 }
 
 void serialization() {
-    cout << section("Serialization") << endl;
+    cout << Section("Serialization") << endl;
     // from string
     auto j1 = R"({"happy": true, "pi":3.141})"_json;
     cout << "j1: " << j1 << endl;
@@ -84,7 +84,7 @@ void serialization() {
 }
 
 void stlLike() {
-    cout << section("STL-Like Access") << endl;
+    cout << Section("STL-Like Access") << endl;
     // create array using push_back
     json j1;
     j1.push_back("foo");
@@ -93,38 +93,38 @@ void stlLike() {
     j1.emplace_back(1.78);
 
     // iterate the array
-    cout << paragraph("iterate the array");
+    cout << Paragraph("iterate the array");
     for (auto it = j1.begin(); it != j1.end(); ++it) {
         cout << *it << ", ";
     }
     cout << endl;
 
     // range-based for
-    cout << paragraph("range-based for") << endl;
+    cout << Paragraph("range-based for") << endl;
     for (auto& v : j1) {
         cout << v << ", ";
     }
     cout << endl;
 
     // getter/setter
-    cout << paragraph("getter/setter") << endl;
+    cout << Paragraph("getter/setter") << endl;
     const auto tmp = j1[0].get<string>();
     j1[1] = 42;
     bool foo = j1.at(2);
 
     // comparison
-    cout << paragraph("comparison") << endl;
+    cout << Paragraph("comparison") << endl;
     cout << "comparison: " << (j1 == "[\"foo\", 42, true, 1.78]"_json) << endl;
 
     // other stuff
-    cout << paragraph("other stuff") << endl;
+    cout << Paragraph("other stuff") << endl;
     cout << " j1.size(): " << j1.size() << endl;
     cout << " j1.empty(): " << j1.empty() << endl;
     j1.type();   // type
     j1.clear();  // clear
 
     // convenience type checkers
-    cout << paragraph("convenience type checkers") << endl;
+    cout << Paragraph("convenience type checkers") << endl;
     cout << "j1.is_null(): " << j1.is_null() << endl;
     cout << "j1.is_boolean(): " << j1.is_boolean() << endl;
     cout << "j1.is_array(): " << j1.is_array() << endl;
@@ -133,7 +133,7 @@ void stlLike() {
     cout << "j1.is_object(): " << j1.is_object() << endl;
 
     // create object
-    cout << paragraph("create object") << endl;
+    cout << Paragraph("create object") << endl;
     json j2;
     j2["foo"] = 23;
     j2["bar"] = false;
@@ -142,19 +142,19 @@ void stlLike() {
     for (auto& v : j2.items()) {
         cout << v.key() << ": " << v.value() << endl;
     }
-    cout << paragraph("structured bindings range for (C++17)") << endl;
+    cout << Paragraph("structured bindings range for (C++17)") << endl;
     // for (auto& [key, value] : j2.items()) {
     //     cout << key << ": " << value << endl;
     // }
 
     // find an entry
-    cout << paragraph("find") << endl;
+    cout << Paragraph("find") << endl;
     cout << "j2.find(\"foo\")" << (j2.find("foo") != j2.end()) << endl;
     cout << "foo count: " << j2.count("foo") << endl;
     cout << "fob count: " << j2.count("fob") << endl;
 
     // delete an entry
-    cout << paragraph("delete an entry") << endl;
+    cout << Paragraph("delete an entry") << endl;
     j2.erase("foo");
     for (auto& v : j2.items()) {
         cout << v.key() << ": " << v.value() << endl;
@@ -162,70 +162,70 @@ void stlLike() {
 }
 
 void conversionFromStlContainers() {
-    cout << section("Conversion from STL Containers") << endl;
+    cout << Section("Conversion from STL Containers") << endl;
 
     // conversion from vector
-    cout << subSection("vector") << endl;
+    cout << SubSection("vector") << endl;
     vector<int> vectorContainers{1, 2, 3, 4};
     json jsonVec(vectorContainers);
     cout << setw(2) << jsonVec << endl;
 
-    cout << subSection("deque") << endl;
+    cout << SubSection("deque") << endl;
     deque<double> dequeContainers{1.2, 2.3, 3.4, 4.5, 5.6};
     json jsonDeq(dequeContainers);
     cout << setw(2) << jsonDeq << endl;
 
-    cout << subSection("list") << endl;
+    cout << SubSection("list") << endl;
     list<bool> listContainers{true, true, false, true};
     json jsonList(listContainers);
     cout << setw(2) << jsonList << endl;
 
-    cout << subSection("forward list") << endl;
+    cout << SubSection("forward list") << endl;
     forward_list<int64_t> forwardListContainers{12345678909876, 2345677890098776, 345678900987654, 456789009876543};
     json jsonForwardList(forwardListContainers);
     cout << setw(2) << jsonForwardList << endl;
 
-    cout << subSection("array") << endl;
+    cout << SubSection("array") << endl;
     array<unsigned long, 5> arrayContainers{1, 2, 3, 4, 5};
     json jsonArray(arrayContainers);
     cout << setw(2) << jsonArray << endl;
 
-    cout << subSection("set") << endl;
+    cout << SubSection("set") << endl;
     set<string> setContainers{"one", "two", "three", "four", "one"};
     json jsonSet(setContainers);
     cout << setw(2) << jsonSet << endl;
 
-    cout << subSection("unordered_set") << endl;
+    cout << SubSection("unordered_set") << endl;
     unordered_set<string> unorderedSetContainers{"one", "two", "three", "four", "one"};
     json jsonUnorderedSet(unorderedSetContainers);
     cout << setw(2) << jsonUnorderedSet << endl;
 
-    cout << subSection("multiset") << endl;
+    cout << SubSection("multiset") << endl;
     multiset<string> multisetContainers{"one", "two", "three", "four", "one"};
     json jsonMultiSet(multisetContainers);
     cout << setw(2) << jsonMultiSet << endl;
 
-    cout << subSection("unordered_multiset") << endl;
+    cout << SubSection("unordered_multiset") << endl;
     unordered_multiset<string> unorderedMultiSetContainers{"one", "two", "three", "four", "one"};
     json jsonUnorderedMultiSet(unorderedMultiSetContainers);
     cout << setw(2) << jsonUnorderedMultiSet << endl;
 
-    cout << subSection("map") << endl;
+    cout << SubSection("map") << endl;
     map<string, int> mapContainters{{"one", 1}, {"two", 2}, {"three", 3}};
     json jsonMap(mapContainters);
     cout << setw(2) << jsonMap << endl;
 
-    cout << subSection("unordered_map") << endl;
+    cout << SubSection("unordered_map") << endl;
     unordered_map<string, double> unorderedMapContainers{{"one", 1.2}, {"two", 2.3}, {"three", 3.4}};
     json jsonUnorderedMap(unorderedMapContainers);
     cout << setw(2) << jsonUnorderedMap << endl;
 
-    cout << subSection("multimap") << endl;
+    cout << SubSection("multimap") << endl;
     multimap<string, bool> multimapContainers{{"one", true}, {"two", true}, {"three", false}, {"three", true}};
     json jsonMultimap(multimapContainers);
     cout << setw(2) << jsonMultimap << endl;
 
-    cout << subSection("multimap") << endl;
+    cout << SubSection("multimap") << endl;
     unordered_multimap<string, bool> unorderedMultimapContainers{
         {"one", true}, {"two", true}, {"three", false}, {"three", true}};
     json jsonUnorderedMultimap(multimapContainers);
@@ -233,7 +233,7 @@ void conversionFromStlContainers() {
 }
 
 void arbitraryTypeConversion() {
-    cout << section("Arbitrary Types Conversions") << endl;
+    cout << Section("Arbitrary Types Conversions") << endl;
     cc::Person p1{"Jeffery", "Chengdu, SiChuan", 25};
 
     // person => json
