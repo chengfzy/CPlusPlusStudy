@@ -135,7 +135,7 @@ some usage for `nlohmann json` library. TODO: not finished.
     Write and read yaml file using `yaml-cpp`.
 
 ## Sqlite
-Basic `SQLiteCpp` usage.
+Basic SQLite usage using `SQLiteCpp`.
 
 ## Others
 1. Alglib01_Interpolation   \

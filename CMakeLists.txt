@@ -11,6 +11,7 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 # find packages for basic libraries
 find_package(Gflags REQUIRED)                                   # gflags
 find_package(Glog REQUIRED)                                     # glog
+find_package(fmt REQUIRED)                                      # format
 
 # prive dependency include directories and libraries
 list(APPEND PRIVATE_DEPEND_INCLUDES
@@ -20,6 +21,7 @@ list(APPEND PRIVATE_DEPEND_INCLUDES
 list(APPEND PRIVATE_DEPEND_LIBS
      ${GFLAGS_LIBRARIES}
      ${GLOG_LIBRARIES}
+     fmt::fmt-header-only
      )
 
 ###############################################################################

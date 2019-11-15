@@ -34,7 +34,7 @@ std::ostream& operator<<(std::ostream& os, const Heading<Type, ParLen>& info) {
     if (info.text_.empty()) {
         os << std::string(infoLen, fillChar);
     } else {
-        std::string fillStr(std::max(5, static_cast<int>((infoLen - info.text_.size()) / 2)), fillChar);
+        std::string fillStr(std::max(5, static_cast<int>((infoLen - info.text_.size() - 1) / 2)), fillChar);
         os << fillStr << " " << info.text_ << " " << fillStr;
     }
     os << std::endl;
