@@ -2,10 +2,10 @@
  * Example Contains Bundle Adjustment used in libmv and Blender. It reads problems from files pass via the command line
  * and runs the bundle adjuster on the problem.
  */
+#include <ceres/ceres.h>
+#include <ceres/rotation.h>
 #include <fstream>
 #include "common/common.hpp"
-#include "ceres/ceres.h"
-#include "ceres/rotation.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 
@@ -150,7 +150,7 @@ EuclideanPoint* pointForTrack(vector<EuclideanPoint>& points, int trackIdx) {
 // File's endian type is reading from a first character of file, which could either be V for big endian or v for little
 // endian. This means you need to design file format assuming first character denotes file endianness in this way.
 class EndianAwareFileReader {
-   public:
+  public:
     EndianAwareFileReader() : file_(nullptr) {
         // Get an endian type of the host machine.
         union {
@@ -197,7 +197,7 @@ class EndianAwareFileReader {
         return value;
     }
 
-   private:
+  private:
     static const long int kLittleEndian = 0x03020100ul;
     static const long int kBigEndian = 0x00010203ul;
 
@@ -378,7 +378,7 @@ struct ReprojectionError {
         return true;
     }
 
-   private:
+  private:
     const double x_;  // observation in x
     const double y_;  // observation in y
 };

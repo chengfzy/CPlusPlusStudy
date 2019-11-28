@@ -1,6 +1,6 @@
 #pragma once
-#include "Eigen/Core"
-#include "ceres/ceres.h"
+#include <ceres/ceres.h>
+#include <Eigen/Core>
 #include "types.h"
 
 // Eigen's ostream operator is not compatible with ceres::Jet types.
@@ -38,7 +38,7 @@ struct cast_impl<ceres::Jet<T, N>, NewType> {
 //
 // where Vec(*) returns the vector(imaginary) part of the quaternion
 class PoseGraph3DErrorTerm {
-   public:
+  public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
     PoseGraph3DErrorTerm(const Pose3d& t_ab, const Eigen::Matrix<double, 6, 6>& sqrtInformation)
@@ -75,7 +75,7 @@ class PoseGraph3DErrorTerm {
             new PoseGraph3DErrorTerm(t_ab, sqrtInformation)));
     }
 
-   private:
+  private:
     const Pose3d t_ab_;                           // the measurement for the position of B relative to A in the frame A
     const Eigen::Matrix<double, 6, 6> sqrtInfo_;  // the square root of the measurement information matrix
 };

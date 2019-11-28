@@ -1,4 +1,4 @@
-#include "ceres/ceres.h"
+#include <ceres/ceres.h>
 using namespace std;
 
 const int kNumObservations = 67;
@@ -31,7 +31,7 @@ struct ExponentialResidual {
         return true;
     }
 
-   private:
+  private:
     const double _x;
     const double _y;
 };

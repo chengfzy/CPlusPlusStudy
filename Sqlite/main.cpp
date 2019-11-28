@@ -1,6 +1,6 @@
+#include <SQLiteCpp/SQLiteCpp.h>
 #include <fmt/format.h>
 #include <iostream>
-#include "SQLiteCpp/SQLiteCpp.h"
 #include "common/common.hpp"
 
 using namespace std;

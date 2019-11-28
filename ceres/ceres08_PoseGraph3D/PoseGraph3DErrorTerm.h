@@ -1,6 +1,6 @@
 #pragma once
-#include "Eigen/Core"
-#include "ceres/ceres.h"
+#include <ceres/ceres.h>
+#include <Eigen/Core>
 #include "types.h"
 
 // Compute the error term for two poses that have a relative pose measurement between them.
@@ -19,7 +19,7 @@
 //
 // where Vec(*) returns the vector(imaginary) part of the quaternion
 class PoseGraph3DErrorTerm {
-   public:
+  public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
     PoseGraph3DErrorTerm(const Pose3d& t_ab, const Eigen::Matrix<double, 6, 6>& sqrtInformation)
@@ -52,7 +52,7 @@ class PoseGraph3DErrorTerm {
             new PoseGraph3DErrorTerm(t_ab, sqrtInformation)));
     }
 
-   private:
+  private:
     const Pose3d t_ab_;                           // the measurement for the position of B relative to A in the frame A
     const Eigen::Matrix<double, 6, 6> sqrtInfo_;  // the square root of the measurement information matrix
 };

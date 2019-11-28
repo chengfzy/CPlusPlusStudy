@@ -1,6 +1,6 @@
+#include <ceres/ceres.h>
 #include "G2OReader.h"
 #include "PoseGraph3DErrorTerm.h"
-#include "ceres/ceres.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "types.h"

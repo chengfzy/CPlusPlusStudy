@@ -1,10 +1,10 @@
 #pragma once
-#include "ceres/ceres.h"
-#include "sophus/se3.hpp"
-#include "sophus/so3.hpp"
+#include <ceres/ceres.h>
+#include <sophus/se3.hpp>
+#include <sophus/so3.hpp>
 
 class PoseLocalParameterization : public ceres::LocalParameterization {
-   public:
+  public:
     virtual bool Plus(const double* x, const double* delta, double* x_plus_delta) const {
         // p1 = p0 + R0 * dp, R1 = R0 * Exp(dPhi)
         Eigen::Map<const Eigen::Vector3d> p0(x);

@@ -1,5 +1,5 @@
 #pragma once
-#include "Eigen/Core"
+#include <Eigen/Core>
 #include "NormalizeAngle.h"
 
 // Compute the rotation matrix from yaw angle
@@ -21,7 +21,7 @@ Eigen::Matrix<T, 2, 2> rotationMatrix2d(const T& yaw) {
 // where R_a is the rotation matrix that rotates a vector represented in frame A into the global frame, and Normalize(*)
 // ensures the angle are in the range [-pi, pi)
 class PoseGraph2DErrorTerm {
-   public:
+  public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
     PoseGraph2DErrorTerm(const double& x_ab, const double& y_ab, const double& yaw_ab,
@@ -50,7 +50,7 @@ class PoseGraph2DErrorTerm {
             new PoseGraph2DErrorTerm(x_ab, y_ab, yaw_ab, sqrtInformation)));
     }
 
-   private:
+  private:
     const Eigen::Vector2d p_ab_;      // the position of B relative to A in the frame A
     const double yaw_ab_;             // the orientation of frame B relative to frame A
     const Eigen::Matrix3d sqrtInfo_;  // the inverse square root of the measurement covariance matrix

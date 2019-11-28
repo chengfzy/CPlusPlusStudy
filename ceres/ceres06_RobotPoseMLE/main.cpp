@@ -4,9 +4,9 @@
  * maximum likelihood estimate (MLE) of the robot's pose at each timestamp.
  */
 
+#include <ceres/ceres.h>
 #include <iostream>
 #include <random>
-#include "ceres/ceres.h"
 #include "common/common.hpp"
 #include "gflags/gflags.h"
 #include "glog/logging.h"

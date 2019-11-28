@@ -1,7 +1,7 @@
 /*
  * using ceres to find the minimum of function 0.5 * (10 - x)^2
  */
-#include "ceres/ceres.h"
+#include <ceres/ceres.h>
 #include "common/common.hpp"
 #include "glog/logging.h"
 

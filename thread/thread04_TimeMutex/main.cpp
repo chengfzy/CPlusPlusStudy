@@ -7,9 +7,9 @@ using namespace std;
 
 timed_mutex mtx;
 
-void fireworks(){
+void fireworks() {
     // waiting to get a lock: each thread prints "-" every 200ms
-    while (!mtx.try_lock_for(chrono::milliseconds(200))){
+    while (!mtx.try_lock_for(chrono::milliseconds(200))) {
         cout << "-";
     }
 
@@ -18,7 +18,6 @@ void fireworks(){
     cout << "*" << endl;
     mtx.unlock();
 }
-
 
 int main(int argc, char* argv[]) {
     thread threads[10];

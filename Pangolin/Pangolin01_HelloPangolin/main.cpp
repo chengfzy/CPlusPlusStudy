@@ -1,4 +1,4 @@
-#include "pangolin/pangolin.h"
+#include <pangolin/pangolin.h>
 
 using namespace std;
 using namespace pangolin;

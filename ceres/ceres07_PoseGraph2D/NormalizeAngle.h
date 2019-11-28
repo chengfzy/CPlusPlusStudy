@@ -1,5 +1,5 @@
 #pragma once
-#include "ceres/ceres.h"
+#include <ceres/ceres.h>
 
 // normalize the angle in radius between [-pi, pi)
 template <typename T>

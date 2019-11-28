@@ -81,13 +81,14 @@ void asyncTaskUsingLambda() {
 
     // fetch data from database and file
     future<string> resultFromDb = async(launch::async, DdbFetcher(), "Data");
-    future<string> resultFromFile = async(launch::async,
-                                          [](const string& data) {
-                                              // should taken 5 seconds to fetch data
-                                              this_thread::sleep_for(chrono::seconds(5));
-                                              return "File_" + data;
-                                          },
-                                          "Data");
+    future<string> resultFromFile = async(
+        launch::async,
+        [](const string& data) {
+            // should taken 5 seconds to fetch data
+            this_thread::sleep_for(chrono::seconds(5));
+            return "File_" + data;
+        },
+        "Data");
     string dbData = resultFromDb.get();
     string fileData = resultFromFile.get();
 

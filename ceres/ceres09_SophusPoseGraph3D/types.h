@@ -5,12 +5,12 @@
  */
 
 #pragma once
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <iostream>
 #include <map>
+#include <sophus/so3.hpp>
 #include <string>
-#include "Eigen/Core"
-#include "Eigen/Geometry"
-#include "sophus/so3.hpp"
 
 // the state for each vertex in the pose graph
 struct Pose3d {

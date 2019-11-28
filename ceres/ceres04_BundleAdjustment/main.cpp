@@ -1,10 +1,10 @@
-#include "ceres/ceres.h"
-#include "ceres/rotation.h"
+#include <ceres/ceres.h>
+#include <ceres/rotation.h>
 using namespace std;
 
 // Read a bundle adjustment in the large dataset
 class BALProblem {
-   public:
+  public:
     BALProblem() = default;
     ~BALProblem() {
         delete[] pointIndex_;
@@ -52,7 +52,7 @@ class BALProblem {
         return true;
     }
 
-   private:
+  private:
     template <typename T>
     void fscanfOrDie(FILE* fptr, const char* format, T* value) {
         int numScanned = fscanf(fptr, format, value);
@@ -61,7 +61,7 @@ class BALProblem {
         }
     }
 
-   private:
+  private:
     int numCameras_;
     int numPoints_;
     int numObservations_;

@@ -24,9 +24,9 @@ inline bool defaultBreakLine(HeadingType type) { return type != HeadingType::Par
 /**
  * @brief Heading to print or show some formatted text
  * @tparam Type     Heading type
- * @tparam ParLen   Print length for paragraph type, and the length of section and subsection will be 1.5 * ParLen
+ * @tparam SecLen   Print length for section and subsection type, and the length of paragraph will be SecLen / 1.5
  */
-template <HeadingType Type = HeadingType::Section, unsigned short ParLen = 80>
+template <HeadingType Type = HeadingType::Section, unsigned short SecLen = 100>
 class Heading {
   public:
     /**
@@ -55,8 +55,8 @@ class Heading {
      * @param info  Heading info
      * @return Output stream
      */
-    template <HeadingType Type_, unsigned short ParLen_>
-    friend std::ostream& operator<<(std::ostream& os, const Heading<Type_, ParLen_>& info);
+    template <HeadingType Type_, unsigned short SecLen_>
+    friend std::ostream& operator<<(std::ostream& os, const Heading<Type_, SecLen_>& info);
 
   private:
     std::string text_;  // heading text

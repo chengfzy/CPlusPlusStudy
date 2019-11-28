@@ -10,13 +10,13 @@
  */
 template <typename T>
 class JobQueue {
-   public:
+  public:
     class Job {
-       public:
+      public:
         Job() : valid_(false) {}
         explicit Job(const T& data) : data_(data), valid_(true) {}
 
-       public:
+      public:
         // check whether the data is valid
         bool isValid() const { return valid_; }
 
@@ -24,12 +24,12 @@ class JobQueue {
         T& data() { return data_; }
         const T& data() const { return data_; }
 
-       private:
+      private:
         T data_;
         bool valid_;
     };
 
-   public:
+  public:
     JobQueue();
     explicit JobQueue(const size_t& maxJobNums);
     ~JobQueue();
@@ -74,7 +74,7 @@ class JobQueue {
      */
     void clear();
 
-   private:
+  private:
     std::size_t maxJobNums_;
     std::atomic<bool> stop_;
     std::queue<T> jobs_;

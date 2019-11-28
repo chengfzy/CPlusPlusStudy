@@ -4,9 +4,9 @@
  */
 
 #pragma once
+#include <Eigen/Core>
 #include <iostream>
 #include <string>
-#include "Eigen/Core"
 #include "NormalizeAngle.h"
 
 // the state for each vertex in the pose graph

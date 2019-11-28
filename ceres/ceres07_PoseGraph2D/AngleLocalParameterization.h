@@ -1,10 +1,10 @@
 #pragma once
+#include <ceres/ceres.h>
 #include "NormalizeAngle.h"
-#include "ceres/ceres.h"
 
 // define a local parameterization for upadting the angle to be constrained in [-pi, pi)
 class AngleLocalParameterization {
-   public:
+  public:
     template <typename T>
     bool operator()(const T* theta, const T* deltaTheta, T* thetaPlusDelta) const {
         *thetaPlusDelta = normalizeAngle(*theta + *deltaTheta);

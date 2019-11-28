@@ -1,8 +1,8 @@
+#include <yaml-cpp/yaml.h>
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 #include "common/common.hpp"
-#include "yaml-cpp/yaml.h"
 
 using namespace std;
 using namespace common;
@@ -12,14 +12,14 @@ class Point {
     float x, y, z;
 
     // write to yaml
-    void write(YAML::Node &node) {
+    void write(YAML::Node& node) {
         node.push_back(x);
         node.push_back(y);
         node.push_back(z);
     }
 
     // read from yaml
-    bool read(const YAML::Node &node) {
+    bool read(const YAML::Node& node) {
         if (!node.IsSequence() || node.size() < 3) return false;
 
         x = node[0].as<float>();
@@ -30,7 +30,7 @@ class Point {
 };
 
 // write yaml
-void writeYaml(const string &file) {
+void writeYaml(const string& file) {
     cout << "write to yaml..." << endl;
     YAML::Node node;
 
@@ -99,7 +99,7 @@ void useEmitter() {
 }
 
 // read yaml
-void readYaml(const string &file) {
+void readYaml(const string& file) {
     cout << "read from yaml..." << endl;
     YAML::Node node = YAML::LoadFile(file);
     YAML::Node node1 = node["family"];
@@ -157,7 +157,7 @@ void readYaml(const string &file) {
     cout << "Read Node Value = " << (boolValue ? "true" : "false") << endl;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     string file = "../../YamlStudy/config.yaml";
     // writeYaml(file);
     useEmitter();

@@ -5,11 +5,11 @@
  */
 
 #pragma once
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <iostream>
 #include <map>
 #include <string>
-#include "Eigen/Core"
-#include "Eigen/Geometry"
 
 // the state for each vertex in the pose graph
 struct Pose3d {

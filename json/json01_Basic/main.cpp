@@ -5,11 +5,11 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <nlohmann/json.hpp>
 #include <set>
 #include <unordered_map>
 #include <unordered_set>
 #include "common/common.hpp"
-#include "nlohmann/json.hpp"
 
 using namespace std;
 using namespace common;

@@ -1,8 +1,8 @@
+#include <Eigen/Core>
 #include <iostream>
-#include "Eigen/Core"
-#include "sophus/so3.hpp"
-#include "unsupported/Eigen/MatrixFunctions"
+#include <sophus/so3.hpp>
 #include "common/common.hpp"
+#include "unsupported/Eigen/MatrixFunctions"
 
 using namespace std;
 using namespace Eigen;
