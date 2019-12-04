@@ -58,7 +58,7 @@ Some C++ syntax demo
 1. boost05_LexicalCast  \
     Convert string to int/long/double and vice verse
 1. boost06_Serialization    \
-    Serialization class
+    Serialization basic type or class data to text, xml and binary.
 1. boost07_MulticastSender  \
     Multicast UDP sender using `asio`, based on boost1.58.
 1. boost08_MulticastReceiver    \

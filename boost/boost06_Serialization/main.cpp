@@ -1,9 +1,14 @@
 #include <fmt/format.h>
+#include <fmt/ranges.h>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/shared_ptr.hpp>
-#include <fstream>
+#include <boost/serialization/vector.hpp>
 #include <iostream>
 #include "common/common.hpp"
 
@@ -27,9 +32,7 @@ class Animal {
 
     template <typename Archive>
     void serialize(Archive& ar, const unsigned int version) {
-        if (version > 0) {
-            ar& BOOST_SERIALIZATION_NVP(name_);
-        }
+        ar& BOOST_SERIALIZATION_NVP(name_);
     }
 
   protected:
@@ -51,7 +54,7 @@ class Dog : public Animal {
 
     template <typename Archive>
     void serialize(Archive& ar, const unsigned int version) {
-        ar& boost::serialization::base_object<Animal>(*this);
+        ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(Animal);
         ar& BOOST_SERIALIZATION_NVP(legs_);
     }
 
@@ -60,59 +63,163 @@ class Dog : public Animal {
 };
 
 BOOST_CLASS_VERSION(Dog, 1)
-BOOST_CLASS_EXPORT_GUID(Dog, "Dog")
+BOOST_CLASS_EXPORT(Dog)
 
-// save data use text archive
-void saveLoadInt() {
-    cout << Section("Serialization Int");
+// serialize basic type to text
+void serializeBasicText() {
+    cout << Section("Serialization Basic with Text");
+
     // save
-    ofstream outFile("../../data/archive.txt");
-    text_oarchive oa(outFile);
-    int i{1234};
-    oa << i;
-    outFile.close();
+    stringstream strStream;
+    text_oarchive oa(strStream);
+    int a1{1234};
+    double a2{1.23456789};
+    string a3{"Hello World!"};
+    vector<string> a4{"Jeffery", "boost", "C++"};
+    oa << a1;
+    oa << a2;
+    oa << a3;
+    oa << a4;
+    cout << format("Serialized string: \"{}\"", strStream.str()) << endl;
 
     // load
-    ifstream inFile("../../data/archive.txt");
-    text_iarchive ia(inFile);
-    int x{0};
-    ia >> x;
-    cout << format("x = {}", x) << endl;
+    text_iarchive ia(strStream);
+    int b1{0};
+    double b2{0};
+    string b3;
+    vector<string> b4;
+    ia >> b1;
+    ia >> b2;
+    ia >> b3;
+    ia >> b4;
+    cout << format("b1 = {}, b2 = {}, b3 = {}, b4 = {}", b1, b2, b3, b4) << endl;
 }
 
-void saveLoadClass() {
-    cout << Section("Serialization Class");
+// serialize basic type to xml
+void serializeBasicXml() {
+    cout << Section("Serialization Basic with XML");
 
-    cout << SubSection("Basic");
     // save
-    stringstream ss1;
-    text_oarchive oa1(ss1);
-    Animal a1("animal");
-    oa1 << a1;
-    cout << format("Saved str: {}", ss1.str()) << endl;
-    // load
-    text_iarchive ia1(ss1);
-    Animal a2;
-    ia1 >> a2;
-    cout << format("Load: a2.name = {}", a2.name()) << endl;
+    stringstream strStream;
+    int a1{1234};
+    double a2{1.23456789};
+    string a3{"Hello World!"};
+    vector<string> a4{"Jeffery", "boost", "C++"};
+    // add brace to ensure xml end with "boost_serialization" tag
+    {
+        xml_oarchive oa(strStream);
+        oa << BOOST_SERIALIZATION_NVP(a1);
+        oa << BOOST_SERIALIZATION_NVP(a2);
+        oa << BOOST_SERIALIZATION_NVP(a3);
+        oa << BOOST_SERIALIZATION_NVP(a4);
+    }
+    cout << format("Serialized string:\n{}", strStream.str()) << endl;
 
-    cout << SubSection("Advance");
-    // save
-    stringstream ss2;
-    text_oarchive oa2(ss2);
-    std::shared_ptr<Animal> b1 = std::make_shared<Dog>("dog", 4);
-    oa2 << b1;
-    cout << format("Saved str: {}", ss2.str()) << endl;
     // load
-    text_iarchive ia2(ss2);
-    std::shared_ptr<Animal> b2;
-    ia2 >> b2;
-    cout << format("Load: b2.name = {}, b2.leg = {}", b2->name(), dynamic_pointer_cast<Dog>(b2)->legs()) << endl;
+    int b1{0};
+    double b2{0};
+    string b3;
+    vector<string> b4;
+    xml_iarchive ia(strStream);
+    ia >> BOOST_SERIALIZATION_NVP(b1);
+    ia >> BOOST_SERIALIZATION_NVP(b2);
+    ia >> BOOST_SERIALIZATION_NVP(b3);
+    ia >> BOOST_SERIALIZATION_NVP(b4);
+    cout << format("b1 = {}, b2 = {}, b3 = {}, b4 = {}", b1, b2, b3, b4) << endl;
+}
+
+// serialize basic type to binary
+void serializeBasicBin() {
+    cout << Section("Serialization Basic with Binary");
+
+    // save
+    stringstream strStream;
+    int a1{1234};
+    double a2{1.23456789};
+    string a3{"Hello World!"};
+    vector<string> a4{"Jeffery", "boost", "C++"};
+    binary_oarchive oa(strStream);
+    oa << BOOST_SERIALIZATION_NVP(a1);
+    oa << BOOST_SERIALIZATION_NVP(a2);
+    oa << BOOST_SERIALIZATION_NVP(a3);
+    oa << BOOST_SERIALIZATION_NVP(a4);
+    cout << format("Serialized string: \"{}\"", strStream.str()) << endl;
+
+    // load
+    int b1{0};
+    double b2{0};
+    string b3;
+    vector<string> b4;
+    binary_iarchive ia(strStream);
+    ia >> BOOST_SERIALIZATION_NVP(b1);
+    ia >> BOOST_SERIALIZATION_NVP(b2);
+    ia >> BOOST_SERIALIZATION_NVP(b3);
+    ia >> BOOST_SERIALIZATION_NVP(b4);
+    cout << format("b1 = {}, b2 = {}, b3 = {}, b4 = {}", b1, b2, b3, b4) << endl;
+}
+
+// serialize class basic usage
+void serializeClassBasic() {
+    cout << Section("Serialization Class Basic");
+
+    // save
+    stringstream strStream;
+    Dog a1("DaHuang", 4);
+    // add brace to ensure xml end with "boost_serialization" tag
+    {
+        xml_oarchive oa(strStream);
+        oa << BOOST_SERIALIZATION_NVP(a1);
+    }
+    cout << format("Serialized string:\n{}", strStream.str()) << endl;
+
+    // load
+    Dog b1;
+    xml_iarchive ia(strStream);
+    ia >> BOOST_SERIALIZATION_NVP(b1);
+    cout << format("b1.name = {}, b1.leg = {}", b1.name(), b1.legs()) << endl;
+
+    // cout << SubSection("Advance");
+    // // save
+    // stringstream ss2;
+    // text_oarchive oa2(ss2);
+    // std::shared_ptr<Animal> b1 = std::make_shared<Dog>("dog", 4);
+    // oa2 << b1;
+    // cout << format("Saved str: {}", ss2.str()) << endl;
+    // // load
+    // text_iarchive ia2(ss2);
+    // std::shared_ptr<Animal> b2;
+    // ia2 >> b2;
+    // cout << format("Load: b2.name = {}, b2.leg = {}", b2->name(), dynamic_pointer_cast<Dog>(b2)->legs()) << endl;
+}
+
+// serialize class advance usage
+void serializeClassAdvance() {
+    cout << Section("Serialization Class Advance");
+
+    // save
+    stringstream strStream;
+    shared_ptr<Animal> a1 = std::make_shared<Dog>("DaHuang", 4);
+    // add brace to ensure xml end with "boost_serialization" tag
+    {
+        xml_oarchive oa(strStream);
+        oa << BOOST_SERIALIZATION_NVP(a1);
+    }
+    cout << format("Serialized string:\n{}", strStream.str()) << endl;
+
+    // load
+    std::shared_ptr<Animal> b1;
+    xml_iarchive ia(strStream);
+    ia >> BOOST_SERIALIZATION_NVP(b1);
+
+    cout << format("b1.name = {}, b1.leg = {}", b1->name(), dynamic_pointer_cast<Dog>(b1)->legs()) << endl;
 }
 
 int main(int argc, char* argv[]) {
-    saveLoadInt();
-    saveLoadClass();
+    serializeBasicText();
+    serializeBasicXml();
+    serializeBasicBin();
+    serializeClassBasic();
+    serializeClassAdvance();
 
     return 0;
 }
