@@ -32,7 +32,7 @@ class Animal {
 
     template <typename Archive>
     void serialize(Archive& ar, const unsigned int version) {
-        ar& BOOST_SERIALIZATION_NVP(name_);
+        ar& boost::serialization::make_nvp("Name", name_);
     }
 
   protected:
@@ -58,12 +58,114 @@ class Dog : public Animal {
         ar& BOOST_SERIALIZATION_NVP(legs_);
     }
 
-  protected:
+  private:
     int legs_ = 0;
 };
-
 BOOST_CLASS_VERSION(Dog, 1)
 BOOST_CLASS_EXPORT(Dog)
+
+class Cat : public Animal {
+  public:
+    Cat(const string& name, int legs) : Animal(name), legs_(legs) {}
+
+  public:
+    int legs() const { return legs_; }
+
+  private:
+    friend class boost::serialization::access;
+
+    // because load_construct_data() will call serialize() function, so split serialization to load and save, the load
+    // will do nothing, because the variable already read in load_construct_data(), cannot read more than one time
+    template <class Archive>
+    void save(Archive& ar, const unsigned int version) const {
+        ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(Animal);
+        ar& boost::serialization::make_nvp("Legs", legs_);
+    }
+    template <class Archive>
+    void load(Archive& ar, const unsigned int version) {
+        // ar& BOOST_SERIALIZATION_BASE_OBJECT_NVP(Animal);
+    }
+
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+  private:
+    int legs_ = 0;
+};
+BOOST_CLASS_VERSION(Cat, 1)
+BOOST_CLASS_EXPORT(Cat)
+
+class People {
+  public:
+    People(const string& name, int legs) : name_(name), legs_(legs) {}
+
+  public:
+    const string& name() const { return name_; }
+    int legs() const { return legs_; }
+
+  private:
+    friend class boost::serialization::access;
+
+    // template <typename Archive>
+    // void serialize(Archive& ar, const unsigned int version) {
+    //     ar& boost::serialization::make_nvp("Name", name_);
+    //     ar& boost::serialization::make_nvp("Legs", legs_);
+    // }
+
+    // because load_construct_data() will call serialize() function, so split serialization to load and save, the load
+    // will do nothing, because the variable already read in load_construct_data(), cannot read more than one time
+    template <class Archive>
+    void save(Archive& ar, const unsigned int version) const {
+        ar& boost::serialization::make_nvp("Name", name_);
+        ar& boost::serialization::make_nvp("Legs", legs_);
+    }
+    template <class Archive>
+    void load(Archive& ar, const unsigned int version) {}
+
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+  private:
+    string name_;
+    int legs_ = 0;
+};
+BOOST_CLASS_VERSION(People, 1)
+
+namespace boost {
+namespace serialization {
+
+// don't need save_construct_data() because it's the same as save()
+// template <typename Archive>
+// inline void save_construct_data(Archive& ar, const People* people, const unsigned int /*version*/) {
+//     ar << boost::serialization::make_nvp("Name", people->name());
+//     int legs = people->legs();
+//     ar << boost::serialization::make_nvp("Legs", legs);
+// }
+
+template <typename Archive>
+inline void load_construct_data(Archive& ar, People* people, const unsigned int /*version*/) {
+    string name;
+    int legs;
+    ar >> boost::serialization::make_nvp("Name", name);
+    ar >> boost::serialization::make_nvp("Legs", legs);
+    ::new (people) People(name, legs);
+}
+
+// don't need save_construct_data() because it's the same as save()
+// template <typename Archive>
+// inline void save_construct_data(Archive& ar, const Cat* cat, const unsigned int /*version*/) {
+// }
+
+// to support base class, should create a base object for retrieve member
+template <typename Archive>
+inline void load_construct_data(Archive& ar, Cat* cat, const unsigned int /*version*/) {
+    int legs;
+    Animal animal;
+    ar >> boost::serialization::make_nvp("Animal", animal);
+    ar >> boost::serialization::make_nvp("Legs", legs);
+    ::new (cat) Cat(animal.name(), legs);
+}
+
+}  // namespace serialization
+}  // namespace boost
 
 // serialize basic type to text
 void serializeBasicText() {
@@ -192,9 +294,9 @@ void serializeClassBasic() {
     // cout << format("Load: b2.name = {}, b2.leg = {}", b2->name(), dynamic_pointer_cast<Dog>(b2)->legs()) << endl;
 }
 
-// serialize class advance usage
-void serializeClassAdvance() {
-    cout << Section("Serialization Class Advance");
+// serialize class with pointer
+void serializeClassPointer() {
+    cout << Section("Serialization Class Pointer");
 
     // save
     stringstream strStream;
@@ -214,12 +316,82 @@ void serializeClassAdvance() {
     cout << format("b1.name = {}, b1.leg = {}", b1->name(), dynamic_pointer_cast<Dog>(b1)->legs()) << endl;
 }
 
+// serialize class without default-constructor
+void serializeClassWithoutDefault() {
+    cout << Section("Serialization Class without Default Constructor");
+
+    // save
+    stringstream strStream;
+    People a1("XiaoMing", 2);
+    // add brace to ensure xml end with "boost_serialization" tag
+    {
+        xml_oarchive oa(strStream);
+        oa << boost::serialization::make_nvp("People", a1);
+    }
+    cout << format("Serialized string:\n{}", strStream.str()) << endl;
+
+    // load for shared pointer, cannot be null pointer and should new a class to store the raw pointer, seems so weired.
+    std::shared_ptr<People> b1 = make_shared<People>("Hi", 10);
+    xml_iarchive ia1(strStream);
+    People* tempB = b1.get();
+    ia1 >> boost::serialization::make_nvp("People", tempB);
+    cout << format("b1.name = {}, b1.leg = {}", b1->name(), b1->legs()) << endl;
+
+    // load for raw pointer
+    stringstream strStream2;  // save again
+    {
+        xml_oarchive oa(strStream2);
+        oa << boost::serialization::make_nvp("People", a1);
+    }
+    People* b2;
+    xml_iarchive ia(strStream2);
+    ia >> boost::serialization::make_nvp("People", b2);
+    cout << format("b2.name = {}, b2.leg = {}", b2->name(), b2->legs()) << endl;
+}
+
+// serialize derived class without default-constructor
+void serializeDeriveClassWithoutDefault() {
+    cout << Section("Serialization Derived Class without Default Constructor");
+
+    // save, cannot save with shared pointer, its result isn't the same
+    stringstream strStream;
+    // shared_ptr<Animal> a1 = make_shared<Cat>("MiaoMiao", 4);
+    Cat a1("MiaoMiao", 4);
+    // add brace to ensure xml end with "boost_serialization" tag
+    {
+        xml_oarchive oa(strStream);
+        oa << boost::serialization::make_nvp("Cat", a1);
+    }
+    cout << format("Serialized string:\n{}", strStream.str()) << endl;
+
+    // load for shared pointer, cannot be null pointer and should new a class to store the raw pointer, seems so
+    // weired.
+    std::shared_ptr<Cat> b1 = make_shared<Cat>("Hi", 10);
+    xml_iarchive ia1(strStream);
+    Cat* tempB = b1.get();
+    ia1 >> boost::serialization::make_nvp("Cat", tempB);
+    cout << format("b1.name = {}, b1.leg = {}", b1->name(), b1->legs()) << endl;
+
+    // load for raw pointer
+    stringstream strStream2;  // save again
+    {
+        xml_oarchive oa(strStream2);
+        oa << boost::serialization::make_nvp("Cat", a1);
+    }
+    Cat* b2;
+    xml_iarchive ia(strStream2);
+    ia >> boost::serialization::make_nvp("Cat", b2);
+    cout << format("b2.name = {}, b2.leg = {}", b2->name(), b2->legs()) << endl;
+}
+
 int main(int argc, char* argv[]) {
     serializeBasicText();
     serializeBasicXml();
     serializeBasicBin();
     serializeClassBasic();
-    serializeClassAdvance();
+    serializeClassPointer();
+    serializeClassWithoutDefault();
+    serializeDeriveClassWithoutDefault();
 
     return 0;
 }
