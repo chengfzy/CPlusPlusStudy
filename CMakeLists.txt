@@ -50,6 +50,7 @@ add_subdirectory(common)        # common library
 
 add_subdirectory(syntax)        # c++ syntax
 add_subdirectory(thread)        # C++11 thread
+add_subdirectory(cxxopts)       # cxxopts study
 add_subdirectory(boost)         # boost Study
 add_subdirectory(Eigen)         # Eigen Study
 add_subdirectory(ceres)         # Ceres Study
