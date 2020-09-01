@@ -244,10 +244,11 @@ ModelManifest.xml
 
 # user defined
 data/
-# clion file
-.idea
-cmake-build-*/
 
-# Qt Creator file
+# IDE and build
+.idea/
+.vscode/
+.history/
+cmake-build-*/
 CMakeLists.txt.user
 build-*/

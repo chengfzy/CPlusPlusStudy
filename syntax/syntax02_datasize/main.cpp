@@ -4,6 +4,7 @@
  */
 #include <iostream>
 #include <memory>
+
 using namespace std;
 
 #define printSize(type) cout << #type << " = " << sizeof(type) << endl
