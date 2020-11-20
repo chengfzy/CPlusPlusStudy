@@ -137,6 +137,12 @@ some usage for `nlohmann json` library. TODO: not finished.
 ## Sqlite
 Basic SQLite usage using `SQLiteCpp`.
 
+
+## pybind
+Some code about `pybind11``
+1. pybind01_Basic \
+    Basic usage. Ref: https://pybind11.readthedocs.io/en/stable/basics.html
+
 ## Others
 1. Alglib01_Interpolation   \
     Study interpolation method in `alglib`.

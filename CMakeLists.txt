@@ -40,24 +40,24 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # project name
-set(PRJ_LIB_COMMON common)   # common library
+set(PRJ_LIB_COMMON common)    # common library
 
 # project include
 list(APPEND PRIVATE_DEPEND_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/common/include)
 
 # projects
-add_subdirectory(common)        # common library
+add_subdirectory(common)           # common library
 
-add_subdirectory(syntax)        # c++ syntax
-add_subdirectory(thread)        # C++11 thread
-add_subdirectory(cxxopts)       # cxxopts study
-add_subdirectory(boost)         # boost Study
-add_subdirectory(Eigen)         # Eigen Study
-add_subdirectory(ceres)         # Ceres Study
-add_subdirectory(Pangolin)      # Pangolin Study
-add_subdirectory(SophusStudy)   # Sophus Study
-add_subdirectory(YamlStudy)     # YAML Study
-add_subdirectory(json)          # json Study
-add_subdirectory(Sqlite)        # SQLite Study
-add_subdirectory(GeometryTransform)         # Geometry Transform
-add_subdirectory(Alglib01_Interpolation)    # alglib
+add_subdirectory(syntax)           # c++ syntax
+add_subdirectory(thread)           # C++11 thread
+add_subdirectory(cxxopts)          # cxxopts study
+add_subdirectory(boost)            # boost Study
+add_subdirectory(Eigen)            # Eigen Study
+add_subdirectory(ceres)            # Ceres Study
+add_subdirectory(Pangolin)         # Pangolin Study
+add_subdirectory(SophusStudy)      # Sophus Study
+add_subdirectory(YamlStudy)        # YAML Study
+add_subdirectory(json)             # json Study
+add_subdirectory(Sqlite)           # SQLite Study
+add_subdirectory(pybind)           # pybind Study
+add_subdirectory(others)           # others

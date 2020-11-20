@@ -1,0 +1,11 @@
+# pybind11 Study
+
+# find package
+find_package(pybind11)
+
+if (${pybind11_FOUND})
+    list(APPEND PRIVATE_DEPEND_INCLUDES ${pybind11_INCLUDE_DIRS})
+    list(APPEND PRIVATE_DEPEND_LIBS ${pybind11_LIBRARIES})
+
+    add_subdirectory(pybind01_Basic)
+endif ()
