@@ -142,6 +142,8 @@ Basic SQLite usage using `SQLiteCpp`.
 Some code about `pybind11``
 1. pybind01_Basic \
     Basic usage. Ref: https://pybind11.readthedocs.io/en/stable/basics.html
+1. pybind02_Class \
+    Use `class`. Ref: https://pybind11.readthedocs.io/en/stable/classes.html
 
 ## Others
 1. Alglib01_Interpolation   \

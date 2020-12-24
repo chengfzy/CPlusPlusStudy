@@ -8,4 +8,5 @@ if (${pybind11_FOUND})
     list(APPEND PRIVATE_DEPEND_LIBS ${pybind11_LIBRARIES})
 
     add_subdirectory(pybind01_Basic)
+    add_subdirectory(pybind02_Class)
 endif ()
