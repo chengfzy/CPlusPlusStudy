@@ -11,6 +11,8 @@ Some C++ syntax demo
     Print the data size and give a reference when to use `const&` and value parameters in function
 1. syntax03_stringSplit \
     Split string using C++11.
+1. syntax04_optional    \
+    Some example about `std::optional`.
 
 ## std::thread
 1. thread01_HelloWorld  \
@@ -107,6 +109,23 @@ Some C++ syntax demo
 1. ceres10_CovarianceEstimation \
     Calculate the covariance of estimated value. Here we only take 1 parameter as example, more parameters and complex problem(have information matrix in problem, local parameterization) could also be calculated.
     Ref: http://ceres-solver.org/nnls_covariance.html#covariance
+1. ceres11_Pose2DEstimation \
+    Consider we have two matched 2D points pair $\mathbf{p}_A \leftrightarrow \mathbf{p}_B$, and want to estimate the 2D transformation $\mathbf{R} \in SO(2), \mathbf{p} \in \mathbb{R}^2$ between the points, i.e.,
+    $$
+    \mathbf{e} = \sum_{n=0}^{N} (\mathbf{R} \mathbf{p}_{A,n}+ \mathbf{p} - \mathbf{p}_{B,n})
+    $$
+    The code using two method to optimize this problem,
+    - Analytical Jacobian with pose parameterization (R, p)
+    - ceres auto Jacobian with pose parameterization (R, p)
+    - ceres auto Jacobian with angle parameterization (theta, p). This method don't work correctly.
+1. ceres12_Pose3DEstimation \
+    Similar to ceres11_Pose2DEstimation but with 3D transformation. Consider we have two matched 3D points pair $\mathbf{p}_A \leftrightarrow \mathbf{p}_B$, and want to estimate the 3D transformation $\mathbf{R} \in SO(3), \mathbf{p} \in \mathbb{R}^3$ between the points, i.e.,
+    $$
+    \mathbf{e} = \sum_{n=0}^{N} (\mathbf{R} \mathbf{p}_{A,n}+ \mathbf{p} - \mathbf{p}_{B,n})
+    $$
+    The problem is also named after ICP, the code using two method to optimize this problem,
+    - Analytical Jacobian with pose parameterization (R, p)
+    - ceres auto Jacobian with pose parameterization (R, p)
 
 ## Pangolin
 1. Pangolin01_HelloPangolin \
