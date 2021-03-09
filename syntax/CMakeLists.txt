@@ -2,3 +2,4 @@
 add_subdirectory(syntax01_move)
 add_subdirectory(syntax02_datasize)
 add_subdirectory(syntax03_stringSplit)
+add_subdirectory(syntax04_optional)
