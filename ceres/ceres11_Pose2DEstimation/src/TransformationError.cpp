@@ -32,7 +32,16 @@ bool TransformationError::Evaluate(double const* const* parameters, double* resi
             J.setZero();
             // J_res_R, unit_complex() = [cos(theta), sin(theta)]
             J.block<2, 2>(0, 0) = r.matrix() * Sophus::SO2d::hat(1) * p1_ *
-                                  Eigen::Vector2d(-r.unit_complex()[0], r.unit_complex()[0]).transpose();
+                                  Eigen::Vector2d(-r.unit_complex()[1], r.unit_complex()[0]).transpose();
+            // const auto& c = r.unit_complex()[0];
+            // const auto& s = r.unit_complex()[1];
+            // double a1 = s * p1_[0] + c * p1_[1];
+            // double a2 = c * p1_[0] - s * p1_[1];
+            // J(0, 0) = a1 * s;
+            // J(0, 1) = -a1 * c;
+            // J(1, 0) = -a2 * s;
+            // J(1, 1) = a2 * c;
+
             // J_res_p
             J.block<2, 2>(0, 2).setIdentity();
         }
