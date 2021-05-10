@@ -15,6 +15,9 @@ int main(int argc, char* argv[]) {
     printSize(nullptr);
 
     printSize(int);
+    printSize(int16_t);
+    printSize(int32_t);
+    printSize(int64_t);
     printSize(short);
     printSize(bool);
     printSize(unsigned int);
