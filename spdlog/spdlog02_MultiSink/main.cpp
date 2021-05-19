@@ -7,10 +7,6 @@
 using namespace std;
 
 int main(int argc, const char* argv[]) {
-    // set log format
-    // spdlog::set_pattern("%^[%Y%m%d %H:%M:%S.%e %L%P,%t%@]%$ %v");
-    spdlog::set_pattern("%^[%Y%m%d %H:%M:%S.%e %L%P,%t%s%#]%$ %v");
-
     // set default logger with multi sink
     auto consoleSink = make_shared<spdlog::sinks::stderr_color_sink_mt>();
     consoleSink->set_level(spdlog::level::info);  // console log only show warn and error message
@@ -27,8 +23,9 @@ int main(int argc, const char* argv[]) {
     // set it to default
     spdlog::set_default_logger(asyncLogger);
 
-    spdlog::set_level(spdlog::level::debug);                         // set log level
-    spdlog::set_pattern("%^[%Y%m%d %H:%M:%S.%e %L%P,%t%s%#]%$ %v");  // set global pattern
+    spdlog::set_level(spdlog::level::debug);                          // set log level
+    spdlog::set_pattern("%^[%Y%m%d %H:%M:%S.%e %L%P,%t:%s%#]%$ %v");  // set global pattern
+    // spdlog::set_pattern("%^[%Y%m%d %H:%M:%S.%e %L%P,%t %@]%$ %v");
 
     spdlog::info("Welcome to spdlog");
     spdlog::error("Some error message with arg: {}", 1);
