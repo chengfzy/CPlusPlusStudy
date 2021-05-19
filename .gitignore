@@ -241,9 +241,9 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-
 # user defined
 data/
+logs/
 
 # IDE and build
 .idea/

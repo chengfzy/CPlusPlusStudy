@@ -8,5 +8,3 @@ if (${Eigen3_FOUND})
     add_subdirectory(Eigen02_LinearEquationSolver)
     add_subdirectory(Eigen03_Interpolation)
 endif ()
-
-

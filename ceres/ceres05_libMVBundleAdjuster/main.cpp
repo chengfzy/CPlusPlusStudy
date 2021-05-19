@@ -14,7 +14,7 @@ using namespace ceres;
 using namespace Eigen;
 using namespace common;
 
-DEFINE_string(fileName, "../../ceres/data/libmv-ba-problems/problem_02.bin", "Input file name");
+DEFINE_string(fileName, "./ceres/data/libmv-ba-problems/problem_02.bin", "Input file name");
 DEFINE_string(refineInstrinsics, "all", "camera intrinsics to be refined. Options are: '', 'none', 'radial', 'all'");
 
 using Vector6d = Eigen::Matrix<double, 6, 1>;

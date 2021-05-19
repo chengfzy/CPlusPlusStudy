@@ -17,7 +17,14 @@ Some C++ syntax demo
     Some example about `std::optional`.
 
 ## cxxopts
-some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
+Some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
+
+## spdlog
+Some study using [spdlog](https://github.com/gabime/spdlog) library
+1. spdlog01_Basic \
+    Some basic log
+1. spdlog02_MultiSink \
+    Use `spdlog` with multi sink, the console only write warning log, and file write all
 
 ## std::thread
 1. thread01_HelloWorld  \

@@ -44,6 +44,7 @@ set(PRJ_LIB_COMMON common)    # common library
 
 # project depends
 list(APPEND DEPEND_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/common/include)
+list(APPEND DEPEND_LIBS)
 
 # projects
 add_subdirectory(common)           # common library
@@ -51,6 +52,7 @@ add_subdirectory(common)           # common library
 add_subdirectory(syntax)           # c++ syntax
 add_subdirectory(thread)           # C++11 thread
 add_subdirectory(cxxopts)          # cxxopts study
+add_subdirectory(spdlog)           # spdlog study
 add_subdirectory(boost)            # boost Study
 add_subdirectory(Eigen)            # Eigen Study
 add_subdirectory(ceres)            # Ceres Study
