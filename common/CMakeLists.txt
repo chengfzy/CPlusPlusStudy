@@ -11,10 +11,9 @@ target_include_directories(${PROJECT_NAME}
                            ${PUBLIC_DEPEND_INCLUDES}
                            PRIVATE
                            ${CMAKE_CURRENT_SOURCE_DIR}/src
-                           ${PRIVATE_DEPEND_INCLUDES}
+                           ${DEPEND_INCLUDES}
                            )
 target_link_libraries(${PROJECT_NAME}
-                      PUBLIC ${PUBLIC_DEPEND_LIBS}
-                      PRIVATE ${PRIVATE_DEPEND_LIBS})
+                      PRIVATE ${DEPEND_LIBS})
 set_target_properties(${PROJECT_NAME} PROPERTIES
                       LINKER_LANGUAGE CXX)

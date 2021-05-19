@@ -4,8 +4,8 @@
 find_package(Pangolin)
 
 if (${Pangolin_FOUND})
-    list(APPEND PRIVATE_DEPEND_INCLUDES ${Pangolin_INCLUDE_DIRS})
-    list(APPEND PRIVATE_DEPEND_LIBS ${Pangolin_LIBRARIES})
+    list(APPEND DEPEND_INCLUDES ${Pangolin_INCLUDE_DIRS})
+    list(APPEND DEPEND_LIBS ${Pangolin_LIBRARIES})
 
     add_subdirectory(Pangolin01_HelloPangolin)
     add_subdirectory(Pangolin02_SimplePlot)

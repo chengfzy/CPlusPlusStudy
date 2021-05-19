@@ -2,8 +2,8 @@
 find_package(Boost COMPONENTS filesystem date_time serialization system)
 
 if (${Boost_FOUND})
-    list(APPEND PRIVATE_DEPEND_INCLUDES ${Boost_INCLUDE_DIRS})
-    list(APPEND PRIVATE_DEPEND_LIBS ${Boost_LIBRARIES} ${PRJ_LIB_COMMON} pthread)
+    list(APPEND DEPEND_INCLUDES ${Boost_INCLUDE_DIRS})
+    list(APPEND DEPEND_LIBS ${Boost_LIBRARIES} ${PRJ_LIB_COMMON} pthread)
 
     add_subdirectory(boost01_FileSystem)        # fileSystem
     add_subdirectory(boost02_TimeStudy)         # time

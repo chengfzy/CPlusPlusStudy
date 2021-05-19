@@ -1,5 +1,7 @@
 # Contents
 
+[TOC]
+
 ## common
 Some common library, especially for heading info.
 
@@ -13,6 +15,9 @@ Some C++ syntax demo
     Split string using C++11.
 1. syntax04_optional    \
     Some example about `std::optional`.
+
+## cxxopts
+some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
 
 ## std::thread
 1. thread01_HelloWorld  \

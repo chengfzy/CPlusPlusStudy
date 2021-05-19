@@ -2,5 +2,5 @@ project(pybind02_Class)
 
 # build project
 pybind11_add_module(${PROJECT_NAME} main.cpp)
-target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_INCLUDES})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${PRIVATE_DEPEND_LIBS})
+target_include_directories(${PROJECT_NAME} PRIVATE ${DEPEND_INCLUDES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${DEPEND_LIBS})

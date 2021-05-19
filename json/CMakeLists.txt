@@ -4,7 +4,7 @@
 find_package(nlohmann_json)         # nlohmann_json
 
 if (${nlohmann_json_FOUND})
-    list(APPEND PRIVATE_DEPEND_LIBS ${PRJ_LIB_COMMON} nlohmann_json::nlohmann_json)
+    list(APPEND DEPEND_LIBS ${PRJ_LIB_COMMON} nlohmann_json::nlohmann_json)
 
     add_subdirectory(json01_Basic)
 endif ()

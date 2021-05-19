@@ -14,11 +14,11 @@ find_package(Glog REQUIRED)                                     # glog
 find_package(fmt REQUIRED)                                      # format
 
 # prive dependency include directories and libraries
-list(APPEND PRIVATE_DEPEND_INCLUDES
+list(APPEND DEPEND_INCLUDES
      ${GFLAGS_INCLUDE_DIRS}
      ${GLOG_INCLUDE_DIRS}
      )
-list(APPEND PRIVATE_DEPEND_LIBS
+list(APPEND DEPEND_LIBS
      ${GFLAGS_LIBRARIES}
      ${GLOG_LIBRARIES}
      fmt::fmt-header-only
@@ -42,8 +42,8 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # project name
 set(PRJ_LIB_COMMON common)    # common library
 
-# project include
-list(APPEND PRIVATE_DEPEND_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/common/include)
+# project depends
+list(APPEND DEPEND_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/common/include)
 
 # projects
 add_subdirectory(common)           # common library
@@ -55,9 +55,9 @@ add_subdirectory(boost)            # boost Study
 add_subdirectory(Eigen)            # Eigen Study
 add_subdirectory(ceres)            # Ceres Study
 add_subdirectory(Pangolin)         # Pangolin Study
-add_subdirectory(SophusStudy)      # Sophus Study
-add_subdirectory(YamlStudy)        # YAML Study
+add_subdirectory(Sophus)           # Sophus Study
 add_subdirectory(json)             # json Study
+add_subdirectory(yaml)             # YAML Study
 add_subdirectory(Sqlite)           # SQLite Study
 add_subdirectory(pybind)           # pybind Study
 add_subdirectory(others)           # others
