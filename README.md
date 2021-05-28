@@ -25,6 +25,11 @@ Some study using [spdlog](https://github.com/gabime/spdlog) library
     Some basic log
 1. spdlog02_MultiSink \
     Use `spdlog` with multi sink, the console only write warning log, and file write all
+1. spdlog03_CustomerFormat \
+    Add customer format flag.
+### Programming Practice
+1. "spdlog::info()" could not add "sourfile:location" flag in logging, while "SPDLOG_INFO" does.
+1. No module name could be add to log, should setting it manually(just input into log message).
 
 ## std::thread
 1. thread01_HelloWorld  \

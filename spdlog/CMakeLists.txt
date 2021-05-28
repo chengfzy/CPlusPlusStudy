@@ -6,4 +6,5 @@ if (${spdlog_FOUND})
 
     add_subdirectory(spdlog01_Basic)
     add_subdirectory(spdlog02_MultiSink)
+    add_subdirectory(spdlog03_CustomerFormat)
 endif ()
