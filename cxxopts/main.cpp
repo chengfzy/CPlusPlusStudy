@@ -12,13 +12,19 @@ int main(int argc, char* argv[]) {
     // options
     cxxopts::Options options(argv[0], "Study code about cxxopts");
     bool print{false};
-    options.add_options()("f,file", "file name", cxxopts::value<string>()->default_value("~/Documents/input.txt"))(
-        "o,output", "output file", cxxopts::value<string>(), "OUT")(
-        "print", "print information", cxxopts::value(print))("l,list", "input list", cxxopts::value<vector<float>>())(
-        "h,help", "print usage");
+    options.positional_help("file output").show_positional_help();
+    // clang-format off
+    options.add_options()
+        ("f,file", "file name", cxxopts::value<string>()->default_value("~/Documents/input.txt"))
+        ("o,output", "output file", cxxopts::value<string>(), "OUT")
+        ("print", "print information", cxxopts::value(print))
+        ("l,list", "input list", cxxopts::value<vector<float>>())
+        ("h,help", "print usage");
+    // clang-format on
     // add group
     options.add_options("Set")("n,num", "number", cxxopts::value<int>()->implicit_value("8"));
 
+    options.parse_positional({"file", "output"});
     auto result = options.parse(argc, argv);
     // print help
     if (result.count("help")) {
