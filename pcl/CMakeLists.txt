@@ -6,4 +6,5 @@ if (${PCL_FOUND})
     list(APPEND DEPEND_LIBS ${PCL_LIBRARIES})
 
     add_subdirectory(pcl01_Basic)
+    add_subdirectory(pcl02_PassThroughFilter)
 endif ()
