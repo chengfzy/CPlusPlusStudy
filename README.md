@@ -173,12 +173,14 @@ Basic SQLite usage using `SQLiteCpp`.
     study code about `Sophus` library
    
 ## PCL
-1. pcl01_Basic  \
+1. pcl01_Basic \
     Using a matrix to transformat a point cloud
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/matrix_transform.html#matrix-transform
 1. pcl02_PassThroughFilter \
     Filtering a point cloud using pass through filter
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/passthrough.html#passthrough
+1. pcl03_VoxelGridFilter \
+    Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
 
 ## pybind
 Some code about `pybind11``

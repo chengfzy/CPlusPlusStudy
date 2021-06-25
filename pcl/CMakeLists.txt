@@ -7,4 +7,5 @@ if (${PCL_FOUND})
 
     add_subdirectory(pcl01_Basic)
     add_subdirectory(pcl02_PassThroughFilter)
+    add_subdirectory(pcl03_VoxelGridFilter)
 endif ()
