@@ -153,6 +153,11 @@ Basic SQLite usage using `SQLiteCpp`.
     - Analytical Jacobian with pose parameterization (R, p)
     - ceres auto Jacobian with pose parameterization (R, p)
 
+## g2o
+1. g2o01_CircleFit \
+    Using g2o for circle fitting
+    Ref: https://github.com/RainerKuemmerle/g2o/blob/master/g2o/examples/data_fitting/circle_fit.cpp
+
 ## Pangolin
 1. Pangolin01_HelloPangolin \
     Draw and show cube using pangolin.

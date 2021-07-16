@@ -59,6 +59,7 @@ add_subdirectory(Sqlite)           # SQLite Study
 add_subdirectory(boost)            # boost Study
 add_subdirectory(Eigen)            # Eigen Study
 add_subdirectory(ceres)            # Ceres Study
+add_subdirectory(g2o)              # g2o Study
 add_subdirectory(Pangolin)         # Pangolin Study
 add_subdirectory(Sophus)           # Sophus Study
 add_subdirectory(pcl)              # PCL Study
