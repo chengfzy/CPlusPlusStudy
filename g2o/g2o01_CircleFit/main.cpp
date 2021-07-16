@@ -40,23 +40,6 @@ class VertexCircle : public BaseVertex<3, Vector3d> {
     }
 };
 
-// class VertexCircle : public g2o::BaseVertex<3, Eigen::Vector3d> {
-//   public:
-//     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
-//     VertexCircle() {}
-
-//     virtual bool read(std::istream& /*is*/) { return false; }
-
-//     virtual bool write(std::ostream& /*os*/) const { return false; }
-
-//     virtual void setToOriginImpl() { cerr << __PRETTY_FUNCTION__ << " not implemented yet" << endl; }
-
-//     virtual void oplusImpl(const double* update) {
-//         Eigen::Vector3d::ConstMapType v(update);
-//         _estimate += v;
-//     }
-// };
-
 class EdgePointOnCircle : public BaseUnaryEdge<1, Vector2d, VertexCircle> {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
