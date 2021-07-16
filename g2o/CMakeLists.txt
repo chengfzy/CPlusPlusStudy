@@ -20,4 +20,5 @@ if (${g2o_FOUND} AND ${Eigen3_FOUND} AND ${Sophus_FOUND})
     list(APPEND DEPEND_LIBS ${g2o_LIBS} ${PRJ_LIB_COMMON})
 
     add_subdirectory(g2o01_CircleFit)
+    add_subdirectory(g2o02_CircleFitWithoutRegister)
 endif ()
