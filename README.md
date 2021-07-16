@@ -157,6 +157,8 @@ Basic SQLite usage using `SQLiteCpp`.
 1. g2o01_CircleFit \
     Using g2o for circle fitting
     Ref: https://github.com/RainerKuemmerle/g2o/blob/master/g2o/examples/data_fitting/circle_fit.cpp
+1. g2o02_CircleFitWithoutRegister \
+    Same as g2o01_CircleFit, but don't use `OptimizationAlgorithmFactory` to create solver.
 
 ## Pangolin
 1. Pangolin01_HelloPangolin \
