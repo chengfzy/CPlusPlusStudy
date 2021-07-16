@@ -40,6 +40,12 @@ class VertexCircle : public BaseVertex<3, Vector3d> {
     }
 };
 
+/**
+ * @brief Measurement for a point on the circle
+ *
+ * Here the measurement is the point which is on the circle, the error function compute the distance of the point to the
+ * center minus the radius of the circle
+ */
 class EdgePointOnCircle : public BaseUnaryEdge<1, Vector2d, VertexCircle> {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -58,6 +64,13 @@ class EdgePointOnCircle : public BaseUnaryEdge<1, Vector2d, VertexCircle> {
     }
 };
 
+/**
+ * @brief Calculate the sum error of all the point using estimated circle params
+ *
+ * @param points    Points
+ * @param circle    Estimated circle parameters
+ * @return  Sum of all errors
+ */
 double errorOfSolution(const vector<Vector2d>& points, const Vector3d& circle) {
     Vector2d center = circle.head<2>();
     const double& radius = circle[2];

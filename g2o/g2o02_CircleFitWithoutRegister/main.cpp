@@ -25,11 +25,11 @@ using namespace common;
  * @brief A circle located at x, y with radius r
  *
  */
-class VertexCircle : public BaseVertex<3, Vector3d> {
+class VertexParam : public BaseVertex<3, Vector3d> {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-    VertexCircle() = default;
+    VertexParam() = default;
     virtual bool read(istream&) { return false; }
     virtual bool write(ostream&) const { return false; }
     virtual void setToOriginImpl() { cerr << __PRETTY_FUNCTION__ << " not implemented yet" << endl; }
@@ -40,7 +40,13 @@ class VertexCircle : public BaseVertex<3, Vector3d> {
     }
 };
 
-class EdgePointOnCircle : public BaseUnaryEdge<1, Vector2d, VertexCircle> {
+/**
+ * @brief Measurement for a point on the circle
+ *
+ * Here the measurement is the point which is on the circle, the error function compute the distance of the point to the
+ * center minus the radius of the circle
+ */
+class EdgePointOnCircle : public BaseUnaryEdge<1, Vector2d, VertexParam> {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     G2O_MAKE_AUTO_AD_FUNCTIONS  // use autodiff
@@ -58,6 +64,13 @@ class EdgePointOnCircle : public BaseUnaryEdge<1, Vector2d, VertexCircle> {
     }
 };
 
+/**
+ * @brief Calculate the sum error of all the point using estimated circle params
+ *
+ * @param points    Points
+ * @param circle    Estimated circle parameters
+ * @return  Sum of all errors
+ */
 double errorOfSolution(const vector<Vector2d>& points, const Vector3d& circle) {
     Vector2d center = circle.head<2>();
     const double& radius = circle[2];
@@ -102,7 +115,7 @@ int main(int argc, char** argv) {
 
     // build the optimization problem given the points
     // 1. add the circle vertex
-    auto circle = new VertexCircle;
+    auto circle = new VertexParam;
     circle->setId(0);
     circle->setEstimate(Vector3d(3, 3, 3));  // initial value for the circle
     optimizer.addVertex(circle);
