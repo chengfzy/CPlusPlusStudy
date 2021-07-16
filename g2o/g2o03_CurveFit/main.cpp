@@ -5,8 +5,10 @@
 #include <g2o/core/auto_differentiation.h>
 #include <g2o/core/base_unary_edge.h>
 #include <g2o/core/base_vertex.h>
-#include <g2o/core/optimization_algorithm_factory.h>
+#include <g2o/core/block_solver.h>
+#include <g2o/core/optimization_algorithm_levenberg.h>
 #include <g2o/core/sparse_optimizer.h>
+#include <g2o/solvers/dense/linear_solver_dense.h>
 #include <g2o/stuff/command_args.h>
 #include <g2o/stuff/sampler.h>
 #include <Eigen/Core>
@@ -18,8 +20,6 @@ using namespace fmt;
 using namespace Eigen;
 using namespace g2o;
 using namespace common;
-
-G2O_USE_OPTIMIZATION_LIBRARY(dense)
 
 /**
  * @brief The params, a, b and lambda for "a * exp(-lambda * x) + b"
@@ -99,8 +99,9 @@ int main(int argc, char** argv) {
     // setup the solver
     SparseOptimizer optimizer;
     // allocate the solver
-    OptimizationAlgorithmProperty solverProperty;
-    optimizer.setAlgorithm(OptimizationAlgorithmFactory::instance()->construct("lm_dense", solverProperty));
+    auto solver = new OptimizationAlgorithmLevenberg(
+        g2o::make_unique<BlockSolverX>(g2o::make_unique<LinearSolverDense<g2o::BlockSolverX::PoseMatrixType>>()));
+    optimizer.setAlgorithm(solver);
 
     // build the optimization problem given the points
     // 1. add the curve parameters vertex
