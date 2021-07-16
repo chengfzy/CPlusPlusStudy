@@ -21,4 +21,5 @@ if (${g2o_FOUND} AND ${Eigen3_FOUND} AND ${Sophus_FOUND})
 
     add_subdirectory(g2o01_CircleFit)
     add_subdirectory(g2o02_CircleFitWithoutRegister)
+    add_subdirectory(g2o03_CurveFit)
 endif ()

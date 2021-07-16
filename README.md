@@ -159,6 +159,9 @@ Basic SQLite usage using `SQLiteCpp`.
     Ref: https://github.com/RainerKuemmerle/g2o/blob/master/g2o/examples/data_fitting/circle_fit.cpp
 1. g2o02_CircleFitWithoutRegister \
     Same as g2o01_CircleFit, but don't use `OptimizationAlgorithmFactory` to create solver.
+1. g2o03_CurveFit \
+    Use g2o for curve fitting
+    Ref: https://github.com/RainerKuemmerle/g2o/blob/master/g2o/examples/data_fitting/curve_fit.cpp
 
 ## Pangolin
 1. Pangolin01_HelloPangolin \
