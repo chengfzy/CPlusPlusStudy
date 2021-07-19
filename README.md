@@ -65,7 +65,9 @@ Some study using [spdlog](https://github.com/gabime/spdlog) library
     One complex project, class have 2 thread, and the child thread has some callback in class main thread
 
 ## json
-some usage for `nlohmann json` library. TODO: not finished.
+some usage for `nlohmann json` library.
+1. json01_Basic \
+    Basic usage
 
 ## YAML
 1. YamlStudy    \
