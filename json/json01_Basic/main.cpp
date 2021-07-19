@@ -33,7 +33,7 @@ void from_json(const json& j, Person& p) {
 
 }  // namespace cc
 
-void createJason() {
+void createJson() {
     cout << Section("Create Json", false) << endl;
 
     // create json step by step
@@ -246,7 +246,7 @@ void arbitraryTypeConversion() {
 }
 
 int main(int argc, char* argv[]) {
-    createJason();
+    createJson();
     serialization();
     stlLike();
     conversionFromStlContainers();
