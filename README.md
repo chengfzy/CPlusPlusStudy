@@ -60,7 +60,11 @@ Some study using [spdlog](https://github.com/gabime/spdlog) library
     Ref: https://blog.csdn.net/lijinqi1987/article/details/78909479
 1. thread10_JobQueue    \
     A job queue for the producer-consumer paradigm.
-    Ref: https://github.com/colmap/colmap/blob/dev/src/util/threading.h 
+    Ref: https://github.com/colmap/colmap/blob/dev/src/util/threading.h
+1. thread11_PackagedTask \
+    Use `packaged_task` example
+1. thread12_ComplexPackagedTask \
+    A complex example using `packaged_task`, see code note for details.
 1. thread20_ComplexProject  \
     One complex project, class have 2 thread, and the child thread has some callback in class main thread
 

@@ -28,6 +28,7 @@ string fetchDataFromFile(const string& data) {
 struct DdbFetcher {
     string operator()(const string& data) {
         // should taken 5 seconds to fetch data
+        cout << "thread id = " << this_thread::get_id() << endl;
         this_thread::sleep_for(chrono::seconds(5));
 
         return "DB_" + data;
@@ -76,6 +77,8 @@ void asyncTask() {
 // async parallel task, using operator() and lambda
 void asyncTaskUsingLambda() {
     cout << Section("Async Task with lambda Function") << endl;
+    cout << "thread id = " << this_thread::get_id() << endl;
+
     // start time
     auto t0 = chrono::system_clock::now();
 
@@ -85,6 +88,7 @@ void asyncTaskUsingLambda() {
         launch::async,
         [](const string& data) {
             // should taken 5 seconds to fetch data
+            cout << "thread id = " << this_thread::get_id() << endl;
             this_thread::sleep_for(chrono::seconds(5));
             return "File_" + data;
         },
