@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     labels.emplace_back("sin(t) + cos(t)");
     log.SetLabels(labels);
 
-    const float tinc{0.01f};
+    const float tinc{0.001f};
 
     // OpenGL view of data, we might have many views of the same data
     Plotter plotter(&log, 0.0f, 4.0f * static_cast<float>(M_PI) / tinc, -2.0f, 2.0f,
@@ -27,9 +27,9 @@ int main(int argc, char* argv[]) {
     plotter.Track("$i");
 
     // add some sample annotations to the plot
-    plotter.AddMarker(Marker::Direction::Vertical, -1000, Marker::Equality::LessThan, Colour::Blue().WithAlpha(0.2f));
-    plotter.AddMarker(Marker::Direction::Horizontal, 100, Marker::GreaterThan, Colour::Red().WithAlpha(0.2f));
-    plotter.AddMarker(Marker::Direction::Horizontal, 10, Marker::Equal, Colour::Green().WithAlpha(0.2f));
+    plotter.AddMarker(Marker::Direction::Vertical, -0.5, Marker::Equality::LessThan, Colour::Blue().WithAlpha(0.2f));
+    plotter.AddMarker(Marker::Direction::Horizontal, 0.3, Marker::GreaterThan, Colour::Red().WithAlpha(0.2f));
+    plotter.AddMarker(Marker::Direction::Horizontal, 0.5, Marker::Equal, Colour::Green().WithAlpha(0.2f));
 
     DisplayBase().AddDisplay(plotter);
 
