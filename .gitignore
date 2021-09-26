@@ -251,4 +251,4 @@ logs/
 .history/
 cmake-build-*/
 CMakeLists.txt.user
-build-*/
+build*/
