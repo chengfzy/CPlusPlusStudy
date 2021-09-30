@@ -27,6 +27,8 @@ Some study using [spdlog](https://github.com/gabime/spdlog) library
     Use `spdlog` with multi sink, the console only write warning log, and file write all
 1. spdlog03_CustomerFormat \
     Add customer format flag.
+1. spdlog04_UseInDll \
+    Use spdlog in dll
 ### Programming Practice
 1. "spdlog::info()" could not add "sourfile:location" flag in logging, while "SPDLOG_INFO" does.
 1. No module name could be add to log, should setting it manually(just input into log message).
