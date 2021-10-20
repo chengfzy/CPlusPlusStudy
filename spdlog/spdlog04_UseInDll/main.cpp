@@ -71,5 +71,6 @@ int main(int argc, const char* argv[]) {
     spdlog::info("Hello World!");
     spdlog::info("This is {:.3f}", 1.23546);
 
+    spdlog::shutdown();
     return 0;
 }

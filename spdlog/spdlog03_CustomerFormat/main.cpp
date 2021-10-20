@@ -51,5 +51,6 @@ int main(int argc, const char* argv[]) {
     SPDLOG_CRITICAL("error information");
     SPDLOG_DEBUG("some debug log {:.5f}", 1.2346799);
 
+    spdlog::shutdown();
     return 0;
 }
