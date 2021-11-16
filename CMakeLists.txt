@@ -58,6 +58,7 @@ add_subdirectory(jsoncpp)          # jsoncpp Study
 add_subdirectory(yaml)             # YAML Study
 add_subdirectory(Sqlite)           # SQLite Study
 add_subdirectory(boost)            # boost Study
+add_subdirectory(httplib)          # cpp-httplib
 add_subdirectory(Eigen)            # Eigen Study
 add_subdirectory(ceres)            # Ceres Study
 add_subdirectory(g2o)              # g2o Study

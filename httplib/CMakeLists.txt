@@ -1,0 +1,9 @@
+# cpp-httplib Study
+find_package(httplib)
+
+if (${httplib_FOUND})
+    list(APPEND DEPEND_LIBS httplib::httplib)
+
+    add_subdirectory(http01_Basic)
+    add_subdirectory(http02_WebClient)
+endif ()
