@@ -67,6 +67,8 @@ Some study using [spdlog](https://github.com/gabime/spdlog) library
     Use `packaged_task` example
 1. thread12_ComplexPackagedTask \
     A complex example using `packaged_task`, see code note for details.
+1. thread13_AtomicBasic \
+    Basic code using `atomic`
 1. thread20_ComplexProject  \
     One complex project, class have 2 thread, and the child thread has some callback in class main thread
 
