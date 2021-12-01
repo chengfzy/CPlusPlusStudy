@@ -15,4 +15,5 @@ if (${Boost_FOUND})
         add_subdirectory(boost07_MulticastSender)   # multicast sender
         add_subdirectory(boost08_MulticastReceiver) # multicast receiver
     endif ()
+    add_subdirectory(boost09_ObtainWebPage)
 endif ()

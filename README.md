@@ -105,7 +105,8 @@ Basic SQLite usage using `SQLiteCpp`.
     Multicast UDP sender using `asio`, based on boost1.58.
 1. boost08_MulticastReceiver    \
     Multicast UDP receiver using `asio`, based on boost1.58.
-    
+1. boost09_ObtainWebPage \
+    Obtain web page content using `boost::asio`
 
 ## Eigen
 1. Eigen01_Basic    \
@@ -205,6 +206,14 @@ Basic SQLite usage using `SQLiteCpp`.
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/passthrough.html#passthrough
 1. pcl03_VoxelGridFilter \
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
+
+# httplib
+Basic usage for httplib
+1. http01_Basic \
+    Basic client/server
+1. http02_WebClient \
+    Get web page content from url
+
 
 ## pybind
 Some code about `pybind11``
