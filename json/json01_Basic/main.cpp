@@ -1,3 +1,4 @@
+#include <fmt/format.h>
 #include <array>
 #include <deque>
 #include <forward_list>
@@ -12,6 +13,7 @@
 #include "common/common.hpp"
 
 using namespace std;
+using namespace fmt;
 using namespace common;
 using json = nlohmann::json;
 
@@ -245,12 +247,49 @@ void arbitraryTypeConversion() {
     // assert(p1 == p2);
 }
 
+namespace nlohmann {
+
+template <typename T>
+struct adl_serializer<std::optional<T>> {
+    static void to_json(json& j, const std::optional<T>& opt) {
+        if (opt == nullopt) {
+            j = nullptr;
+        } else {
+            j = *opt;
+        }
+    }
+
+    static void from_json(const json& j, std::optional<T>& opt) {
+        if (j.is_null()) {
+            opt = nullopt;
+        } else {
+            opt = j.get<T>();
+        }
+    }
+};
+
+}  // namespace nlohmann
+
+void optionalType() {
+    cout << Section("Types Conversions for std::optional") << endl;
+    optional<double> x1;
+    json j1 = x1;
+    cout << setw(2) << j1 << endl;
+
+    optional<double> x2 = 3;
+    json j2 = x2;
+    cout << setw(2) << j2 << endl;
+    optional<double> x2b = j2;
+    cout << format("x2b is valid = {}, value = {}", x2b.has_value(), *x2b) << endl;
+}
+
 int main(int argc, char* argv[]) {
-    createJson();
-    serialization();
-    stlLike();
-    conversionFromStlContainers();
-    arbitraryTypeConversion();
+    // createJson();
+    // serialization();
+    // stlLike();
+    // conversionFromStlContainers();
+    // arbitraryTypeConversion();
+    optionalType();
 
     return 0;
 }
