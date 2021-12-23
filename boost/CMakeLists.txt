@@ -1,4 +1,4 @@
-# Boost Study
+# Boost study
 find_package(Boost COMPONENTS filesystem date_time serialization system)
 
 if (${Boost_FOUND})

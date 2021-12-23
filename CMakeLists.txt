@@ -53,17 +53,18 @@ add_subdirectory(syntax)           # c++ syntax
 add_subdirectory(thread)           # C++11 thread
 add_subdirectory(cxxopts)          # cxxopts study
 add_subdirectory(spdlog)           # spdlog study
-add_subdirectory(json)             # json(nlohmann/json) Study
-add_subdirectory(jsoncpp)          # jsoncpp Study
-add_subdirectory(yaml)             # YAML Study
-add_subdirectory(Sqlite)           # SQLite Study
-add_subdirectory(boost)            # boost Study
+add_subdirectory(json)             # json(nlohmann/json) study
+add_subdirectory(jsoncpp)          # jsoncpp study
+add_subdirectory(yaml)             # YAML study
+add_subdirectory(Sqlite)           # SQLite study
+add_subdirectory(boost)            # boost study
 add_subdirectory(httplib)          # cpp-httplib
-add_subdirectory(Eigen)            # Eigen Study
-add_subdirectory(ceres)            # Ceres Study
-add_subdirectory(g2o)              # g2o Study
-add_subdirectory(Pangolin)         # Pangolin Study
-add_subdirectory(Sophus)           # Sophus Study
-add_subdirectory(pcl)              # PCL Study
-add_subdirectory(pybind)           # pybind Study
+add_subdirectory(Eigen)            # Eigen study
+add_subdirectory(ceres)            # Ceres study
+add_subdirectory(g2o)              # g2o study
+add_subdirectory(Pangolin)         # Pangolin study
+add_subdirectory(Sophus)           # Sophus study
+add_subdirectory(pcl)              # PCL study
+add_subdirectory(pybind)           # pybind study
+add_subdirectory(archive)          # libarchive study
 add_subdirectory(others)           # others

@@ -207,13 +207,18 @@ Basic SQLite usage using `SQLiteCpp`.
 1. pcl03_VoxelGridFilter \
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
 
-# httplib
+## httplib
 Basic usage for httplib
 1. http01_Basic \
     Basic client/server
 1. http02_WebClient \
     Get web page content from url
 
+
+## archive
+Compress or decompress file
+1. archive01_basic \
+    Using libarchive to compress/decompress files
 
 ## pybind
 Some code about `pybind11``
