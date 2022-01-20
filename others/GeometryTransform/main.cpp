@@ -183,6 +183,7 @@ void rotationBetween2Vector() {
 
 int main(int argc, char* argv[]) {
     basic01();
+    test02();
     RotMatAngleConversion();
     rotationBetween2Vector();
 
