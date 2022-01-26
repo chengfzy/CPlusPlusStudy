@@ -1,7 +1,9 @@
 # Thread Study: C++11 thread
 
+find_package(Threads REQUIRED)
+
 # depend libs
-list(APPEND DEPEND_LIBS pthread ${PRJ_LIB_COMMON})
+list(APPEND DEPEND_LIBS Threads::Threads ${PRJ_LIB_COMMON})
 
 add_subdirectory(thread01_HelloWorld)
 add_subdirectory(thread02_Basic)

@@ -220,6 +220,11 @@ Compress or decompress file
 1. archive01_basic \
     Using libarchive to compress/decompress files
 
+# TurboJpeg
+Some study using [TurboJpeg](https://libjpeg-turbo.org/)
+1. TurboJpeg01_CompressBenchmark \
+    Compress YUYV image to JPEG using different method, and calculate the average used time.
+
 ## pybind
 Some code about `pybind11``
 1. pybind01_Basic \

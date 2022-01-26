@@ -15,14 +15,14 @@ find_package(fmt REQUIRED)                                      # format
 
 # prive dependency include directories and libraries
 list(APPEND DEPEND_INCLUDES
-     ${GFLAGS_INCLUDE_DIRS}
-     ${GLOG_INCLUDE_DIRS}
-     )
+    ${GFLAGS_INCLUDE_DIRS}
+    ${GLOG_INCLUDE_DIRS}
+)
 list(APPEND DEPEND_LIBS
-     ${GFLAGS_LIBRARIES}
-     ${GLOG_LIBRARIES}
-     fmt::fmt-header-only
-     )
+    ${GFLAGS_LIBRARIES}
+    ${GLOG_LIBRARIES}
+    fmt::fmt-header-only
+)
 
 ###############################################################################
 # Project Setting
@@ -30,14 +30,14 @@ list(APPEND DEPEND_LIBS
 # default build type
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
-endif ()
+endif()
 message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
 
 # projects build setting
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # project name
 set(PRJ_LIB_COMMON common)    # common library
@@ -47,24 +47,25 @@ list(APPEND DEPEND_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/common/include)
 list(APPEND DEPEND_LIBS)
 
 # projects
-add_subdirectory(common)           # common library
+add_subdirectory(common)            # common library
 
-add_subdirectory(syntax)           # c++ syntax
-add_subdirectory(thread)           # C++11 thread
-add_subdirectory(cxxopts)          # cxxopts study
-add_subdirectory(spdlog)           # spdlog study
-add_subdirectory(json)             # json(nlohmann/json) study
-add_subdirectory(jsoncpp)          # jsoncpp study
-add_subdirectory(yaml)             # YAML study
-add_subdirectory(Sqlite)           # SQLite study
-add_subdirectory(boost)            # boost study
-add_subdirectory(httplib)          # cpp-httplib
-add_subdirectory(Eigen)            # Eigen study
-add_subdirectory(ceres)            # Ceres study
-add_subdirectory(g2o)              # g2o study
-add_subdirectory(Pangolin)         # Pangolin study
-add_subdirectory(Sophus)           # Sophus study
-add_subdirectory(pcl)              # PCL study
-add_subdirectory(pybind)           # pybind study
-add_subdirectory(archive)          # libarchive study
-add_subdirectory(others)           # others
+add_subdirectory(syntax)            # c++ syntax
+add_subdirectory(thread)            # C++11 thread
+add_subdirectory(cxxopts)           # cxxopts study
+add_subdirectory(spdlog)            # spdlog study
+add_subdirectory(json)              # json(nlohmann/json) study
+add_subdirectory(jsoncpp)           # jsoncpp study
+add_subdirectory(yaml)              # YAML study
+add_subdirectory(Sqlite)            # SQLite study
+add_subdirectory(boost)             # boost study
+add_subdirectory(httplib)           # cpp-httplib
+add_subdirectory(Eigen)             # Eigen study
+add_subdirectory(ceres)             # Ceres study
+# add_subdirectory(g2o)               # g2o study
+add_subdirectory(Pangolin)          # Pangolin study
+add_subdirectory(Sophus)            # Sophus study
+add_subdirectory(pcl)               # PCL study
+add_subdirectory(pybind)            # pybind study
+add_subdirectory(archive)           # libarchive study
+add_subdirectory(TurboJpeg)         # TurboJpeg study
+add_subdirectory(others)            # others
