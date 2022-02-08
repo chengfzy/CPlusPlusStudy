@@ -1,3 +1,3 @@
 # Some example about video process
-
 add_subdirectory(VideoProcess01_SimpleX264Encoder)
+add_subdirectory(VideoProcess02_X264Encoder)
