@@ -2,14 +2,14 @@
 #
 # The following variables are set by this module:
 #
-#   X264_FOUND: TRUE if libx264 is found.
-#   X264_INCLUDE_DIRS: Include directories for libx264.
-#   X264_LIBRARIES: Libraries required to link libx264.
+#   - X264_FOUND:           TRUE if libx264 is found
+#   - X264_INCLUDE_DIRS:    Include directories for libx264
+#   - X264_LIBRARIES:       Libraries for libx264
 #
 # The following variables control the behavior of this module:
 #
-# X264_INCLUDE_DIR_HINTS: List of additional directories in which to search for X264 includes.
-# X264_LIBRARY_DIR_HINTS: List of additional directories in which to search for X264 libraries.
+#   - X264_INCLUDE_DIR_HINTS:   List of additional directories in which to search for X264 includes
+#   - X264_LIBRARY_DIR_HINTS:   List of additional directories in which to search for X264 libraries
 
 set(X264_INCLUDE_DIR_HINTS "" CACHE PATH "X264 include directory")
 set(X264_LIBRARY_DIR_HINTS "" CACHE PATH "X264 library directory")
@@ -23,7 +23,7 @@ include(FindPackageHandleStandardArgs)
 # use pkg-config to get the directories and then use these values in the find_path() and find_library() calls
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
-    pkg_check_modules(_x264 x264)
+    pkg_check_modules(_x264 x264 QUIET)
 endif()
 
 # set check include dir and lib dir, also the check suffixes
@@ -71,12 +71,26 @@ find_library(X264_LIBRARIES
 
 if (X264_INCLUDE_DIRS AND X264_LIBRARIES)
     set(X264_FOUND TRUE)
-    message(STATUS "Found X264")
+    
+    # parse version
+    set(_X264VersionHeader "${X264_INCLUDE_DIRS}/x264_config.h")
+    if (EXISTS "${_X264VersionHeader}")
+        file(STRINGS "${_X264VersionHeader}" _X264Version  REGEX "X264_POINTVER")
+        string(REGEX REPLACE ".*\"n?\(.*\)\"" "\\1" X264Version "${_X264Version}")
+    endif()
+
+    # show message
+    message(STATUS "Found X264 (Version: ${X264Version})")
     message(STATUS "  Includes: ${X264_INCLUDE_DIRS}")
     message(STATUS "  Libraries: ${X264_LIBRARIES}")
-else ()
+else()
     set(X264_FOUND FALSE)
     if (X264_FIND_REQUIRED)
         message(FATAL_ERROR "Could not find X264")
-    endif ()
-endif ()
+    endif()
+endif()
+
+find_package_handle_standard_args(X264
+    REQUIRED_VARS X264_INCLUDE_DIRS
+    VERSION_VAR X264Version
+)

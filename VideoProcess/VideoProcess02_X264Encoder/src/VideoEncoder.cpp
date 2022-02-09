@@ -1,53 +1,61 @@
 #include "VideoEncoder.h"
 #include <fmt/format.h>
 #include <glog/logging.h>
-#include <turbojpeg.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include <turbojpeg.h>
+#include <x264.h>
+#ifdef __cplusplus
+};
+#endif
+
 using namespace std;
 using namespace fmt;
 
-void VideoEncoder::init(const boost::filesystem::path& imageFolder, int width, int heigh, int csp) {
+// Initialization with image folder, image size and image format
+void VideoEncoder::init(const boost::filesystem::path& imageFolder, int width, int heigh, ImageFormat imageFormat) {
     using namespace boost;
     using namespace boost::filesystem;
 
     // set
     LOG(INFO) << format("image folder: {}", imageFolder.string());
     imageFiles_.clear();
+    imageFormat_ = imageFormat;
     width_ = width;
     height_ = heigh;
-    csp_ = csp;
-    LOG(INFO) << format("image size = {}x{}", width_, height_);
+    LOG(INFO) << format("image format = {}, image size = {}x{}", imageFormat_, width_, height_);
 
     // calculate channel and chunk size
-    switch (csp_) {
-        case X264_CSP_I420:  // YUV420
+    switch (imageFormat_) {
+        case ImageFormat::YUV420P:  // YUV 4:2:0 planar
             ySize_ = width_ * height_;
             uSize_ = ySize_ / 4;
             vSize_ = ySize_ / 4;
             break;
-        case X264_CSP_I422:  // YUV422(YUV422 planar)
-        case X264_CSP_YUYV:  // YUYV(YUV422 packed)
+        case ImageFormat::YUYV422:  // YUYV 4:2:2 packed
+        case ImageFormat::YUV422P:  // YUV 4:2:2 planar
             ySize_ = width_ * height_;
             uSize_ = ySize_ / 2;
             vSize_ = ySize_ / 2;
             break;
         default:
-            LOG(ERROR) << format("unsupported colorspace {}", csp_);
+            LOG(ERROR) << format("unsupported image format {}", imageFormat_);
             break;
     }
     chunkSize_ = ySize_ + uSize_ + vSize_;
-    LOG(INFO) << format("color space = {}, Y/U/V size = {}/{}/{}, chunk size = {}", csp_, ySize_, uSize_, vSize_,
-                        chunkSize_);
+    LOG(INFO) << format("Y/U/V size = {}/{}/{}, chunk size = {}", ySize_, uSize_, vSize_, chunkSize_);
 
     // find images
     directory_iterator itEnd;
     for (directory_iterator it(imageFolder); it != itEnd; ++it) {
-        if (!is_directory(*it)) {
+        if (is_regular_file(*it)) {
             imageFiles_.emplace_back(canonical(it->path()));
         }
     }
@@ -59,13 +67,9 @@ void VideoEncoder::init(const boost::filesystem::path& imageFolder, int width, i
         return id1 < id2;
     });
     LOG(INFO) << format("found {} images", imageFiles_.size());
-
-    // print
-    // for (size_t i = 0; i < imageFiles_.size(); ++i) {
-    //     cout << format("\t[{}/{}] {}", i, imageFiles_.size(), imageFiles_[i].string()) << endl;
-    // }
 }
 
+// Show image
 void VideoEncoder::show(int waitTime) {
     // read image and show
     for (size_t i = 0; i < imageFiles_.size(); ++i) {
@@ -79,10 +83,7 @@ void VideoEncoder::show(int waitTime) {
         fs.close();
         LOG(INFO) << format("[{}/{}] {}, data size = {}", i, imageFiles_.size(), imageFiles_[i].string(), raw.size());
 
-        // to BGR and show
         cv::Mat yuv(height_, width_, CV_8UC2, raw.data());
-        cv::Mat bgr;
-
         // split
         // cv::Mat yChannel(height_, width_, CV_8UC1, raw.data());
         // cv::Mat uChannel(height_, width_ / 2, CV_8UC1, raw.data() + ySize_);
@@ -92,9 +93,25 @@ void VideoEncoder::show(int waitTime) {
         // cv::imshow("V", vChannel);
         // cv::waitKey();
 
-        // cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_YUYV);
-        cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_YUY2);
-        cv::resize(bgr, bgr, cv::Size(), 0.5, 0.5);  // resize
+        // to BGR and show
+        cv::Mat bgr;
+        switch (imageFormat_) {
+            case ImageFormat::YUV420P:
+                cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_I420);
+                break;
+            case ImageFormat::YUV422P:
+                cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_Y422);
+            case ImageFormat::YUYV422:
+                cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_YUYV);
+            default:
+                LOG(ERROR) << format("unsupported image format {}", imageFormat_);
+                break;
+        }
+        // resize if too large
+        if (bgr.rows > 720 || bgr.cols > 720) {
+            float ratio = 720.F / max(bgr.rows, bgr.cols);
+            cv::resize(bgr, bgr, cv::Size(), ratio, ratio);
+        }
         cv::imshow("BGR", bgr);
         cv::waitKey(waitTime);
     }
@@ -102,7 +119,11 @@ void VideoEncoder::show(int waitTime) {
 
 // save YUV image to .jpg
 void VideoEncoder::saveJpeg(const boost::filesystem::path& saveFolder) {
-    LOG(INFO) << format("convert YUV422 packed(YUYV) to .jpg to \"{}\"", saveFolder.string());
+    if (imageFormat_ != ImageFormat::YUYV422) {
+        LOG(ERROR) << format("unsupported image format {}", imageFormat_);
+        return;
+    }
+    LOG(INFO) << format("convert YUV image to .jpg, and save to \"{}\"", saveFolder.string());
     // create save folder
     boost::filesystem::create_directories(saveFolder);
 
@@ -155,82 +176,53 @@ void VideoEncoder::saveJpeg(const boost::filesystem::path& saveFolder) {
     }
 }
 
-// save to YUV planar image
-void VideoEncoder::saveYUVPlanar(const boost::filesystem::path& saveFolder) {
-    LOG(INFO) << format("convert YUV422 packed(YUYV) to YUV422 planar to \"{}\"", saveFolder.string());
-    // create save folder
-    boost::filesystem::create_directories(saveFolder);
-
-    for (int i = 0; i < imageFiles_.size(); ++i) {
-        LOG(INFO) << format("encoding frame [{}]", i);
-
-        // read image
-        string inputFileName = imageFiles_[i].string();
-        fstream inFs(inputFileName, ios::in | ios::binary);
-        if (!inFs.is_open()) {
-            LOG(FATAL) << format("cannot open image file \"{}\"", inputFileName);
-            continue;
-        }
-        vector<unsigned char> raw = vector<unsigned char>(istreambuf_iterator<char>(inFs), {});
-        inFs.close();
-
-        // convert YUYV(YUV422 packed) to YUV(YUV422 planar)
-        vector<unsigned char> yuvData(chunkSize_);
-        unsigned char* pRaw = raw.data();
-        unsigned char* pY = yuvData.data();
-        unsigned char* pU = yuvData.data() + ySize_;
-        unsigned char* pV = yuvData.data() + ySize_ + uSize_;
-        for (int i = 0; i < uSize_; ++i) {
-            *(pY++) = *(pRaw++);
-            *(pU++) = *(pRaw++);
-            *(pY++) = *(pRaw++);
-            *(pV++) = *(pRaw++);
-        }
-
-        // write to file
-        boost::filesystem::path saveFile = saveFolder / format("{}.bin", i);
-        fstream outFs(saveFile.string(), ios::out | ios::binary);
-        if (!outFs.is_open()) {
-            LOG(ERROR) << fmt::format("cannot create file \"{}\"", saveFile.string());
-        }
-        outFs.write(reinterpret_cast<const char*>(yuvData.data()), yuvData.size());
-        outFs.close();
-    }
-}
-
-void VideoEncoder::encode(const boost::filesystem::path& saveFile) {
+// Encode image to H264 video
+void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCount) {
     LOG(INFO) << format("encode YUV image to video file \"{}\"", saveFile.string());
-
-    // set parameters of x246
-    x264_param_t param;
-    x264_param_default(&param);
-    param.i_log_level = X264_LOG_DEBUG;
-    param.i_width = width_;
-    param.i_height = height_;
-    param.i_threads = X264_SYNC_LOOKAHEAD_AUTO;
-    param.i_frame_total = 0;
-    param.i_keyint_max = 10;
-    param.i_bframe = 0;
-    param.b_open_gop = 0;
-    param.i_bframe_pyramid = 0;
-    param.rc.i_qp_constant = 0;
-    param.rc.i_qp_max = 0;
-    param.rc.i_qp_min = 0;
-    param.i_bframe_adaptive = X264_B_ADAPT_TRELLIS;
-    param.i_fps_den = 1;
-    param.i_fps_num = 25;
-    param.i_timebase_den = param.i_fps_num;
-    param.i_timebase_num = param.i_fps_den;
-    param.i_csp = csp_;
-    // x264_param_apply_profile(&param, x264_profile_names[5]);
 
     // open yuv and h264 file
     ofstream outFs(saveFile.string(), ios::binary);
-    CHECK(outFs.is_open()) << format("cannot open \"{}\" to save H264 video", saveFile.string());
+    CHECK(outFs.is_open()) << format("cannot open file \"{}\" to save H264 video", saveFile.string());
+
+    // get color space
+    int csp{X264_CSP_NONE};
+    switch (imageFormat_) {
+        case ImageFormat::YUV420P:
+            csp = X264_CSP_I420;
+            break;
+        case ImageFormat::YUV422P:
+            csp = X264_CSP_I422;
+            break;
+        case ImageFormat::YUYV422:
+            csp = X264_CSP_YUYV;
+            break;
+        default:
+            LOG(ERROR) << format("unsupported image format {}", imageFormat_);
+            return;
+            break;
+    }
+
+    // set parameters of x246
+    x264_param_t param;
+    x264_param_default_preset(&param, "fast", "zerolatency");
+    const int fps = 30;  // FPS,  [Hz]
+    param.i_csp = csp;
+    param.i_width = width_;
+    param.i_height = height_;
+    param.i_log_level = X264_LOG_DEBUG;  // log
+    param.i_threads = 1;                 // 1 thread
+    param.i_frame_total = 0;
+    param.i_bframe = 0;  // no b frame
+    param.i_keyint_max = fps * 2;
+    param.i_keyint_min = fps * 2;
+    param.i_fps_den = 1;
+    param.i_fps_num = fps;
+    param.i_timebase_den = param.i_fps_num;
+    param.i_timebase_num = param.i_fps_den;
 
     // alloc memory for input image
     x264_picture_t inPic;
-    x264_picture_alloc(&inPic, csp_, width_, height_);
+    int ret = x264_picture_alloc(&inPic, csp, width_, height_);
     // out image
     x264_picture_t outPic;
     x264_picture_init(&outPic);
@@ -242,8 +234,12 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile) {
     CHECK(handle != nullptr) << "cannot init encoder";
 
     // encode to H264
-    for (int i = 0; i < imageFiles_.size(); ++i) {
-        LOG(INFO) << format("encoding frame [{}] {}", i, imageFiles_[i].string());
+    int frameCount = imageFiles_.size();
+    if (maxFameCount > 0 && frameCount > maxFameCount) {
+        frameCount = maxFameCount;
+    }
+    for (int i = 0; i < frameCount; ++i) {
+        LOG(INFO) << format("encoding frame [{}/{}] {}", i, frameCount, imageFiles_[i].string());
 
         // read image
         inPic.i_pts = i;
@@ -253,11 +249,7 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile) {
             LOG(FATAL) << format("cannot open image file \"{}\"", fileName);
             continue;
         }
-        // vector<unsigned char> raw = vector<unsigned char>(istreambuf_iterator<char>(fs), {});
-        // vector<unsigned char> raw = vector<unsigned char>(istreambuf_iterator<char>(fs), {});
-        // inPic.img.plane[0] =
-
-        if (csp_ == X264_CSP_I422) {
+        if (imageFormat_ == ImageFormat::YUV422P) {
             fs.read(reinterpret_cast<char*>(inPic.img.plane[0]), ySize_);
             fs.read(reinterpret_cast<char*>(inPic.img.plane[1]), uSize_);
             fs.read(reinterpret_cast<char*>(inPic.img.plane[2]), vSize_);
@@ -265,19 +257,6 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile) {
             fs.read(reinterpret_cast<char*>(inPic.img.plane[0]), chunkSize_);
         }
         fs.close();
-
-        // convert YUYV(YUV422 packed) to YUV(YUV422 planar)
-        // inPic.i_pts = i;
-        // unsigned char* pRaw = raw.data();
-        // uint8_t* pY = inPic.img.plane[0];
-        // uint8_t* pU = inPic.img.plane[1];
-        // uint8_t* pV = inPic.img.plane[2];
-        // for (int m = 0; m < uSize; ++m) {
-        //     *(pY++) = *(pRaw++);
-        //     *(pU++) = *(pRaw++);
-        //     *(pY++) = *(pRaw++);
-        //     *(pV++) = *(pRaw++);
-        // }
 
         // encode
         int ret = x264_encoder_encode(handle, &nal, &iNal, &inPic, &outPic);

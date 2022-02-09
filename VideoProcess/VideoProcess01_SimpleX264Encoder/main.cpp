@@ -9,11 +9,18 @@
 #include <fmt/format.h>
 #include <glog/logging.h>
 #include <sched.h>
-#include <x264.h>
 #include <chrono>
 #include <fstream>
 #include <iostream>
 #include <opencv2/opencv.hpp>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include <x264.h>
+#ifdef __cplusplus
+};
+#endif
 
 using namespace std;
 using namespace fmt;
