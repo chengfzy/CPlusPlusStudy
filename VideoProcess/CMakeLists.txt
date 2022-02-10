@@ -10,4 +10,4 @@ list(APPEND DEPEND_LIBS cxxopts::cxxopts ${OpenCV_LIBRARIES} ${Boost_LIBRARIES})
 # projects
 add_subdirectory(VideoProcess01_SimpleX264Encoder)
 add_subdirectory(VideoProcess02_X264Encoder)
-# add_subdirectory(VideoProcess03_FFmpegEncoder)
+add_subdirectory(VideoProcess03_FFmpegEncoder)
