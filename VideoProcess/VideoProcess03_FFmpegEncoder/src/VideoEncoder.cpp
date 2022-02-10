@@ -278,6 +278,8 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCo
     if (codec->id == AVCodecID::AV_CODEC_ID_H264) {
         av_opt_set(context->priv_data, "preset", "fast", 0);
         av_opt_set(context->priv_data, "tune", "zerolatency", 0);
+        av_opt_set(context->priv_data, "qp", "0", 0);  // use QT for quality controlling
+        // av_opt_set(context->priv_data, "crf", "0", 0);
     }
 
     // open codec

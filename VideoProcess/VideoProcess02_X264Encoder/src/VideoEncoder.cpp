@@ -234,6 +234,11 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCo
     param.i_fps_num = fps;
     param.i_timebase_den = param.i_fps_num;
     param.i_timebase_num = param.i_fps_den;
+    // use QP for quality controlling, [0, 51], 0 mean lossess, 51 mean more worst
+    param.rc.i_rc_method = X264_RC_CQP;
+    param.rc.i_qp_constant = 0;
+    // or use CRF(Constant Rate Factor) for quality controlling, [0, 51], 0 mean lossess, 51 mean more worst
+    // param.rc.f_rf_constant = 0;
 
     // alloc memory for input image
     x264_picture_t inPic;
