@@ -15,7 +15,7 @@ int main(int argc, const char* argv[]) {
     FLAGS_colorlogtostderr = true;
 
     // argument parser
-    cxxopts::Options options(argv[0], "Video Encoder & Decoder");
+    cxxopts::Options options(argv[0], "Video Encoder using FFmpeg");
     options.set_width(120);
     // clang-format off
     options.add_options()
@@ -62,7 +62,8 @@ int main(int argc, const char* argv[]) {
 
     VideoEncoder encoder;
     encoder.init(imageFolder, width, height, imageFormat);
-    encoder.encode(saveFile, 50);
+    // encoder.show();
+    encoder.encode(saveFile);
 
     google::ShutdownGoogleLogging();
     return 0;

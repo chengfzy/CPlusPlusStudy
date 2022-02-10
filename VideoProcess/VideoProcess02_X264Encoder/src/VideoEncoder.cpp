@@ -99,10 +99,25 @@ void VideoEncoder::show(int waitTime) {
             case ImageFormat::YUV420P:
                 cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_I420);
                 break;
-            case ImageFormat::YUV422P:
-                cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_Y422);
+            case ImageFormat::YUV422P: {
+                vector<unsigned char> yuyvData(chunkSize_);
+                unsigned char* pY = raw.data();
+                unsigned char* pU = raw.data() + ySize_;
+                unsigned char* pV = raw.data() + ySize_ + uSize_;
+                unsigned char* pDst = yuyvData.data();
+                for (int i = 0; i < uSize_; ++i) {
+                    *(pDst++) = *(pY++);
+                    *(pDst++) = *(pU++);
+                    *(pDst++) = *(pY++);
+                    *(pDst++) = *(pV++);
+                }
+                cv::Mat yuyv(height_, width_, CV_8UC2, yuyvData.data());
+                cv::cvtColor(yuyv, bgr, cv::COLOR_YUV2BGR_YUYV);
+                break;
+            }
             case ImageFormat::YUYV422:
                 cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_YUYV);
+                break;
             default:
                 LOG(ERROR) << format("unsupported image format {}", imageFormat_);
                 break;

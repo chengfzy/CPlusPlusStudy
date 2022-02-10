@@ -43,7 +43,7 @@ string av_errstr(int errNum) {
  * @param fs
  */
 void encodeFrame(AVCodecContext* context, AVFrame* frame, AVPacket* packet, ofstream& fs) {
-    // send the frame to endcoder
+    // send the frame to encoder
     LOG_IF(INFO, frame != nullptr) << format("send frame {}", frame->pts);
     int ret = avcodec_send_frame(context, frame);
     CHECK(ret >= 0) << format("could not send a frame for encoding: {}", av_errstr(ret));
@@ -114,8 +114,8 @@ void VideoEncoder::init(const boost::filesystem::path& imageFolder, int width, i
 
 // Show image
 void VideoEncoder::show(int waitTime) {
-    // read image and show
     for (size_t i = 0; i < imageFiles_.size(); ++i) {
+        // read image
         string fileName = imageFiles_[i].string();
         fstream fs(fileName, ios::in | ios::binary);
         if (!fs.is_open()) {
@@ -142,10 +142,25 @@ void VideoEncoder::show(int waitTime) {
             case ImageFormat::YUV420P:
                 cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_I420);
                 break;
-            case ImageFormat::YUV422P:
-                cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_Y422);
+            case ImageFormat::YUV422P: {
+                vector<unsigned char> yuyvData(chunkSize_);
+                unsigned char* pY = raw.data();
+                unsigned char* pU = raw.data() + ySize_;
+                unsigned char* pV = raw.data() + ySize_ + uSize_;
+                unsigned char* pDst = yuyvData.data();
+                for (int i = 0; i < uSize_; ++i) {
+                    *(pDst++) = *(pY++);
+                    *(pDst++) = *(pU++);
+                    *(pDst++) = *(pY++);
+                    *(pDst++) = *(pV++);
+                }
+                cv::Mat yuyv(height_, width_, CV_8UC2, yuyvData.data());
+                cv::cvtColor(yuyv, bgr, cv::COLOR_YUV2BGR_YUYV);
+                break;
+            }
             case ImageFormat::YUYV422:
                 cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_YUYV);
+                break;
             default:
                 LOG(ERROR) << format("unsupported image format {}", imageFormat_);
                 break;
@@ -233,14 +248,13 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCo
     auto codec = avcodec_find_encoder(AVCodecID::AV_CODEC_ID_H264);
     CHECK(codec != nullptr) << format("cannot found video codec");
 
-    // allocate contex
-    auto context = avcodec_alloc_context3(codec);
-    CHECK(context != nullptr) << format("cannot allocate video codec context");
-
     // allocate packet
     auto packet = av_packet_alloc();
     CHECK(packet != nullptr) << format("cannot allocate video packet");
 
+    // allocate contex
+    auto context = avcodec_alloc_context3(codec);
+    CHECK(context != nullptr) << format("cannot allocate video codec context");
     // set parameters
     const int fps = 30;  // FPS,  [Hz]
     context->width = width_;
