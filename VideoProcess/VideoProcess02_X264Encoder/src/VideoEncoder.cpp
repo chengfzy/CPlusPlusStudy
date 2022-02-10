@@ -180,7 +180,7 @@ void VideoEncoder::saveJpeg(const boost::filesystem::path& saveFolder) {
 void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCount) {
     LOG(INFO) << format("encode YUV image to video file \"{}\"", saveFile.string());
 
-    // open yuv and h264 file
+    // open output h264 file
     ofstream outFs(saveFile.string(), ios::binary);
     CHECK(outFs.is_open()) << format("cannot open file \"{}\" to save H264 video", saveFile.string());
 

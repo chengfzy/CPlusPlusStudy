@@ -1,5 +1,6 @@
 #include "VideoEncoder.h"
 #include <fmt/format.h>
+#include <fmt/ostream.h>
 #include <glog/logging.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
@@ -20,6 +21,46 @@ extern "C" {
 
 using namespace std;
 using namespace fmt;
+
+/**
+ * @brief Get the error string of FFmpeg, to avoid build error when using "av_err2str(errnum)" macro in C++
+ *
+ * @param errNum Error number
+ * @return Error string
+ */
+string av_errstr(int errNum) {
+    string str(AV_ERROR_MAX_STRING_SIZE, 0);
+    av_strerror(errNum, str.data(), str.size());
+    return str;
+}
+
+/**
+ * @brief Encode one frame
+ *
+ * @param context
+ * @param frame
+ * @param packet
+ * @param fs
+ */
+void encodeFrame(AVCodecContext* context, AVFrame* frame, AVPacket* packet, ofstream& fs) {
+    // send the frame to endcoder
+    LOG_IF(INFO, frame != nullptr) << format("send frame {}", frame->pts);
+    int ret = avcodec_send_frame(context, frame);
+    CHECK(ret >= 0) << format("could not send a frame for encoding: {}", av_errstr(ret));
+
+    while (ret >= 0) {
+        ret = avcodec_receive_packet(context, packet);
+        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
+            return;
+        } else if (ret < 0) {
+            LOG(FATAL) << format("could during encoding: {}", av_errstr(ret));
+        }
+
+        LOG(INFO) << format("write packet {}, size = {}", packet->pts, packet->size);
+        fs.write(reinterpret_cast<const char*>(packet->data), packet->size);
+        av_packet_unref(packet);
+    }
+}
 
 // Initialization with image folder, image size and image format
 void VideoEncoder::init(const boost::filesystem::path& imageFolder, int width, int heigh, ImageFormat imageFormat) {
@@ -180,9 +221,15 @@ void VideoEncoder::saveJpeg(const boost::filesystem::path& saveFolder) {
 
 // Encode image to H264 video
 void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCount) {
-    LOG(INFO) << format("encode YUV image to video file \"{}\"", saveFile.string());
+    // calculate frame count
+    int frameCount = imageFiles_.size();
+    if (maxFameCount > 0 && frameCount > maxFameCount) {
+        frameCount = maxFameCount;
+    }
+    LOG(INFO) << format("encode {} YUV images to video file \"{}\"", frameCount, saveFile.string());
 
     // find encoder
+    avcodec_register_all();
     auto codec = avcodec_find_encoder(AVCodecID::AV_CODEC_ID_H264);
     CHECK(codec != nullptr) << format("cannot found video codec");
 
@@ -202,75 +249,52 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCo
     context->framerate = AVRational{fps, 1};
     context->max_b_frames = 0;
     context->gop_size = 10;
-    context->pix_fmt = AVPixelFormat::AV_PIX_FMT_YUV422P;
+    switch (imageFormat_) {
+        case ImageFormat::YUV420P:
+            context->pix_fmt = AVPixelFormat::AV_PIX_FMT_YUV420P;
+            break;
+        case ImageFormat::YUV422P:
+        case ImageFormat::YUYV422:
+            context->pix_fmt = AVPixelFormat::AV_PIX_FMT_YUV422P;
+            break;
+        default:
+            LOG(FATAL) << format("unsupported image format {}", imageFormat_);
+            break;
+    }
     if (codec->id == AVCodecID::AV_CODEC_ID_H264) {
         av_opt_set(context->priv_data, "preset", "fast", 0);
+        av_opt_set(context->priv_data, "tune", "zerolatency", 0);
     }
 
     // open codec
     int ret = avcodec_open2(context, codec, nullptr);
-    CHECK(ret >= 0) << format("could not open codec: {}", av_err2str(ret));
+    CHECK(ret >= 0) << format("could not open codec: {}", av_errstr(ret));
 
-    // open save file
-
-    // register
-    av_register_all();
-    // init context
-    AVFormatContext* formatCtx;
-    avformat_alloc_output_context2(&formatCtx, nullptr, nullptr, saveFile.string().c_str());
-    AVOutputFormat* fmt = formatCtx->oformat;
-
-    // open output file
-    int ret = avio_open(&formatCtx->pb, saveFile.string().c_str(), AVIO_FLAG_WRITE);
-    LOG_IF(ERROR, ret < 0) << format("cannot open file \"{}\" to save H264 video", saveFile.string());
-
-    // create stream
-    const int fps = 30;  // FPS,  [Hz]
-    auto videoStream = avformat_new_stream(formatCtx, nullptr);
-    videoStream->time_base.num = 1;
-    videoStream->time_base.den = fps;
-
-    // set parameters
-    auto codeCtx = videoStream->codec;
-    codeCtx->codec_id = fmt->video_codec;
-    codeCtx->codec_type = AVMEDIA_TYPE_VIDEO;
-    codeCtx->pix_fmt = AV_PIX_FMT_YUYV422;
-    codeCtx->width = width_;
-    codeCtx->height = height_;
-    codeCtx->time_base.num = 1;
-    codeCtx->time_base.den = fps;
-    codeCtx->max_b_frames = 0;
-    AVDictionary* param{nullptr};
-    av_dict_set(&param, "preset", "medium", 0);
-    av_dict_set(&param, "tune", "zerolatency", 0);
-    // show some information
-    av_dump_format(formatCtx, 0, saveFile.string().c_str(), 1);
-
-    // find and open codec
-    auto codec = avcodec_find_encoder(codeCtx->codec_id);
-    CHECK(codec != nullptr) << "Cannot find encoder";
-    ret = avcodec_open2(codeCtx, codec, &param);
-    CHECK(ret >= 0) << format("failed to open encoder, {}", ret);
-
-    // create picture size
+    // allocate frame
     auto frame = av_frame_alloc();
-    auto picSize = avpicture_get_size(codeCtx->pix_fmt, width_, height_);
-    uint8_t* picBuf = (uint8_t*)av_malloc(picSize);
-    avpicture_fill((AVPicture*)frame, picBuf, codeCtx->pix_fmt, width_, height_);
+    frame->format = context->pix_fmt;
+    frame->width = context->width;
+    frame->height = context->height;
+    ret = av_frame_get_buffer(frame, 0);
+    CHECK(ret >= 0) << format("could not allocate the video frame data: {}", av_errstr(ret));
 
-    // write file header
-    avformat_write_header(formatCtx, nullptr);
+    // open output h264 file
+    ofstream outFs(saveFile.string(), ios::binary);
+    CHECK(outFs.is_open()) << format("cannot open file \"{}\" to save H264 video", saveFile.string());
 
-    // encode to H264
-    int frameCount = imageFiles_.size();
-    if (maxFameCount > 0 && frameCount > maxFameCount) {
-        frameCount = maxFameCount;
-    }
-    AVPacket packet;
-    av_new_packet(&packet, picSize);
-    int gotPicture{0};
+    // write frame header
+    // avformat_write_header(context, nullptr);
+
+    // encode
     for (int i = 0; i < frameCount; ++i) {
         LOG(INFO) << format("encoding frame [{}/{}] {}", i, frameCount, imageFiles_[i].string());
+
+        // make sure the frame data is writable. On the first round, the frame is fresh from av_frame_get_buffer() and
+        // therefore it's writable, but on the next rounds, encode() will have called avcodec_send_frame(), and the
+        // codec may have kept a reference to the frame in its internal structures, that make the frame unwritable.
+        // av_frame_make_writable() checks that and allocates a new buffer for the frame only if necessary
+        ret = av_frame_make_writable(frame);
+        CHECK(ret >= 0) << format("could not make the frame writable: {}", av_errstr(ret));
 
         // read image
         frame->pts = i;
@@ -280,57 +304,47 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCo
             LOG(FATAL) << format("cannot open image file \"{}\"", fileName);
             continue;
         }
-        if (imageFormat_ == ImageFormat::YUV422P) {
-            fs.read(reinterpret_cast<char*>(frame->data[0]), ySize_);
-            fs.read(reinterpret_cast<char*>(frame->data[1]), uSize_);
-            fs.read(reinterpret_cast<char*>(frame->data[2]), vSize_);
-        } else {
-            fs.read(reinterpret_cast<char*>(frame->data[0]), chunkSize_);
+        switch (imageFormat_) {
+            case ImageFormat::YUV420P:
+            case ImageFormat::YUV422P:
+                fs.read(reinterpret_cast<char*>(frame->data[0]), ySize_);
+                fs.read(reinterpret_cast<char*>(frame->data[1]), uSize_);
+                fs.read(reinterpret_cast<char*>(frame->data[2]), vSize_);
+                break;
+            case ImageFormat::YUYV422: {
+                vector<unsigned char> raw = vector<unsigned char>(istreambuf_iterator<char>(fs), {});
+                // convert YUYV422 to YUV422P
+                unsigned char* pRaw = raw.data();
+                unsigned char* pY = frame->data[0];
+                unsigned char* pU = frame->data[1];
+                unsigned char* pV = frame->data[2];
+                for (int m = 0; m < uSize_; ++m) {
+                    *(pY++) = *(pRaw++);
+                    *(pU++) = *(pRaw++);
+                    *(pY++) = *(pRaw++);
+                    *(pV++) = *(pRaw++);
+                }
+                break;
+            }
+            default:
+                LOG(FATAL) << format("unsupported image format {}", imageFormat_);
+                break;
         }
         fs.close();
 
         // encode
-        ret = avcodec_encode_video2(codeCtx, &packet, frame, &gotPicture);
-        CHECK(ret >= 0) << format("failed to encode, {}", ret);
-        if (gotPicture == 1) {
-            packet.stream_index = videoStream->index;
-            ret = av_write_frame(formatCtx, &packet);
-            av_free_packet(&packet);
-        }
+        encodeFrame(context, frame, packet, outFs);
     }
-    // flush encoder
-    if (formatCtx->streams[0]->codec->codec->capabilities & AV_CODEC_CAP_DELAY) {
-        while (true) {
-            packet.data = nullptr;
-            packet.size = 0;
-            av_init_packet(&packet);
-            ret = avcodec_encode_video2(formatCtx->streams[0]->codec, &packet, nullptr, &gotPicture);
-            av_frame_free(nullptr);
-            if (ret < 0) {
-                break;
-            }
-            if (!gotPicture) {
-                break;
-            }
-            LOG(INFO) << format("flush 1 frame");
-            ret = av_write_frame(formatCtx, &packet);
-            if (ret < 0) {
-                break;
-            }
-        }
-    }
+
+    // flush the encoder
+    encodeFrame(context, nullptr, packet, outFs);
 
     // write tailer
-    av_write_trailer(formatCtx);
 
-    // clean
-    if (videoStream) {
-        avcodec_close(videoStream->codec);
-        av_free(frame);
-        av_free(picBuf);
-    }
-    avio_close(formatCtx->pb);
-    avformat_free_context(formatCtx);
+    // free
+    avcodec_free_context(&context);
+    av_packet_free(&packet);
+    av_frame_free(&frame);
 }
 
 #if 0

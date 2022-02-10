@@ -20,7 +20,7 @@ int main(int argc, const char* argv[]) {
     // clang-format off
     options.add_options()
         ("imageFolder", "image folder", cxxopts::value<string>()->default_value("./data/images"))
-        ("imageFormat", "image format", cxxopts::value<string>()->default_value("YUYV"))
+        ("imageFormat", "image format", cxxopts::value<string>()->default_value("YUYV422"))
         ("width", "image width", cxxopts::value<int>()->default_value("1920"))
         ("height", "image height", cxxopts::value<int>()->default_value("1080"))
         ("saveFile", "save video file", cxxopts::value<string>()->default_value("./data/video.h264"))
