@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
     constexpr size_t kAlgNum{6};        // algorithm num
     vector<string> saveFiles{"./data/OpenCV.png",    "./data/OpenCVTurboJpeg.jpg", "./data/jpeg.jpg",
                              "./data/TurboJpeg.jpg", "./data/YuyvBgr1.bin",        "./data/YuyvBgr2.bin"};
-    vector<array<double, kAlgNum>> usedTime(kRepeatNum);
+    vector<array<int64_t, kAlgNum>> usedTime(kRepeatNum);
     vector<unsigned char> yuvData;  // YUV data for turbojpeg
 
     // allocate buffer size before compress for method 03
@@ -107,8 +107,8 @@ int main(int argc, char* argv[]) {
             cvtColor(yuv, bgr, COLOR_YUV2BGR_YUYV);
             imwrite(saveFiles[0], bgr);
             auto t1 = steady_clock::now();
-            auto dt = duration_cast<duration<double>>(t1 - t0).count();
-            cout << fmt::format("OpenCV = {:.5f} s", dt);
+            auto dt = duration_cast<microseconds>(t1 - t0).count();
+            cout << fmt::format("OpenCV = {:.2f} ms", dt / 1000.);
             usedTime[i][0] = dt;
         }
 
@@ -142,9 +142,9 @@ int main(int argc, char* argv[]) {
             tjFree(dest);
 
             auto t1 = steady_clock::now();
-            auto dt = duration_cast<duration<double>>(t1 - t0).count();   // all
-            auto dt2 = duration_cast<duration<double>>(t2 - t0).count();  // convert YUV=>BGR
-            cout << fmt::format(", OpenCV+TurboJpeg = {:.5f}/{:.5f} s", dt2, dt);
+            auto dt = duration_cast<microseconds>(t1 - t0).count();   // all
+            auto dt2 = duration_cast<microseconds>(t2 - t0).count();  // convert YUV=>BGR
+            cout << fmt::format(", OpenCV+TurboJpeg = {:.2f}/{:.2f} ms", dt2 / 1000., dt / 1000.);
             usedTime[i][1] = dt;
 
             // destory compressor
@@ -206,8 +206,8 @@ int main(int argc, char* argv[]) {
 
             // record time
             auto t1 = steady_clock::now();
-            auto dt = duration_cast<duration<double>>(t1 - t0).count();
-            cout << fmt::format(", JPEG = {:.5f} s", dt);
+            auto dt = duration_cast<microseconds>(t1 - t0).count();
+            cout << fmt::format(", JPEG = {:.2f} ms", dt / 1000.);
             usedTime[i][2] = dt;
         }
 
@@ -263,11 +263,12 @@ int main(int argc, char* argv[]) {
             auto t4 = steady_clock::now();
 
             // record time
-            auto dt = duration_cast<duration<double>>(t1 - t0).count();   // all
-            auto dt2 = duration_cast<duration<double>>(t2 - t0).count();  // compress
-            auto dt3 = duration_cast<duration<double>>(t3 - t1).count();  // decode using OpenCV
-            auto dt4 = duration_cast<duration<double>>(t4 - t3).count();  // decode using TurboJPEG
-            cout << fmt::format(", TurboJpeg = {:.5f}/{:.5f}/{:.5f}/{:.5f} s", dt2, dt3, dt4, dt);
+            auto dt = duration_cast<microseconds>(t1 - t0).count();   // all
+            auto dt2 = duration_cast<microseconds>(t2 - t0).count();  // compress
+            auto dt3 = duration_cast<microseconds>(t3 - t1).count();  // decode using OpenCV
+            auto dt4 = duration_cast<microseconds>(t4 - t3).count();  // decode using TurboJPEG
+            cout << fmt::format(", TurboJpeg = {:.2f}/{:.2f}/{:.2f}/{:.2f} ms", dt2 / 1000., dt3 / 1000., dt4 / 1000.,
+                                dt / 1000.);
             usedTime[i][3] = dt;
 
             // destory compressor
@@ -347,9 +348,9 @@ int main(int argc, char* argv[]) {
 
             // record time
             auto t1 = steady_clock::now();
-            auto dt1 = duration_cast<duration<double>>(t1 - t0).count();  // all
-            auto dt2 = duration_cast<duration<double>>(t2 - t0).count();  // compress
-            cout << fmt::format(", YUYV2BGR = {:.5f}/{:.5f} s", dt2, dt1);
+            auto dt1 = duration_cast<microseconds>(t1 - t0).count();  // all
+            auto dt2 = duration_cast<microseconds>(t2 - t0).count();  // compress
+            cout << fmt::format(", YUYV2BGR = {:.2f}/{:.2f} ms", dt2 / 1000., dt1 / 1000.);
             usedTime[i][4] = dt1;
         }
 
@@ -395,9 +396,9 @@ int main(int argc, char* argv[]) {
 
             // record time
             auto t1 = steady_clock::now();
-            auto dt1 = duration_cast<duration<double>>(t1 - t0).count();  // YUYV => BGR
-            auto dt2 = duration_cast<duration<double>>(t2 - t0).count();
-            cout << fmt::format(", YUYV2BGR with Table = {:.5f}/{:.5f} s", dt2, dt1) << endl;
+            auto dt1 = duration_cast<microseconds>(t1 - t0).count();  // YUYV => BGR
+            auto dt2 = duration_cast<microseconds>(t2 - t0).count();
+            cout << fmt::format(", YUYV2BGR with Table = {:.2f}/{:.2f} ms", dt2 / 1000., dt1 / 1000.) << endl;
             usedTime[i][5] = dt1;
         }
     }
@@ -419,14 +420,15 @@ int main(int argc, char* argv[]) {
     array<double, kAlgNum> averageTime;
     for (size_t i = 0; i < kAlgNum; ++i) {
         averageTime[i] = accumulate(usedTime.begin(), usedTime.end(), 0.,
-                                    [&](const double& a, const array<double, kAlgNum>& v) { return a + v[i]; }) /
+                                    [&](const int64_t& a, const array<int64_t, kAlgNum>& v) { return a + v[i]; }) /
                          kRepeatNum;
     }
     cout << endl
          << fmt::format(
-                "Average: OpenCV = {:.5f} s, OpenCV+TurboJpeg = {:.5f} s, JPEG = {:.5f} s, TurboJpeg = {:.5f} s, "
-                "YUYV2BGR = {:.5f} s, YUYV2BGR with Table = {:.5f} s",
-                averageTime[0], averageTime[1], averageTime[2], averageTime[3], averageTime[4], averageTime[5])
+                "Average: OpenCV = {:.2f} ms, OpenCV+TurboJpeg = {:.2f} ms, JPEG = {:.2f} ms, TurboJpeg = {:.2f} ms, "
+                "YUYV2BGR = {:.2f} ms, YUYV2BGR with Table = {:.2f} ms",
+                averageTime[0] / 1000., averageTime[1] / 1000., averageTime[2] / 1000., averageTime[3] / 1000.,
+                averageTime[4] / 1000., averageTime[5] / 1000.)
          << endl;
 
     google::ShutdownGoogleLogging();

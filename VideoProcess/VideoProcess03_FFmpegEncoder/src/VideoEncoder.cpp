@@ -281,6 +281,7 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCo
         av_opt_set(context->priv_data, "qp", "0", 0);  // use QT for quality controlling
         // av_opt_set(context->priv_data, "crf", "0", 0);
     }
+    av_log_set_level(AV_LOG_DEBUG);  // enable debug log info
 
     // open codec
     int ret = avcodec_open2(context, codec, nullptr);

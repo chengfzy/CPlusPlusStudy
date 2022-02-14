@@ -31,14 +31,14 @@ void VideoDecoder::decode(const boost::filesystem::path& videoFile, const boost:
     // create save directories if not exist
     boost::filesystem::create_directories(saveFolder);
 
-    // find encoder
+    // find decoder
     avcodec_register_all();
     auto codec = avcodec_find_decoder(AVCodecID::AV_CODEC_ID_H264);
     CHECK(codec != nullptr) << format("cannot found video codec");
 
     // init parser
     auto parser = av_parser_init(codec->id);
-    CHECK(codec != nullptr) << format("cannot found init video parser");
+    CHECK(parser != nullptr) << format("cannot init video parser");
 
     // allocate packet
     auto packet = av_packet_alloc();
