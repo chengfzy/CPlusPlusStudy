@@ -1,7 +1,7 @@
 # spadlog Study
 find_package(spdlog)
 
-if (${spdlog_FOUND})
+if(${spdlog_FOUND})
     # list(APPEND DEPEND_LIBS spdlog::spdlog)
     list(APPEND DEPEND_LIBS spdlog::spdlog_header_only)
 
@@ -9,4 +9,4 @@ if (${spdlog_FOUND})
     add_subdirectory(spdlog02_MultiSink)
     add_subdirectory(spdlog03_CustomerFormat)
     add_subdirectory(spdlog04_UseInDll)
-endif ()
+endif()

@@ -1,7 +1,7 @@
 # Boost study
 find_package(Boost COMPONENTS filesystem date_time serialization system)
 
-if (${Boost_FOUND})
+if(${Boost_FOUND})
     list(APPEND DEPEND_INCLUDES ${Boost_INCLUDE_DIRS})
     list(APPEND DEPEND_LIBS ${Boost_LIBRARIES} ${PRJ_LIB_COMMON} pthread)
 
@@ -11,9 +11,9 @@ if (${Boost_FOUND})
     add_subdirectory(boost04_Tokenizer)         # tokenizer
     add_subdirectory(boost05_LexicalCast)       # lexical cast
     add_subdirectory(boost06_Serialization)     # serialization
-    if (${Boost_VERSION} VERSION_GREATER_EQUAL 106901)
+    if(${Boost_VERSION} VERSION_GREATER_EQUAL 106901)
         add_subdirectory(boost07_MulticastSender)   # multicast sender
         add_subdirectory(boost08_MulticastReceiver) # multicast receiver
-    endif ()
+    endif()
     add_subdirectory(boost09_ObtainWebPage)
-endif ()
+endif()

@@ -3,7 +3,7 @@
 # find package
 find_package(SQLiteCpp)
 
-if (${SQLiteCpp_FOUND})
+if(${SQLiteCpp_FOUND})
     list(APPEND DEPEND_INCLUDES ${SQLiteCpp_INCLUDE_DIRS})
     list(APPEND DEPEND_LIBS ${SQLiteCpp_LIBRARIES} ${PRJ_LIB_COMMON})
 
@@ -13,4 +13,4 @@ if (${SQLiteCpp_FOUND})
     target_include_directories(${PROJECT_NAME} PRIVATE ${DEPEND_INCLUDES})
     target_link_libraries(${PROJECT_NAME} PRIVATE ${DEPEND_LIBS})
     add_dependencies(${PROJECT_NAME} ${PRJ_LIB_COMMON})
-endif ()
+endif()

@@ -28,7 +28,7 @@ list(APPEND DEPEND_LIBS
 # Project Setting
 ###############################################################################
 # default build type
-if (NOT CMAKE_BUILD_TYPE)
+if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
