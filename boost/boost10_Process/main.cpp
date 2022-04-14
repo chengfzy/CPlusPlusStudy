@@ -30,10 +30,16 @@ int main(int argc, const char* argv[]) {
     child c(bp::search_path(bin), args = {"--url=hello"}, env, std_out > log2, std_err > log2);
 
     LOG(INFO) << format("PID: {}", c.id());
-    LOG(INFO) << format("is running: {}", c.running());
+    c.terminate();
+
+    this_thread::sleep_for(1s);
+    c.terminate();
+    LOG(INFO) << format("terminate is running: {}", c.running());
 
     c.wait();
-    LOG(INFO) << format("process1 exit code: {}", c.exit_code());
+    LOG(INFO) << format("process2 exit code: {}", c.exit_code());
+
+    this_thread::sleep_for(10s);
 
     closeLog();
     return 0;
