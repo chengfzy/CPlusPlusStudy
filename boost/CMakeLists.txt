@@ -15,5 +15,6 @@ if(${Boost_FOUND})
         add_subdirectory(boost07_MulticastSender)   # multicast sender
         add_subdirectory(boost08_MulticastReceiver) # multicast receiver
     endif()
-    add_subdirectory(boost09_ObtainWebPage)
+    add_subdirectory(boost09_ObtainWebPage)     # asio to obtain web page
+    add_subdirectory(boost10_Process)           # process
 endif()
