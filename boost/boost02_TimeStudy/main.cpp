@@ -1,3 +1,5 @@
+#include <fmt/chrono.h>
+#include <fmt/format.h>
 #include <time.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <chrono>
@@ -5,6 +7,7 @@
 #include "common/common.hpp"
 
 using namespace std;
+using namespace fmt;
 using namespace common;
 using namespace boost;
 
@@ -34,34 +37,47 @@ int main(int argc, char* argv[]) {
     }
 
     // chrono Time
-    cout << Section("chrono Time") << endl;
-    chrono::steady_clock::time_point t0 = chrono::steady_clock::now();
-    double sum{0};
-    for (int i = 0; i < 100000; ++i) {
-        sum += i * 8;
+    {
+        cout << Section("chrono Time") << endl;
+        chrono::steady_clock::time_point t0 = chrono::steady_clock::now();
+        double sum{0};
+        for (int i = 0; i < 100000; ++i) {
+            sum += i * 8;
+        }
+        chrono::steady_clock::time_point t1 = chrono::steady_clock::now();
+        auto runTime = chrono::duration_cast<chrono::microseconds>(t1 - t0);
+        cout << "Run Time = " << runTime.count() << endl;
+        chrono::microseconds d1(10);
+        cout << "duration = " << d1.count() << endl;
     }
-    chrono::steady_clock::time_point t1 = chrono::steady_clock::now();
-    auto runTime = chrono::duration_cast<chrono::microseconds>(t1 - t0);
-    cout << "Run Time = " << runTime.count() << endl;
-    chrono::microseconds d1(10);
-    cout << "duration = " << d1.count() << endl;
 
     // Boost-Time
-    cout << Section("boost Time") << endl;
-    boost::posix_time::ptime dateTime0 = boost::posix_time::microsec_clock::local_time();
-    cout << "dateTime0 = " << dateTime0 << endl;
-    boost::posix_time::time_duration time(10, 20, 12, 134);
-    boost::gregorian::date date(2018, 1, 18);
-    boost::posix_time::ptime dateTime(date, time);
-    cout << "datetime = " << dateTime << endl;
-    cout << "time = " << time << endl;
-    time += boost::posix_time::milliseconds(56);
-    cout << "time = " << time << endl;
+    {
+        cout << Section("boost Time") << endl;
+        boost::posix_time::ptime dateTime0 = boost::posix_time::microsec_clock::local_time();
+        cout << "dateTime0 = " << dateTime0 << endl;
+        boost::posix_time::time_duration time(10, 20, 12, 134);
+        boost::gregorian::date date(2018, 1, 18);
+        boost::posix_time::ptime dateTime(date, time);
+        cout << "datetime = " << dateTime << endl;
+        cout << "time = " << time << endl;
+        time += boost::posix_time::milliseconds(56);
+        cout << "time = " << time << endl;
+        // format date
+        auto t0 = boost::posix_time::microsec_clock::local_time();
+        cout << format("current time t0: {}-{}-{} {}:{}:{}.{}", t0.date().year(), t0.date().month(), t0.date().day(),
+                       t0.time_of_day().hours(), t0.time_of_day().minutes(), t0.time_of_day().seconds(),
+                       t0.time_of_day().fractional_seconds())
+             << endl;
+        // format chrono
+        auto t1 = chrono::system_clock::now();
+        cout << format("current time t1: {:%Y-%m-%d_%H:%M:%S}", t1) << endl;
 
-    // 1970 time
-    boost::posix_time::ptime t1970(boost::gregorian::date(1970, 1, 1));
-    double clockFrom1970 = (dateTime0 - t1970).total_milliseconds() / 1000.0;  // ms
-    cout << "tick from 1970 = " << clockFrom1970 << " ms";
+        // 1970 time
+        boost::posix_time::ptime t1970(boost::gregorian::date(1970, 1, 1));
+        double clockFrom1970 = (dateTime0 - t1970).total_milliseconds() / 1000.0;  // ms
+        cout << "tick from 1970 = " << clockFrom1970 << " ms";
+    }
 
     return 0;
 }
