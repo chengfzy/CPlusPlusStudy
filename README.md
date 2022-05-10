@@ -15,6 +15,8 @@ Some C++ syntax demo
     Split string using C++11.
 1. syntax04_optional    \
     Some example about `std::optional`.
+1. syntax05_any    \
+    Some example about `std::any`.
 
 ## cxxopts
 Some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
