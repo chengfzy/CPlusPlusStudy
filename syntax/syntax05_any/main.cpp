@@ -45,7 +45,6 @@ int main(int argc, char* argv[]) {
         // using any to construct a base class, MessageA and MessageB don't has a base class, but with std::any and
         // template function, they could be treat as the same
         cout << Section("Test 01");
-        // vector<MessageData<MessageType::MessageA>> data;
         vector<MessageData> data;
 
         data.emplace_back(MessageData{MessageType::MessageA, 1, MessageA{124, 3464576}});
