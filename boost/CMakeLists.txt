@@ -1,5 +1,5 @@
 # Boost study
-find_package(Boost COMPONENTS filesystem date_time serialization system)
+find_package(Boost COMPONENTS filesystem date_time serialization system iostreams)
 
 if(${Boost_FOUND})
     list(APPEND DEPEND_INCLUDES ${Boost_INCLUDE_DIRS})
@@ -17,4 +17,5 @@ if(${Boost_FOUND})
     endif()
     add_subdirectory(boost09_ObtainWebPage)     # asio to obtain web page
     add_subdirectory(boost10_Process)           # process
+    add_subdirectory(boost11_CompresssFile)     # compress file
 endif()
