@@ -128,7 +128,8 @@ void RotMatAngleConversion() {
 
     // Euler angle C: constructed from rotation matrix
     cout << Paragraph("02c") << endl;
-    EulerAnglesZYXd x02c = EulerAnglesZYXd::FromRotation<false, false, false>(R1);
+    // EulerAnglesZYXd x02c = EulerAnglesZYXd::FromRotation<false, false, false>(R1);
+    EulerAnglesZYXd x02c(R1);
     cout << "R = " << x02c.toRotationMatrix() << endl;
     cout << "x = " << x02c.angles().transpose() << endl;
 
