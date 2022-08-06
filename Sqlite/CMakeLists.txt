@@ -1,7 +1,7 @@
 # SQLite Study
 
 # find package
-find_package(SQLiteCpp)
+find_package(SQLiteCpp QUIET)
 
 if(${SQLiteCpp_FOUND})
     list(APPEND DEPEND_INCLUDES ${SQLiteCpp_INCLUDE_DIRS})

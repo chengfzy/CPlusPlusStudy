@@ -1,5 +1,5 @@
 # cxxopts Study
-find_package(cxxopts)
+find_package(cxxopts QUIET)
 
 if(${cxxopts_FOUND})
     list(APPEND DEPEND_LIBS cxxopts::cxxopts)

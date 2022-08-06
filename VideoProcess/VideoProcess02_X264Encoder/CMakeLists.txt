@@ -1,8 +1,8 @@
 # X264 Encoder using libx264
 project(VideoProcess02_X264Encoder)
 
-find_package(X264)          # x264
-find_package(TurboJpeg)     # turbojpeg
+find_package(X264 QUIET)          # x264
+find_package(TurboJpeg QUIET)     # turbojpeg
 
 if(${X264_FOUND} AND ${TurboJpeg_FOUND})
     list(APPEND DEPEND_INCLUDES ${X264_INCLUDE_DIRS} ${TurboJpeg_INCLUDE_DIRS})

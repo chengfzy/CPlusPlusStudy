@@ -1,7 +1,7 @@
 # Simple Video Encoder using libx264
 project(VideoProcess01_SimpleX264Encoder)
 
-find_package(X264)      # x264
+find_package(X264 QUIET)      # x264
 if(${X264_FOUND})
     list(APPEND DEPEND_INCLUDES ${X264_INCLUDE_DIRS})
     list(APPEND DEPEND_LIBS ${X264_LIBRARIES})

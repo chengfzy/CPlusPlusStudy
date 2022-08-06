@@ -9,7 +9,7 @@
  * 必须在使用之前添加, 否则没啥用. 而`spdlog::set_level()`是在`SPDLOG_ACTIVE_LEVEL`的基础上进行设置,
  * 默认`SPDLOG_ACTIVE_LEVEL`为Debug, 只有在`spdlog::set_level()`大于Debug时才有用
  *  4. 官方说的设置是针对为header_only, 但其实header_log就只需要调用DLL中的setupLog()即可, 其他不用管
- *  5. 如果使用的是spdlog的lib库，调用setupLog()或setupLogApp()f均可
+ *  5. 如果使用的是spdlog的lib库，调用setupLog()或setupLogApp()均可
  *
  */
 

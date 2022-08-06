@@ -1,5 +1,5 @@
 # PCL Study
-find_package(PCL)
+find_package(PCL QUIET)
 
 if(${PCL_FOUND})
     list(APPEND DEPEND_INCLUDES ${PCL_INCLUDE_DIRS})

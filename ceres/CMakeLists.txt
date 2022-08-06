@@ -1,9 +1,9 @@
 # Ceres Study
 
 # find package
-find_package(Ceres)
-find_package(Eigen3)
-find_package(Sophus)
+find_package(Ceres QUIET)
+find_package(Eigen3 QUIET)
+find_package(Sophus QUIET)
 
 if(${Ceres_FOUND} AND ${Eigen3_FOUND} AND ${Sophus_FOUND})
     list(APPEND DEPEND_INCLUDES ${CERES_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS} ${SOPHUS_INCLUDE_DIRS})

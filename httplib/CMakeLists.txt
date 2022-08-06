@@ -1,5 +1,5 @@
 # cpp-httplib Study
-find_package(httplib)
+find_package(httplib QUIET)
 
 if(${httplib_FOUND})
     list(APPEND DEPEND_LIBS httplib::httplib)

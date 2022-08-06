@@ -1,7 +1,7 @@
 # Pangolin Study
 
 # find package
-find_package(Pangolin)
+find_package(Pangolin QUIET)
 
 if(${Pangolin_FOUND})
     list(APPEND DEPEND_INCLUDES ${Pangolin_INCLUDE_DIRS})

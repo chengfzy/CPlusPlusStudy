@@ -1,7 +1,7 @@
 # Json Study
 
 # find libraries
-find_package(jsoncpp)       # jsoncpp
+find_package(jsoncpp QUIET)       # jsoncpp
 
 if(${jsoncpp_FOUND})
     list(APPEND DEPEND_LIBS ${PRJ_LIB_COMMON} jsoncpp_lib)

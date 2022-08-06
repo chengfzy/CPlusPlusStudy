@@ -1,5 +1,5 @@
 # liarchive Study
-find_package(LibArchive)
+find_package(LibArchive QUIET)
 
 if(${LibArchive_FOUND})
 list(APPEND DEPEND_INCLUDES ${LibArchive_INCLUDE_DIRS})

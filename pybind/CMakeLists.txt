@@ -1,7 +1,7 @@
 # pybind11 Study
 
 # find package
-find_package(pybind11)
+find_package(pybind11 QUIET)
 
 if(${pybind11_FOUND})
     list(APPEND DEPEND_INCLUDES ${pybind11_INCLUDE_DIRS})

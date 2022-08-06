@@ -1,9 +1,9 @@
 # g2o Study
 
 # find package
-find_package(g2o)
-find_package(Eigen3)
-find_package(Sophus)
+find_package(g2o QUIET)
+find_package(Eigen3 QUIET)
+find_package(Sophus QUIET)
 
 if(${g2o_FOUND} AND ${Eigen3_FOUND} AND ${Sophus_FOUND})
     list(APPEND DEPEND_INCLUDES ${EIGEN3_INCLUDE_DIRS} ${SOPHUS_INCLUDE_DIRS})

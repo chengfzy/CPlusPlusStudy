@@ -1,5 +1,5 @@
 # spadlog Study
-find_package(spdlog)
+find_package(spdlog QUIET)
 
 if(${spdlog_FOUND})
     # list(APPEND DEPEND_LIBS spdlog::spdlog)

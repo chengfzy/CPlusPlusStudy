@@ -1,6 +1,6 @@
 # TurboJpeg, some study using turbojpeg
 
-find_package(TurboJpeg)     # turbojpeg
+find_package(TurboJpeg QUIET)     # turbojpeg
 
 if(TurboJpeg_FOUND)
     list(APPEND DEPEND_INCLUDES ${TurboJpeg_INCLUDE_DIRS})

@@ -1,5 +1,5 @@
 # Eigen Study
-find_package(Eigen3)
+find_package(Eigen3 QUIET)
 
 if(${Eigen3_FOUND})
     list(APPEND DEPEND_INCLUDES ${EIGEN3_INCLUDE_DIRS})
