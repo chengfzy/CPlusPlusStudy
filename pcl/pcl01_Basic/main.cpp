@@ -64,7 +64,7 @@ int main(int argc, const char* argv[]) {
     cout << "Method #1: using a Matrix4f" << endl;
     cout << transform01 << endl;
 
-    // METHOD 02, using Affine3f, this methos is easier and less error prone
+    // METHOD 02, using Affine3f, this method is easier and less error prone
     Affine3f transform02 = Affine3f::Identity();
     transform02.translation() << 2.5, 0, 0;
     transform02.rotate(AngleAxisf(theta, Vector3f::UnitZ()));

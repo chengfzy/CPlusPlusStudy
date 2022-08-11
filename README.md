@@ -203,7 +203,7 @@ Basic SQLite usage using `SQLiteCpp`.
    
 ## PCL
 1. pcl01_Basic \
-    Using a matrix to transformat a point cloud
+    Using a matrix to transform a point cloud
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/matrix_transform.html#matrix-transform
 1. pcl02_PassThroughFilter \
     Filtering a point cloud using pass through filter
