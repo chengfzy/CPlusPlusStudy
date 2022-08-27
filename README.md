@@ -17,6 +17,8 @@ Some C++ syntax demo
     Some example about `std::optional`.
 1. syntax05_any    \
     Some example about `std::any`.
+1. syntax06_dataConversion  \
+    Data conversion, `uint8_t[8] => uint64_t`
 
 ## cxxopts
 Some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
