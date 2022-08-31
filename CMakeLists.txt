@@ -67,6 +67,7 @@ add_subdirectory(Sophus)            # Sophus study
 add_subdirectory(pcl)               # PCL study
 add_subdirectory(pybind)            # pybind study
 add_subdirectory(archive)           # libarchive study
+add_subdirectory(protobuf)          # protobuf study
 add_subdirectory(TurboJpeg)         # TurboJpeg study
 add_subdirectory(VideoProcess)      # video process
 add_subdirectory(others)            # others
