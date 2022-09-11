@@ -20,23 +20,6 @@ Some C++ syntax demo
 1. syntax06_dataConversion  \
     Data conversion, `uint8_t[8] => uint64_t`
 
-## cxxopts
-Some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
-
-## spdlog
-Some study using [spdlog](https://github.com/gabime/spdlog) library
-1. spdlog01_Basic \
-    Some basic log
-1. spdlog02_MultiSink \
-    Use `spdlog` with multi sink, the console only write warning log, and file write all
-1. spdlog03_CustomerFormat \
-    Add customer format flag.
-1. spdlog04_UseInDll \
-    Use spdlog in dll
-### Programming Practice
-1. "spdlog::info()" could not add "sourfile:location" flag in logging, while "SPDLOG_INFO" does.
-1. No module name could be add to log, should setting it manually(just input into log message).
-
 ## std::thread
 1. thread01_HelloWorld  \
     Ref: http://www.cnblogs.com/haippy/p/3235560.html
@@ -76,44 +59,6 @@ Some study using [spdlog](https://github.com/gabime/spdlog) library
 1. thread20_ComplexProject  \
     One complex project, class have 2 thread, and the child thread has some callback in class main thread
 
-## json
-some usage for `nlohmann json` library.
-1. json01_Basic \
-    Basic usage
-
-## jsoncpp
-some usage for `jsoncpp` library.
-1. jsoncpp01_Basic \
-    Basic usage
-## YAML
-1. YamlStudy    \
-    Write and read yaml file using `yaml-cpp`.
-
-## Sqlite
-Basic SQLite usage using `SQLiteCpp`.
-
-## boost
-1. boost01_FileSystem   \
-    Study code about `boost filesystem`: list file and folder, create folder
-1. boost02_TimeStudy    \
-    Study code about `chrono` time and boost time
-1. boost03_Interpolation    \
-    Rational interpolation and cubic B-spline interpolation
-1. boost04_Tokenizer    \
-    Boost tokenizer, separate string with specified separator
-1. boost05_LexicalCast  \
-    Convert string to int/long/double and vice verse
-1. boost06_Serialization    \
-    Serialization basic type or class data to text, xml and binary.
-1. boost07_MulticastSender  \
-    Multicast UDP sender using `asio`, based on boost1.58.
-1. boost08_MulticastReceiver    \
-    Multicast UDP receiver using `asio`, based on boost1.58.
-1. boost09_ObtainWebPage \
-    Obtain web page content using `boost::asio`
-1. boost10_Process \
-    Start multiple process from current process using `boost::process`
-
 ## Eigen
 1. Eigen01_Basic    \
     Basic using about Eigen library
@@ -121,7 +66,10 @@ Basic SQLite usage using `SQLiteCpp`.
     Solve linear system equations use Eigen
 1. Eigen03_Interpolation    \
     Use interpolation method in Eigen  
-    
+        
+## Sophus
+1. SophusStudy  \
+    study code about `Sophus` library
 
 ## Ceres
 1. ceres01_HelloWorld  \
@@ -183,6 +131,16 @@ Basic SQLite usage using `SQLiteCpp`.
 1. g2o03_CurveFit \
     Use g2o for curve fitting
     Ref: https://github.com/RainerKuemmerle/g2o/blob/master/g2o/examples/data_fitting/curve_fit.cpp
+   
+## PCL
+1. pcl01_Basic \
+    Using a matrix to transform a point cloud
+    Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/matrix_transform.html#matrix-transform
+1. pcl02_PassThroughFilter \
+    Filtering a point cloud using pass through filter
+    Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/passthrough.html#passthrough
+1. pcl03_VoxelGridFilter \
+    Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
 
 ## Pangolin
 1. Pangolin01_HelloPangolin \
@@ -197,21 +155,72 @@ Basic SQLite usage using `SQLiteCpp`.
 1. Pangolin04_MultiDisplay  \
     Multiple display.
     Ref: https://github.com/stevenlovegrove/Pangolin/blob/master/examples/SimpleMultiDisplay/main.cpp
-    
-    
-## Sophus
-1. SophusStudy  \
-    study code about `Sophus` library
-   
-## PCL
-1. pcl01_Basic \
-    Using a matrix to transform a point cloud
-    Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/matrix_transform.html#matrix-transform
-1. pcl02_PassThroughFilter \
-    Filtering a point cloud using pass through filter
-    Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/passthrough.html#passthrough
-1. pcl03_VoxelGridFilter \
-    Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
+
+## boost
+1. boost01_FileSystem   \
+    Study code about `boost filesystem`: list file and folder, create folder
+1. boost02_TimeStudy    \
+    Study code about `chrono` time and boost time
+1. boost03_Interpolation    \
+    Rational interpolation and cubic B-spline interpolation
+1. boost04_Tokenizer    \
+    Boost tokenizer, separate string with specified separator
+1. boost05_LexicalCast  \
+    Convert string to int/long/double and vice verse
+1. boost06_Serialization    \
+    Serialization basic type or class data to text, xml and binary.
+1. boost07_MulticastSender  \
+    Multicast UDP sender using `asio`, based on boost1.58.
+1. boost08_MulticastReceiver    \
+    Multicast UDP receiver using `asio`, based on boost1.58.
+1. boost09_ObtainWebPage \
+    Obtain web page content using `boost::asio`
+1. boost10_Process \
+    Start multiple process from current process using `boost::process`
+
+## cxxopts
+Some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
+
+## spdlog
+Some study using [spdlog](https://github.com/gabime/spdlog) library
+1. spdlog01_Basic \
+    Some basic log
+1. spdlog02_MultiSink \
+    Use `spdlog` with multi sink, the console only write warning log, and file write all
+1. spdlog03_CustomerFormat \
+    Add customer format flag.
+1. spdlog04_UseInDll \
+    Use spdlog in dll
+### Programming Practice
+1. "spdlog::info()" could not add "sourfile:location" flag in logging, while "SPDLOG_INFO" does.
+1. No module name could be add to log, should setting it manually(just input into log message).
+
+## json
+some usage for `nlohmann json` library.
+1. json01_Basic \
+    Basic usage
+
+## jsoncpp
+some usage for `jsoncpp` library.
+1. jsoncpp01_Basic \
+    Basic usage
+
+## YAML
+1. YamlStudy    \
+    Write and read yaml file using `yaml-cpp`.
+
+## protobuf
+Some usage about protobuf
+1. protobuf01_Basic \
+    Basic example
+
+## Sqlite
+Basic SQLite usage using `SQLiteCpp`.
+
+## archive
+Compress or decompress file using `libarchive`
+1. archive01_basic \
+    Using libarchive to compress/decompress files
 
 ## httplib
 Basic usage for httplib
@@ -220,15 +229,6 @@ Basic usage for httplib
 1. http02_WebClient \
     Get web page content from url
 
-## protobuf
-Some usage about protobuf
-1. protobuf01_Basic \
-    Basic example
-
-## archive
-Compress or decompress file
-1. archive01_basic \
-    Using libarchive to compress/decompress files
 
 # TurboJpeg
 Some study using [TurboJpeg](https://libjpeg-turbo.org/)
@@ -253,7 +253,7 @@ Some system applications
     Get the mac address of certain net device name
 
 ## pybind
-Some code about `pybind11``
+Some code about `pybind11`
 1. pybind01_Basic \
     Basic usage. Ref: https://pybind11.readthedocs.io/en/stable/basics.html
 1. pybind02_Class \
