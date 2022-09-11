@@ -70,4 +70,5 @@ add_subdirectory(archive)           # libarchive study
 add_subdirectory(protobuf)          # protobuf study
 add_subdirectory(TurboJpeg)         # TurboJpeg study
 add_subdirectory(VideoProcess)      # video process
+add_subdirectory(system)            # system application
 add_subdirectory(others)            # others
