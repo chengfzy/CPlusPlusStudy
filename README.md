@@ -142,6 +142,12 @@ Some C++ syntax demo
 1. pcl03_VoxelGridFilter \
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
 
+## algorithm
+Some algorithm
+1. alg01_DBSCAN \
+    DBSCAN implementation using C++
+    Ref: https://en.wikipedia.org/wiki/DBSCAN
+
 ## Pangolin
 1. Pangolin01_HelloPangolin \
     Draw and show cube using pangolin.
