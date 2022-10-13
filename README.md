@@ -147,6 +147,8 @@ Some algorithm
 1. alg01_DBSCAN \
     DBSCAN implementation using C++
     Ref: https://en.wikipedia.org/wiki/DBSCAN
+1. alg02_BinarySearch \
+    Search value $y_1$, $y_2$ in data to ensure $y_1 \le x < y_2$
 
 ## Pangolin
 1. Pangolin01_HelloPangolin \

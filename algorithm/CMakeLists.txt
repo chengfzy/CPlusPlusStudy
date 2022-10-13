@@ -1,2 +1,3 @@
 # algorithm
 add_subdirectory(alg01_DBSCAN)
+add_subdirectory(alg02_BinarySearch)
