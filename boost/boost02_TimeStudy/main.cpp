@@ -1,5 +1,6 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
+#include <fmt/ostream.h>
 #include <time.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <chrono>
@@ -11,17 +12,19 @@ using namespace fmt;
 using namespace common;
 using namespace boost;
 
-int main(int argc, char* argv[]) {
+int main(int argc, const char* argv[]) {
+    initLog(argc, argv);
+
     // time_t and tm
     {
-        cout << Section("time_t and tm") << endl;
+        LOG(INFO) << Section("time_t and tm");
 
         // convert time_t to tm
         time_t t0 = time(nullptr);
-        cout << "t0 = " << t0 << endl;
+        LOG(INFO) << format("t0 = {}", t0);
         tm* t1 = gmtime(&t0);
-        cout << "t1 = " << asctime(t1);
-        //        delete t1;
+        LOG(INFO) << format("t1 = {}", asctime(t1));
+        // delete t1;
 
         // convert tm to time_t
         tm t3;
@@ -32,13 +35,13 @@ int main(int argc, char* argv[]) {
         t3.tm_min = 0;
         t3.tm_sec = 0;
         time_t t4 = mktime(&t3);
-        cout << "t3 = " << asctime(&t3);
-        cout << "t4 = " << t4 << endl;
+        LOG(INFO) << format("t3 = {}", asctime(&t3));
+        LOG(INFO) << format("t4 = {}", t4);
     }
 
     // chrono Time
     {
-        cout << Section("chrono Time") << endl;
+        LOG(INFO) << Section("chrono Time");
         chrono::steady_clock::time_point t0 = chrono::steady_clock::now();
         double sum{0};
         for (int i = 0; i < 100000; ++i) {
@@ -46,38 +49,38 @@ int main(int argc, char* argv[]) {
         }
         chrono::steady_clock::time_point t1 = chrono::steady_clock::now();
         auto runTime = chrono::duration_cast<chrono::microseconds>(t1 - t0);
-        cout << "Run Time = " << runTime.count() << endl;
+        LOG(INFO) << format("Run Time = {}", runTime.count());
         chrono::microseconds d1(10);
-        cout << "duration = " << d1.count() << endl;
+        LOG(INFO) << format("duration = {}", d1.count());
     }
 
     // Boost-Time
     {
-        cout << Section("boost Time") << endl;
+        LOG(INFO) << Section("boost Time");
         boost::posix_time::ptime dateTime0 = boost::posix_time::microsec_clock::local_time();
-        cout << "dateTime0 = " << dateTime0 << endl;
+        LOG(INFO) << format("dateTime0 = {}", dateTime0);
         boost::posix_time::time_duration time(10, 20, 12, 134);
         boost::gregorian::date date(2018, 1, 18);
         boost::posix_time::ptime dateTime(date, time);
-        cout << "datetime = " << dateTime << endl;
-        cout << "time = " << time << endl;
+        LOG(INFO) << format("datetime = {}", dateTime);
+        LOG(INFO) << format("time = {}", time);
         time += boost::posix_time::milliseconds(56);
-        cout << "time = " << time << endl;
+        LOG(INFO) << format("time = {}", time);
         // format date
         auto t0 = boost::posix_time::microsec_clock::local_time();
-        cout << format("current time t0: {}-{}-{} {}:{}:{}.{}", t0.date().year(), t0.date().month(), t0.date().day(),
-                       t0.time_of_day().hours(), t0.time_of_day().minutes(), t0.time_of_day().seconds(),
-                       t0.time_of_day().fractional_seconds())
-             << endl;
+        LOG(INFO) << format("current time t0: {}-{}-{} {}:{}:{}.{}", t0.date().year(), t0.date().month(),
+                            t0.date().day(), t0.time_of_day().hours(), t0.time_of_day().minutes(),
+                            t0.time_of_day().seconds(), t0.time_of_day().fractional_seconds());
         // format chrono
         auto t1 = chrono::system_clock::now();
-        cout << format("current time t1: {:%Y-%m-%d_%H:%M:%S}", t1) << endl;
+        LOG(INFO) << format("current time t1: {:%Y-%m-%d_%H:%M:%S}", t1);
 
-        // 1970 time
+        // time since epoch(1970.1.1)
         boost::posix_time::ptime t1970(boost::gregorian::date(1970, 1, 1));
-        double clockFrom1970 = (dateTime0 - t1970).total_milliseconds() / 1000.0;  // ms
-        cout << "tick from 1970 = " << clockFrom1970 << " ms";
+        auto timeCount = (dateTime0 - t1970).total_nanoseconds();  // ns
+        LOG(INFO) << format("tick from 1970 = {} ns", timeCount);
     }
 
+    closeLog();
     return 0;
 }
