@@ -257,8 +257,10 @@ Some example about video process
 
 ## system
 Some system applications
-1. system01_GetMacAddress \
-    Get the mac address of certain net device name
+1. system01_GetNetDeviceInfo \
+    Get the net device info, include IPv4 address, mac address
+    Ref:
+        1. https://segmentfault.com/a/1190000005138358
 
 ## pybind
 Some code about `pybind11`
