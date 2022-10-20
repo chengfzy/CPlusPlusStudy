@@ -49,9 +49,18 @@ int main(int argc, const char* argv[]) {
         }
         chrono::steady_clock::time_point t1 = chrono::steady_clock::now();
         auto runTime = chrono::duration_cast<chrono::microseconds>(t1 - t0);
-        LOG(INFO) << format("Run Time = {}", runTime.count());
+        LOG(INFO) << format("Run Time = {} ms", runTime.count());
         chrono::microseconds d1(10);
         LOG(INFO) << format("duration = {}", d1.count());
+
+        // time add
+        auto t2 = t0 + chrono::microseconds(1000);
+        LOG(INFO) << format("t0 = {}", t0.time_since_epoch());
+        LOG(INFO) << format("t2 = {}", t2.time_since_epoch());
+
+        // from time count
+        chrono::steady_clock::time_point t3(chrono::nanoseconds(t2.time_since_epoch().count()));
+        LOG(INFO) << format("t3 = {}", t3.time_since_epoch());
     }
 
     // Boost-Time
