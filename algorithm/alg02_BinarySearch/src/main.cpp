@@ -16,7 +16,7 @@ template <typename T>
 void method01(const vector<int>& data, const T& x) {
     auto it2 = lower_bound(data.begin(), data.end(), x, [](int v, const T& s) { return v <= s; });
     if (it2 == data.begin() || it2 == data.end()) {
-        LOG(ERROR) << "method01: cannot find";
+        LOG(ERROR) << format("method01: cannot find, x = {}", x);
         return;
     }
     auto it1 = prev(it2);
@@ -27,7 +27,7 @@ template <typename T>
 void method02(const vector<int>& data, const T& x) {
     auto it2 = upper_bound(data.begin(), data.end(), x, [](const T& s, int v) { return s < v; });
     if (it2 == data.begin() || it2 == data.end()) {
-        LOG(ERROR) << "method02: cannot find";
+        LOG(ERROR) << format("method02: cannot find, x = {}", x);
         return;
     }
     auto it1 = prev(it2);
@@ -38,7 +38,7 @@ template <typename T>
 void method03(const vector<int>& data, const T& x) {
     auto it1 = lower_bound(data.rbegin(), data.rend(), x, [](int v, const T& s) { return v > s; });
     if (it1 == data.rbegin() || it1 == data.rend()) {
-        LOG(ERROR) << "method03: cannot find";
+        LOG(ERROR) << format("method03: cannot find, x = {}", x);
         return;
     }
     auto it2 = prev(it1);
@@ -48,7 +48,7 @@ template <typename T>
 void method04(const vector<int>& data, const T& x) {
     auto it1 = upper_bound(data.rbegin(), data.rend(), x, [](const T& s, int v) { return s >= v; });
     if (it1 == data.rbegin() || it1 == data.rend()) {
-        LOG(ERROR) << "method03: cannot find";
+        LOG(ERROR) << format("method04: cannot find, x = {}", x);
         return;
     }
     auto it2 = prev(it1);
