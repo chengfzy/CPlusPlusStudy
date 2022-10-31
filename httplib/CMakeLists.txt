@@ -6,4 +6,5 @@ if(${httplib_FOUND})
 
     add_subdirectory(http01_Basic)
     add_subdirectory(http02_WebClient)
+    add_subdirectory(http03_Post)
 endif()
