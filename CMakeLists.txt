@@ -66,6 +66,7 @@ add_subdirectory(jsoncpp)           # jsoncpp study
 add_subdirectory(yaml)              # YAML study
 add_subdirectory(protobuf)          # protobuf study
 add_subdirectory(SqliteCpp)         # SQLiteCpp study
+add_subdirectory(SqliteOrm)         # SQLite ORM study
 add_subdirectory(archive)           # libarchive study
 add_subdirectory(httplib)           # httplib
 add_subdirectory(TurboJpeg)         # TurboJpeg study

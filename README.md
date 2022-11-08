@@ -225,6 +225,11 @@ Some usage about protobuf
 ## SqliteCpp
 Basic SQLite usage using `SQLiteCpp`.
 
+## SqliteOrm
+Some usage about [SQLite ORM](https://github.com/fnc12/sqlite_orm)
+1. SqliteOrm01_Basic    \
+    Basic usage
+
 ## archive
 Compress or decompress file using `libarchive`
 1. archive01_basic \
