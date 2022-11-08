@@ -222,7 +222,7 @@ Some usage about protobuf
 1. protobuf01_Basic \
     Basic example
 
-## Sqlite
+## SqliteCpp
 Basic SQLite usage using `SQLiteCpp`.
 
 ## archive

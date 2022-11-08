@@ -65,7 +65,7 @@ add_subdirectory(json)              # json(nlohmann/json) study
 add_subdirectory(jsoncpp)           # jsoncpp study
 add_subdirectory(yaml)              # YAML study
 add_subdirectory(protobuf)          # protobuf study
-add_subdirectory(Sqlite)            # SQLite study
+add_subdirectory(SqliteCpp)         # SQLiteCpp study
 add_subdirectory(archive)           # libarchive study
 add_subdirectory(httplib)           # httplib
 add_subdirectory(TurboJpeg)         # TurboJpeg study
