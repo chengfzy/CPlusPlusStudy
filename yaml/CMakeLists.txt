@@ -2,7 +2,7 @@
 project(YamlStudy)
 
 # yaml-cpp
-find_package(yaml-cpp)
+find_package(yaml-cpp QUIET)
 
 if(${yaml-cpp_FOUND})
     list(APPEND DEPEND_INCLUDES ${YAML_CPP_INCLUDE_DIRS})

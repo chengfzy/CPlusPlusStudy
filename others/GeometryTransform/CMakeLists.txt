@@ -1,7 +1,7 @@
 # find package
-find_package(Eigen3 REQUIRED)
-find_package(Sophus REQUIRED)
-find_package(OpenCV REQUIRED)
+find_package(Eigen3 QUIET)
+find_package(Sophus QUIET)
+find_package(OpenCV QUIET)
 
 if(${Eigen3_FOUND} AND ${Sophus_FOUND} AND ${OpenCV_FOUND})
     list(APPEND DEPEND_INCLUDES ${EIGEN3_INCLUDE_DIR} ${SOPHUS_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
