@@ -70,6 +70,7 @@ add_subdirectory(SqliteOrm)         # SQLite ORM study
 add_subdirectory(SqliteModernCpp)   # SqliteModernCpp study
 add_subdirectory(archive)           # libarchive study
 add_subdirectory(httplib)           # httplib
+add_subdirectory(hv)                # libhv
 add_subdirectory(TurboJpeg)         # TurboJpeg study
 add_subdirectory(VideoProcess)      # video process
 add_subdirectory(system)            # system applications

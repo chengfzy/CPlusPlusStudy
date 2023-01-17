@@ -230,6 +230,11 @@ Some usage about [SQLite ORM](https://github.com/fnc12/sqlite_orm)
 1. SqliteOrm01_Basic    \
     Basic usage
 
+## SqliteModernCpp
+Some study code about [sqlite_modern_cpp](https://github.com/SqliteModernCpp/sqlite_modern_cpp)
+1. SqliteModernCpp01_Basic \
+    Basic usage
+
 ## archive
 Compress or decompress file using `libarchive`
 1. archive01_basic \
@@ -242,6 +247,12 @@ Basic usage for httplib
 1. http02_WebClient \
     Get web page content from url
 
+## libhv
+Some study code about [libhuv](https://github.com/ithewei/libhv)
+1. hv01_TcpServer \
+    Basic TCP server
+1. hv02_TcpClient \
+    Basic TCP Client
 
 ## TurboJpeg
 Some study using [TurboJpeg](https://libjpeg-turbo.org/)
