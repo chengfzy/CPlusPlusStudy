@@ -10,4 +10,5 @@ if(${libhv_FOUND} AND ${OPENSSL_FOUND})
 
     add_subdirectory(hv01_TcpServer)
     add_subdirectory(hv02_TcpClient)
+    add_subdirectory(hv03_HttpServer)
 endif()
