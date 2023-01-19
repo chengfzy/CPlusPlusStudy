@@ -253,6 +253,12 @@ Some study code about [libhuv](https://github.com/ithewei/libhv)
     Basic TCP server
 1. hv02_TcpClient \
     Basic TCP Client
+1. hv03_HttpServer \
+    Basic HTTP server
+1. hv04_WebSocketServer \
+    Basic web socket server
+1. hv05_WebSocketClient \
+    Basic web socket client
 
 ## TurboJpeg
 Some study using [TurboJpeg](https://libjpeg-turbo.org/)
