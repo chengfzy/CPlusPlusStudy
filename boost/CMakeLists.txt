@@ -16,10 +16,11 @@ if(${Boost_FOUND})
     add_subdirectory(boost08_CompresssFile)     # compress file
     
     # asio
-    if(${Boost_VERSION} VERSION_GREATER_EQUAL 106901)
+    if(${Boost_VERSION} VERSION_GREATER_EQUAL "1.69.0")
         message(STATUS "build boost::asio study")
-        add_subdirectory(asio01_MulticastSender)   # multicast sender
-        add_subdirectory(asio02_MulticastReceiver) # multicast receiver
-        add_subdirectory(asio03_ObtainWebPage)     # asio to obtain web page
+        add_subdirectory(asio01_Basic)              # basic
+        add_subdirectory(asio01_MulticastSender)    # multicast sender using UDP
+        add_subdirectory(asio02_MulticastReceiver)  # multicast receiver using UDP
+        add_subdirectory(asio03_ObtainWebPage)      # asio to obtain web page
     endif()
 endif()
