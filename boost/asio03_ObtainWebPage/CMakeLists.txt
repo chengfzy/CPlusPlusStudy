@@ -1,4 +1,4 @@
-project(boost10_Process)
+project(asio03_ObtainWebPage)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)

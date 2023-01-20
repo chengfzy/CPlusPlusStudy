@@ -2,6 +2,7 @@
 find_package(Boost COMPONENTS filesystem date_time serialization system iostreams)
 
 if(${Boost_FOUND})
+    message(STATUS "build boost study")
     list(APPEND DEPEND_INCLUDES ${Boost_INCLUDE_DIRS})
     list(APPEND DEPEND_LIBS ${Boost_LIBRARIES} ${PRJ_LIB_COMMON} pthread)
 
@@ -11,11 +12,14 @@ if(${Boost_FOUND})
     add_subdirectory(boost04_Tokenizer)         # tokenizer
     add_subdirectory(boost05_LexicalCast)       # lexical cast
     add_subdirectory(boost06_Serialization)     # serialization
+    add_subdirectory(boost07_Process)           # process
+    add_subdirectory(boost08_CompresssFile)     # compress file
+    
+    # asio
     if(${Boost_VERSION} VERSION_GREATER_EQUAL 106901)
-        add_subdirectory(boost07_MulticastSender)   # multicast sender
-        add_subdirectory(boost08_MulticastReceiver) # multicast receiver
+        message(STATUS "build boost::asio study")
+        add_subdirectory(asio01_MulticastSender)   # multicast sender
+        add_subdirectory(asio02_MulticastReceiver) # multicast receiver
+        add_subdirectory(asio03_ObtainWebPage)     # asio to obtain web page
     endif()
-    add_subdirectory(boost09_ObtainWebPage)     # asio to obtain web page
-    add_subdirectory(boost10_Process)           # process
-    add_subdirectory(boost11_CompresssFile)     # compress file
 endif()

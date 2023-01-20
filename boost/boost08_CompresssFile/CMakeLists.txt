@@ -1,4 +1,4 @@
-project(boost11_CompresssFile)
+project(boost08_CompresssFile)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)

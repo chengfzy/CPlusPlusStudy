@@ -1,4 +1,4 @@
-project(boost08_MulticastReceiver)
+project(asio01_MulticastSender)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)
