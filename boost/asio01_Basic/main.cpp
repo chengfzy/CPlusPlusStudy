@@ -137,8 +137,8 @@ void multiThreadHandler() {
 int main(int argc, const char* argv[]) {
     initLog(argc, argv);
 
-    // syncTimer();
-    // asyncTimer();
+    syncTimer();
+    asyncTimer();
     bindArgumentToHandler();
     memberFunctionHandler();
     multiThreadHandler();
