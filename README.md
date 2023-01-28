@@ -183,6 +183,12 @@ Some algorithm
 1. asio01_Basic \
     Basic skills and concepts required for asio.
     Ref: https://www.boost.org/doc/libs/1_81_0/doc/html/boost_asio/tutorial.html, basic skills
+1. asio02_SyncTcpClient \
+    Synchronous TCP client.
+    Ref: https://www.boost.org/doc/libs/1_81_0/doc/html/boost_asio/tutorial/tutdaytime1.html
+1. asio03_SyncTcpServer \
+    Synchronous TCP server.
+    Ref: https://www.boost.org/doc/libs/1_81_0/doc/html/boost_asio/tutorial/tutdaytime2.html
 1. asio01_MulticastSender  \
     Multicast UDP sender using `asio`, based on boost1.58.
 1. asio02_MulticastReceiver    \
