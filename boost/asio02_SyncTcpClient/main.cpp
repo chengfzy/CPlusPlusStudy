@@ -11,11 +11,15 @@ int main(int argc, const char* argv[]) {
     try {
         const std::string kHost{"127.0.0.1"};
         io_context io;
-        ip::tcp::resolver resolver(io);
-        ip::tcp::resolver::results_type endPoints = resolver.resolve("", "daytime");
-
+        // method 01
+        // ip::tcp::resolver resolver(io);
+        // ip::tcp::resolver::results_type endPoints = resolver.resolve("", "daytime");
+        // ip::tcp::socket socket(io);
+        // connect(socket, endPoints);
+        // method 02
+        ip::tcp::endpoint endPoint(ip::address::from_string(kHost), 1234);
         ip::tcp::socket socket(io);
-        connect(socket, endPoints);
+        socket.connect(endPoint);
 
         while (true) {
             std::array<char, 128> buf;
