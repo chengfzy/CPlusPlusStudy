@@ -16,7 +16,7 @@ int main(int argc, const char* argv[]) {
 
     try {
         io_context io;
-        ip::tcp::acceptor acceptor(io, ip::tcp::endpoint(ip::tcp::v4(), 1234));  // TCP port 60000 for IPv4
+        ip::tcp::acceptor acceptor(io, ip::tcp::endpoint(ip::tcp::v4(), 1234));  // TCP port 1234 for IPv4
         while (true) {
             ip::tcp::socket socket(io);
             acceptor.accept(socket);
