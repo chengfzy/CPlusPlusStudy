@@ -17,14 +17,18 @@ class TcpConnection : public std::enable_shared_from_this<TcpConnection> {
     void start() {
         static int count{0};
         message_ = format("count = {}", count++);
-        LOG(INFO) << format("send message: \"{}\"",message_);
+        LOG(INFO) << format("send message: \"{}\"", message_);
 
-        async_write(socket_, buffer(message_),
-                    boost::bind(&TcpConnection::handleWrite, shared_from_this(), placeholders::error,
-                                placeholders::bytes_transferred));
+        // method 01
+        // async_write(socket_, buffer(message_),
+        //             boost::bind(&TcpConnection::handleWrite01, shared_from_this(), placeholders::error,
+        //                         placeholders::bytes_transferred));
+        // method 02
+        async_write(socket_, buffer(message_), boost::bind(&TcpConnection::handleWrite02, shared_from_this()));
     }
 
-    void handleWrite(const boost::system::error_code& ec, size_t bytesTransferred) {}
+    void handleWrite01(const boost::system::error_code& ec, size_t bytesTransferred) {}
+    void handleWrite02() {}
 
   private:
     explicit TcpConnection(io_context& io) : socket_(io) {}
