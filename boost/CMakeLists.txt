@@ -20,7 +20,8 @@ if(${Boost_FOUND})
         message(STATUS "build boost::asio study")
         add_subdirectory(asio01_Basic)              # basic
         add_subdirectory(asio02_SyncTcpClient)      # synchronous TCP client
-        add_subdirectory(asio03_SyncTcpServer)      # syncrhonous TCP server
+        add_subdirectory(asio03_SyncTcpServer)      # synchronous TCP server
+        add_subdirectory(asio04_AsyncTcpServer)     # asynchronous TCP server
         add_subdirectory(asio01_MulticastSender)    # multicast sender using UDP
         add_subdirectory(asio02_MulticastReceiver)  # multicast receiver using UDP
         add_subdirectory(asio03_ObtainWebPage)      # asio to obtain web page

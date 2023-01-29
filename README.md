@@ -189,6 +189,11 @@ Some algorithm
 1. asio03_SyncTcpServer \
     Synchronous TCP server.
     Ref: https://www.boost.org/doc/libs/1_81_0/doc/html/boost_asio/tutorial/tutdaytime2.html
+1. asio04_AsyncTcpServer    \
+    Asynchronous TCP server.
+    Ref: https://www.boost.org/doc/libs/1_81_0/doc/html/boost_asio/tutorial/tutdaytime3.html
+
+
 1. asio01_MulticastSender  \
     Multicast UDP sender using `asio`, based on boost1.58.
 1. asio02_MulticastReceiver    \
