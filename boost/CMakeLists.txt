@@ -22,6 +22,9 @@ if(${Boost_FOUND})
         add_subdirectory(asio02_SyncTcpClient)      # synchronous TCP client
         add_subdirectory(asio03_SyncTcpServer)      # synchronous TCP server
         add_subdirectory(asio04_AsyncTcpServer)     # asynchronous TCP server
+        add_subdirectory(asio05_SyncUdpClient)      # asynchronous UDP client
+        add_subdirectory(asio06_SyncUdpServer)      # synchronous UDP server
+
         add_subdirectory(asio01_MulticastSender)    # multicast sender using UDP
         add_subdirectory(asio02_MulticastReceiver)  # multicast receiver using UDP
         add_subdirectory(asio03_ObtainWebPage)      # asio to obtain web page
