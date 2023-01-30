@@ -1,4 +1,4 @@
-project(asio02_MulticastReceiver)
+project(asio10_MulticastReceiver)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)

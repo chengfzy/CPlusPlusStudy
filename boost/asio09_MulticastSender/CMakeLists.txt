@@ -1,6 +1,6 @@
-project(asio03_ObtainWebPage)
+project(asio09_MulticastSender)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE ${DEPEND_INCLUDES})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${DEPEND_LIBS} ssl crypto)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${DEPEND_LIBS})

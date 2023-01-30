@@ -8,7 +8,7 @@ if(${Boost_FOUND})
 
     add_subdirectory(boost01_FileSystem)        # fileSystem
     add_subdirectory(boost02_TimeStudy)         # time
-    add_subdirectory(boost03_Interpolation)     # interpolation, should use boost 1.6
+    # add_subdirectory(boost03_Interpolation)     # interpolation, should use boost 1.6
     add_subdirectory(boost04_Tokenizer)         # tokenizer
     add_subdirectory(boost05_LexicalCast)       # lexical cast
     add_subdirectory(boost06_Serialization)     # serialization
@@ -26,9 +26,8 @@ if(${Boost_FOUND})
         add_subdirectory(asio06_SyncUdpServer)      # synchronous UDP server
         add_subdirectory(asio07_AsyncUdpServer)     # asynchronous UDP server
         add_subdirectory(asio08_AsyncTcpUdpServer)  # asynchronous TCP&UDP server
-
-        add_subdirectory(asio01_MulticastSender)    # multicast sender using UDP
-        add_subdirectory(asio02_MulticastReceiver)  # multicast receiver using UDP
-        add_subdirectory(asio03_ObtainWebPage)      # asio to obtain web page
+        add_subdirectory(asio09_MulticastSender)    # multicast sender using UDP
+        add_subdirectory(asio10_MulticastReceiver)  # multicast receiver using UDP
+        add_subdirectory(asio11_ObtainWebPage)      # asio to obtain web page
     endif()
 endif()
