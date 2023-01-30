@@ -202,6 +202,9 @@ Some algorithm
 1. asio07_AsyncUdpServer    \
     Asynchronous UDP server.
     Ref: https://www.boost.org/doc/libs/1_81_0/doc/html/boost_asio/tutorial/tutdaytime6.html
+1. asio08_AsyncTcpUdpServer \
+    A combined TCP/UDP asynchronous server.
+    Ref: https://www.boost.org/doc/libs/1_81_0/doc/html/boost_asio/tutorial/tutdaytime7.html
 
 
 1. asio01_MulticastSender  \
