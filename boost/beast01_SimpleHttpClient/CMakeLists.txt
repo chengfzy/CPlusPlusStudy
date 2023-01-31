@@ -1,4 +1,4 @@
-project(beast01_HttpClient)
+project(beast01_SimpleHttpClient)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)

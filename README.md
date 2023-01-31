@@ -213,7 +213,7 @@ Some algorithm
     Obtain web page content using `boost::asio`
 
 ### beast
-1. beast01_HttpClient   \
+1. beast01_SimpleHttpClient   \
     Simple HTTP client.
     Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/doc/html/beast/quick_start/http_client.html
 

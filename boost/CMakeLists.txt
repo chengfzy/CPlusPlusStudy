@@ -31,6 +31,6 @@ if(${Boost_FOUND})
         add_subdirectory(asio11_ObtainWebPage)      # asio to obtain web page
 
         message(STATUS "build boost::beast study")
-        add_subdirectory(beast01_HttpClient)        # simple HTTP client
+        add_subdirectory(beast01_SimpleHttpClient)        # simple HTTP client
     endif()
 endif()
