@@ -212,6 +212,12 @@ Some algorithm
 1. asio11_ObtainWebPage \
     Obtain web page content using `boost::asio`
 
+### beast
+1. beast01_HttpClient   \
+    Simple HTTP client.
+    Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/doc/html/beast/quick_start/http_client.html
+
+
 ## cxxopts
 Some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
 

@@ -15,7 +15,7 @@ if(${Boost_FOUND})
     add_subdirectory(boost07_Process)           # process
     add_subdirectory(boost08_CompresssFile)     # compress file
     
-    # asio
+    # asio and beast
     if(${Boost_VERSION} VERSION_GREATER_EQUAL "1.69.0")
         message(STATUS "build boost::asio study")
         add_subdirectory(asio01_Basic)              # basic
@@ -29,5 +29,8 @@ if(${Boost_FOUND})
         add_subdirectory(asio09_MulticastSender)    # multicast sender using UDP
         add_subdirectory(asio10_MulticastReceiver)  # multicast receiver using UDP
         add_subdirectory(asio11_ObtainWebPage)      # asio to obtain web page
+
+        message(STATUS "build boost::beast study")
+        add_subdirectory(beast01_HttpClient)        # simple HTTP client
     endif()
 endif()
