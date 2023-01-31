@@ -216,7 +216,15 @@ Some algorithm
 1. beast01_SimpleHttpClient   \
     Simple HTTP client.
     Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/doc/html/beast/quick_start/http_client.html
-
+1. beast02_SimpleWebSocketClient    \
+    Simple WebSocket client.
+    Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/doc/html/beast/quick_start/websocket_client.html
+1. beast03_WebSocketClient  \
+    WebSocket client.
+    Ref: https://www.ningto.com/post/3F43B74209B4DC0D11BCCADAC3E041CE
+1. beast04_WebSocketServer  \
+    WebSocket server.
+    Ref: https://www.ningto.com/post/3F43B74209B4DC0D11BCCADAC3E041CE
 
 ## cxxopts
 Some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
