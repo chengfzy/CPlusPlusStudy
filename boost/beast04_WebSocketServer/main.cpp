@@ -60,7 +60,7 @@ int main(int argc, const char* argv[]) {
     try {
         // input parameters
         string host{"127.0.0.1"};
-        int port{2345};
+        int port{8800};
 
         asio::io_context io;
 

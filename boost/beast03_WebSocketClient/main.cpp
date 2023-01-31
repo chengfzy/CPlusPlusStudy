@@ -23,7 +23,7 @@ int main(int argc, const char* argv[]) {
     try {
         // input parameters
         string host{"127.0.0.1"};
-        string port{"2345"};
+        string port{"8800"};
 
         asio::io_context io;
         tcp::resolver resolver(io);
