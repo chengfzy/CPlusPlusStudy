@@ -21,12 +21,12 @@ int main(int argc, const char* argv[]) {
 
     try {
         // input
-        // string host{"echo.websocket.org"};
-        // string port{"80"};
-        // string text = "Hello, WebSocket";
-        string host{"121.40.165.18"};
-        string port{"8800"};
+        string host{"echo.websocket.org"};
+        string port{"80"};
         string text = "Hello, WebSocket";
+        // string host{"121.40.165.18"};
+        // string port{"8800"};
+        // string text = "Hello, WebSocket";
 
         asio::io_context io;
         tcp::resolver resolver(io);
@@ -38,13 +38,13 @@ int main(int argc, const char* argv[]) {
         auto ep = asio::connect(ws.next_layer(), results);
         // update the host_ string, this will provide the value of the host HTTP header during WebSocket handshake. see
         // https://tools.ietf.org/html/rfc7230#section-5.4
-        // host += ':' + to_string(ep.port());
+        host += ':' + to_string(ep.port());
 
         // set a decorator to change the User-Agent of the handshake
-        // ws.set_option(websocket::stream_base::decorator([](websocket::request_type& req) {
-        //     // req.set(http::field::user_agent, format("{} websocket-client-coro", BOOST_BEAST_VERSION_STRING));
-        //     req.set(http::field::user_agent, string(BOOST_BEAST_VERSION_STRING) + " websocket-client-coro");
-        // }));
+        ws.set_option(websocket::stream_base::decorator([](websocket::request_type& req) {
+            // req.set(http::field::user_agent, format("{} websocket-client-coro", BOOST_BEAST_VERSION_STRING));
+            req.set(http::field::user_agent, string(BOOST_BEAST_VERSION_STRING) + " websocket-client-coro");
+        }));
 
         // perform the WebSocket handshake
         ws.handshake(host, "/");
