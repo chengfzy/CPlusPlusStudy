@@ -36,6 +36,7 @@ int main(int argc, const char* argv[]) {
         // update the host_ string, this will provide the value of the host HTTP header during WebSocket handshake. see
         // https://tools.ietf.org/html/rfc7230#section-5.4
         host += ':' + to_string(ep.port());
+        LOG(INFO) << format("host: {}", host);
 
         // set a decorator to change the User-Agent of the handshake
         ws.set_option(websocket::stream_base::decorator([](websocket::request_type& req) {

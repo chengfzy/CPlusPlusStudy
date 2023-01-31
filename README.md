@@ -229,6 +229,9 @@ Some algorithm
     Ref: 
     - https://www.boost.org/doc/libs/1_81_0/libs/beast/example/websocket/client/sync/websocket_client_sync.cpp
     - https://www.ningto.com/post/3F43B74209B4DC0D11BCCADAC3E041CE
+1. beast05_AsyncWebSocketClient \
+    Asynchronous WebSocket client.
+    Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/example/websocket/client/async/websocket_client_async.cpp
 
 ## cxxopts
 Some study using [cxxopts](https://github.com/jarro2783/cxxopts) library
