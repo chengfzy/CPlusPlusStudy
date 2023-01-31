@@ -1,4 +1,4 @@
-project(beast03_WebSocketClient)
+project(beast04_SyncWebSocketServer)
 
 # build project
 add_executable(${PROJECT_NAME} main.cpp)

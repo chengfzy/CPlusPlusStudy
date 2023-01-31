@@ -33,7 +33,7 @@ if(${Boost_FOUND})
         message(STATUS "build boost::beast study")
         add_subdirectory(beast01_SimpleHttpClient)      # simple HTTP client
         add_subdirectory(beast02_SimpleWebSocketClient) # simple WebSocket client
-        add_subdirectory(beast03_WebSocketClient)       # WebSocket client
-        add_subdirectory(beast04_WebSocketServer)       # WebSocket server
+        add_subdirectory(beast03_SyncWebSocketClient)   # synchronous WebSocket client
+        add_subdirectory(beast04_SyncWebSocketServer)   # synchronous WebSocket server
     endif()
 endif()
