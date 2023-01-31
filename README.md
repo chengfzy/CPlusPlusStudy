@@ -220,7 +220,7 @@ Some algorithm
     Simple WebSocket client.
     Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/doc/html/beast/quick_start/websocket_client.html
 1. beast03_WebSocketClient  \
-    WebSocket client.
+    WebSocket client, don't work success.
     Ref: https://www.ningto.com/post/3F43B74209B4DC0D11BCCADAC3E041CE
 1. beast04_WebSocketServer  \
     WebSocket server.
