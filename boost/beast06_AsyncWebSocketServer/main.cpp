@@ -1,4 +1,6 @@
 #include <fmt/ostream.h>
+#include <boost/asio/buffers_iterator.hpp>
+#include <boost/asio/dispatch.hpp>
 #include <boost/asio/strand.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
@@ -25,11 +27,22 @@ void error(const beast::error_code& ec, const string& type) {
 class Session : public enable_shared_from_this<Session> {
   public:
     // take ownership of the socket
-    explicit Session(tcp::socket&& socket) : ws_(move(socket)) {}
+    explicit Session(tcp::socket&& socket) : ws_(move(socket)) {
+        LOG(INFO) << format("new session coming, address: {}", ws_.next_layer().socket().remote_endpoint());
+    }
 
   public:
     // get on the correct executor
     void run() {
+        // we need to be executing within a strand to perform async operations on the IO objects in the session,
+        // although not strictly necessary for single-threaded contexts, this example code is written to be thread-safe
+        // by default.
+        asio::dispatch(ws_.get_executor(), beast::bind_front_handler(&Session::onRun, shared_from_this()));
+    }
+
+  private:
+    // start the asynchronous operation
+    void onRun() {
         // set suggested timeout settings for the WebSocket
         ws_.set_option(websocket::stream_base::timeout::suggested(beast::role_type::server));
 
@@ -41,10 +54,6 @@ class Session : public enable_shared_from_this<Session> {
         // accept the websocket handshake
         ws_.async_accept(beast::bind_front_handler(&Session::onAccept, shared_from_this()));
     }
-
-  private:
-    // start the asynchronous operation
-    void onRun() {}
 
     void onAccept(const beast::error_code& ec) {
         if (ec) {
@@ -73,9 +82,14 @@ class Session : public enable_shared_from_this<Session> {
             return error(ec, "read");
         }
 
-        // echo the message
+        LOG(INFO) << format("receive text: {}", beast::make_printable(buffer_.data()));
+
+        // echo the message back
         ws_.text(ws_.got_text());
-        ws_.async_write(buffer_.data(), beast::bind_front_handler(&Session::onWrite, shared_from_this()));
+        auto replyText =
+            format("##{}##", string(asio::buffers_begin(buffer_.data()), asio::buffers_end(buffer_.data())));
+        // ws_.async_write(buffer_.data(), beast::bind_front_handler(&Session::onWrite, shared_from_this()));
+        ws_.async_write(asio::buffer(replyText), beast::bind_front_handler(&Session::onWrite, shared_from_this()));
     }
 
     void onWrite(const beast::error_code& ec, const std::size_t& bytesTransferred) {
@@ -104,6 +118,7 @@ class Session : public enable_shared_from_this<Session> {
 class Listener : public enable_shared_from_this<Listener> {
   public:
     Listener(asio::io_context& io, const tcp::endpoint& endpoint) : io_(io), acceptor_(io) {
+        LOG(INFO) << format("server address: {}", endpoint);
         beast::error_code ec;
 
         // open the acceptor
