@@ -30,7 +30,7 @@ class Session : public enable_shared_from_this<Session> {
         resolver_.async_resolve(host, port, beast::bind_front_handler(&Session::onResolve, shared_from_this()));
     }
 
-  public:
+  private:
     void onResolve(const beast::error_code& ec, const tcp::resolver::results_type& results) {
         if (ec) {
             return error(ec, "connect");

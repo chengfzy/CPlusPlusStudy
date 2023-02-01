@@ -36,5 +36,6 @@ if(${Boost_FOUND})
         add_subdirectory(beast03_SyncWebSocketClient)   # synchronous WebSocket client
         add_subdirectory(beast04_SyncWebSocketServer)   # synchronous WebSocket server
         add_subdirectory(beast05_AsyncWebSocketClient)  # asynchronous WebSocket client
+        add_subdirectory(beast06_AsyncWebSocketServer)  # asynchronous WebSocket server
     endif()
 endif()
