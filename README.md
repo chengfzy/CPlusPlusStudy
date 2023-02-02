@@ -238,6 +238,9 @@ Some algorithm
 1. beast08_SyncHttpServer   \
     Synchronous HTTP server.
     Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/example/http/server/sync/http_server_sync.cpp
+1. beast10_AsyncHttpServer  \
+    Asynchronous HTTP server.
+    Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/example/http/server/async/http_server_async.cpp
 
 ## cxxopts
 Some study using [cxxopts](https://github.com/jarro2783/cxxopts) library

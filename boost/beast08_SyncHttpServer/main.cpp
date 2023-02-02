@@ -19,20 +19,6 @@ void error(const beast::error_code& ec, const string& type) {
     LOG(ERROR) << format("{} error: {}", type, ec.message());
 }
 
-// // append an HTTP rel-path to a local filesystem path, the returned path is normalized for the platform
-// string pathCat(const beast::string_view& base, const beast::string_view& path) {
-//     if (base.empty()) {
-//         return string(path);
-//     }
-
-//     string result(base);
-//     if (result.back() == '/0') {
-//         result.resize(result.size() - 1);
-//     }
-//     result.append(path.data(), path.size());
-//     return result;
-// }
-
 /**
  * @brief This function produces an HTTP response for the given request, the type of the response object depends on the
  * contents of the request, so the interface requires the caller to pass a generic lambda for receiving the response
@@ -76,7 +62,7 @@ void handleRequest(beast::string_view docRoot, http::request<Body, http::basic_f
     // make sure we handle the method
     if (req.method() != http::verb::get && req.method() != http::verb::head) {
         LOG(ERROR) << "unknown HTTP method";
-        return;
+        return sender(badRequest("unknown HTTP method"));
     }
 
     // build the path to the requested file
