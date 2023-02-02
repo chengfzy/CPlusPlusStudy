@@ -19,9 +19,9 @@ int main(int argc, const char* argv[]) {
 
     try {
         // input
-        string host{"www.boost.org"};
-        string port{"80"};
-        string target = "/";
+        string host{"127.0.0.1"};
+        string port{"8080"};
+        string target = "/?foo=bar";
         int version = 11;  // 10, 11, HTTP version, 1.0 or 1.1
 
         asio::io_context io;
