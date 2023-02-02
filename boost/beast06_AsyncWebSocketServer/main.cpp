@@ -186,7 +186,7 @@ int main(int argc, const char* argv[]) {
         int port{8800};
         const int kThreadNum{4};  // thread number
 
-        asio::io_context io;
+        asio::io_context io(kThreadNum);
 
         // create and launch a listening port
         make_shared<Listener>(io, tcp::endpoint(asio::ip::make_address(host), port))->run();
