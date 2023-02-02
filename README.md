@@ -235,6 +235,9 @@ Some algorithm
 1. beast06_AsyncWebSocketServer \
     Asynchronous WebSocket server.
     Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/example/websocket/server/async/websocket_server_async.cpp
+1. beast07_SyncHttpClient   \
+    Synchronous HTTP client.
+    Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/example/http/client/sync/http_client_sync.cpp
 1. beast08_SyncHttpServer   \
     Synchronous HTTP server.
     Ref: https://www.boost.org/doc/libs/1_81_0/libs/beast/example/http/server/sync/http_server_sync.cpp
