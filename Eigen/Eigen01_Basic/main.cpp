@@ -2,6 +2,7 @@
 #include <Eigen/SVD>
 #include <array>
 #include <iostream>
+#include <numeric>
 #include "common/common.hpp"
 
 using namespace std;
@@ -140,9 +141,11 @@ int main(int argc, char* argv[]) {
 
         // Case 02: calculate mean and variance for 2D vector data
         Matrix<double, N, 3> mat02;
+        vector<Vector3d> data02(N, Vector3d::Zero());
         for (Index i = 0; i < mat02.rows(); ++i) {
             for (Index j = 0; j < mat02.cols(); ++j) {
                 mat02(i, j) = 3 * i + j;
+                data02[i][j] = 3 * i + j;
             }
         }
         cout << "mat02 = " << endl << mat02 << endl;
@@ -152,6 +155,33 @@ int main(int argc, char* argv[]) {
         // convert to Vector3d
         Vector3d meanVec(mean02), varVec(var02);
         cout << "Vector3d. Mean02 = " << meanVec.transpose() << ", Var02 = " << varVec.transpose() << endl;
+
+        // calculate using STL function
+        Vector3d mean03 = accumulate(data02.begin(), data02.end(), Vector3d::Zero().eval()) / data02.size();
+        // Vector3d var03a = accumulate(data02.begin(), data02.end(), Vector3d::Zero().eval(),
+        //                              [&](const Vector3d& s, const Vector3d& v) {
+        //                                  // Vector3d temp1 = v - mean03;
+        //                                  // Vector3d diff2 = (v - mean03).array().square();
+        //                                  // // LOG(INFO) << format("temp1 = {}, diff2 = {}", temp1, diff2);
+        //                                  // return s + diff2;
+        //                                  return s + Vector3d((v - mean03).array().square());
+        //                              });
+        Vector3d var03a = Vector3d::Zero();
+        var03a = accumulate(data02.begin(), data02.end(), var03a, [&](const Vector3d& s, const Vector3d& v) {
+            // Vector3d temp1 = v - mean03;
+            // Vector3d diff2 = (v - mean03).array().square();
+            // // LOG(INFO) << format("temp1 = {}, diff2 = {}", temp1, diff2);
+            // return s + diff2;
+            return s + Vector3d((v - mean03).array().square());
+        });
+        var03a /= N;
+        Vector3d var03 = Vector3d::Zero();
+        for (auto& v : data02) {
+            var03 += Vector3d((v - mean03).array().square());
+        }
+        var03 /= N;
+        cout << "Vector3d. Mean03 = " << mean03.transpose() << ", Var03a = " << var03a.transpose() << endl;
+        cout << "Vector3d. Mean03 = " << mean03.transpose() << ", Var03a = " << var03.transpose() << endl;
     }
 
     // matrix norm
