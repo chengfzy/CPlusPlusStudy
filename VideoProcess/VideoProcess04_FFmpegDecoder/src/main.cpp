@@ -3,6 +3,7 @@
 #include <glog/logging.h>
 #include <boost/algorithm/string.hpp>
 #include <cxxopts.hpp>
+#include <iostream>
 #include "VideoDecoder.h"
 
 using namespace std;

@@ -32,7 +32,7 @@ void VideoDecoder::decode(const boost::filesystem::path& videoFile, const boost:
     boost::filesystem::create_directories(saveFolder);
 
     // find decoder
-    avcodec_register_all();
+    // avcodec_register_all();
     auto codec = avcodec_find_decoder(AVCodecID::AV_CODEC_ID_H264);
     CHECK(codec != nullptr) << format("cannot found video codec");
 

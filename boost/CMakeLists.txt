@@ -37,9 +37,9 @@ if(${Boost_FOUND})
         add_subdirectory(beast04_SyncWebSocketServer)   # synchronous WebSocket server
         add_subdirectory(beast05_AsyncWebSocketClient)  # asynchronous WebSocket client
         add_subdirectory(beast06_AsyncWebSocketServer)  # asynchronous WebSocket server
-        add_subdirectory(beast07_SyncHttpClient)        # synchronous HTTP client
-        add_subdirectory(beast08_SyncHttpServer)        # synchronous HTTP server
-        add_subdirectory(beast09_AsyncHttpClient)       # asynchronous HTTP client
-        add_subdirectory(beast10_AsyncHttpServer)       # asynchronous HTTP server
+        # add_subdirectory(beast07_SyncHttpClient)        # synchronous HTTP client
+        # add_subdirectory(beast08_SyncHttpServer)        # synchronous HTTP server
+        # add_subdirectory(beast09_AsyncHttpClient)       # asynchronous HTTP client
+        # add_subdirectory(beast10_AsyncHttpServer)       # asynchronous HTTP server
     endif()
 endif()

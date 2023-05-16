@@ -7,6 +7,7 @@
 #include <boost/beast/version.hpp>
 #include <boost/beast/websocket.hpp>
 #include <common/common.hpp>
+#include <thread>
 
 using namespace std;
 using namespace fmt;
@@ -60,7 +61,7 @@ int main(int argc, const char* argv[]) {
             ws.read(buffer);
             LOG(INFO) << format("receive text: {}", beast::make_printable(buffer.data()));
 
-            this_thread::sleep_for(1s);
+            std::this_thread::sleep_for(1s);
         }
 
         // close the WebSocket connection

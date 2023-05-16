@@ -1,8 +1,10 @@
 #include <fmt/format.h>
+#include <fmt/ostream.h>
 #include <fmt/ranges.h>
 #include <glog/logging.h>
 #include <boost/algorithm/string.hpp>
 #include <cxxopts.hpp>
+#include <iostream>
 #include "VideoEncoder.h"
 
 using namespace std;

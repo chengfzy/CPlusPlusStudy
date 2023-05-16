@@ -3,6 +3,7 @@
 #include <glog/logging.h>
 #include <boost/process.hpp>
 #include <iostream>
+#include <thread>
 #include "common/common.hpp"
 
 using namespace std;

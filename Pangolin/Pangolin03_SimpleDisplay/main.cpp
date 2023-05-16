@@ -93,10 +93,10 @@ int main(int argc, char* argv[]) {
             SaveWindowOnRender("window");
         }
         if (Pushed(saveCube)) {
-            dCam.SaveOnRender("cube");
+            SaveWindowOnRender("cube", dCam.v);
         }
         if (Pushed(recordCube)) {
-            DisplayBase().RecordOnRender("ffmpeg:[fps=50,bps=8388608,unique_filename]//screencap.avi");
+            // DisplayBase().RecordOnRender("ffmpeg:[fps=50,bps=8388608,unique_filename]//screencap.avi");
         }
 
         // activate efficiently by object

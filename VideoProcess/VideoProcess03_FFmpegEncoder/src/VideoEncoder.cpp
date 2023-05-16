@@ -244,7 +244,7 @@ void VideoEncoder::encode(const boost::filesystem::path& saveFile, int maxFameCo
     LOG(INFO) << format("encode {} YUV images to video file \"{}\"", frameCount, saveFile.string());
 
     // find encoder
-    avcodec_register_all();
+    // avcodec_register_all();
     auto codec = avcodec_find_encoder(AVCodecID::AV_CODEC_ID_H264);
     CHECK(codec != nullptr) << format("cannot found video codec");
 
