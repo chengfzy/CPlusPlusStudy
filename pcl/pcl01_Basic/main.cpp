@@ -87,7 +87,7 @@ int main(int argc, const char* argv[]) {
     viewer.addPointCloud(transformedCloud, transformedCloudColorHandler, "Transformed Cloud");
     viewer.addCoordinateSystem(1.0, "Cloud", 0);
     viewer.setSize(800, 600);
-    viewer.setBackgroundColor(0.05, 0.05, 0.05, 0);  // seting background to a dark gray
+    viewer.setBackgroundColor(0.05, 0.05, 0.05, 0);  // setting background to a dark gray
     viewer.setPointCloudRenderingProperties(visualization::PCL_VISUALIZER_POINT_SIZE, 2, "Original Cloud");
     viewer.setPointCloudRenderingProperties(visualization::PCL_VISUALIZER_POINT_SIZE, 2, "Transformed Cloud");
 
