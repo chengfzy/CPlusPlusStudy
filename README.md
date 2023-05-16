@@ -141,6 +141,9 @@ Some C++ syntax demo
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/passthrough.html#passthrough
 1. pcl03_VoxelGridFilter \
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
+1. pcl04_IterativeClosestPoint \
+    Using ICP(iterative closest point) to align two point clouds
+    Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/iterative_closest_point.html
 
 ## algorithm
 Some algorithm
