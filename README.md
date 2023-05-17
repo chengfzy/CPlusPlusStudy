@@ -144,6 +144,10 @@ Some C++ syntax demo
 1. pcl04_IterativeClosestPoint \
     Using ICP(iterative closest point) to align two point clouds
     Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/iterative_closest_point.html
+1. pcl05_IncrementalRegisterClouds \
+    Incrementally register pairs of clouds
+    Ref: https://pcl.readthedocs.io/projects/tutorials/en/latest/pairwise_incremental_registration.html#pairwise-incremental-registration
+
 
 ## algorithm
 Some algorithm
