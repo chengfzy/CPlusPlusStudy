@@ -9,6 +9,6 @@ if(${Pangolin_FOUND})
 
     add_subdirectory(Pangolin01_HelloPangolin)
     add_subdirectory(Pangolin02_SimplePlot)
-    add_subdirectory(Pangolin03_SimpleDisplay)
+    # add_subdirectory(Pangolin03_SimpleDisplay)
     add_subdirectory(Pangolin04_MultiDisplay)
 endif()

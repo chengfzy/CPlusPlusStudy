@@ -8,6 +8,9 @@
 #include <common/common.hpp>
 #include <thread>
 
+#include <boost/asio.hpp>
+#include <boost/beast.hpp>
+
 using namespace std;
 using namespace fmt;
 using namespace common;

@@ -1,3 +1,4 @@
+#include <fmt/ostream.h>
 #include <boost/asio.hpp>
 #include <common/common.hpp>
 
@@ -17,6 +18,7 @@ int main(int argc, const char* argv[]) {
     try {
         io_context io;
         ip::tcp::acceptor acceptor(io, ip::tcp::endpoint(ip::tcp::v4(), 1234));  // TCP port 1234 for IPv4
+        LOG(INFO) << format("start TCP server on {}", acceptor.local_endpoint());
         while (true) {
             ip::tcp::socket socket(io);
             acceptor.accept(socket);
