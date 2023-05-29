@@ -290,6 +290,10 @@ some usage for `jsoncpp` library.
 Some usage about protobuf
 1. protobuf01_Basic \
     Basic example
+    Code to generate python file:
+    ```sh
+    protoc --proto_path ./proto --python_out . ./proto/cc/AddressBook.proto
+    ```
 
 ## SqliteCpp
 Basic SQLite usage using `SQLiteCpp`.
