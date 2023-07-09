@@ -6,8 +6,8 @@ find_package(Eigen3 QUIET)
 find_package(Sophus QUIET)
 
 if(${Ceres_FOUND} AND ${Eigen3_FOUND} AND ${Sophus_FOUND})
-    list(APPEND DEPEND_INCLUDES ${CERES_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS} ${SOPHUS_INCLUDE_DIRS})
-    list(APPEND DEPEND_LIBS ${CERES_LIBRARIES} ${PRJ_LIB_COMMON})
+    list(APPEND DEPEND_INCLUDES ${EIGEN3_INCLUDE_DIRS} ${SOPHUS_INCLUDE_DIRS})
+    list(APPEND DEPEND_LIBS Ceres::ceres ${PRJ_LIB_COMMON})
 
     add_subdirectory(ceres01_HelloWorld)
     add_subdirectory(ceres02_Powell)

@@ -12,7 +12,7 @@ using namespace common;
 struct CostFunctor {
     template <typename T>
     bool operator()(const T* const x, T* residual) const {
-        residual[0] = T(10.0) - x[0];
+        residual[0] = 10.0 - x[0];
         return true;
     }
 };
@@ -86,7 +86,7 @@ class QuadraticCostFunction : public ceres::SizedCostFunction<1, 1> {
     QuadraticCostFunction() = default;
     ~QuadraticCostFunction() override = default;
 
-    bool Evaluate(double const* const* parameters, double* residuals, double** jacobians) const override {
+    virtual bool Evaluate(double const* const* parameters, double* residuals, double** jacobians) const override {
         const double x = parameters[0][0];
         residuals[0] = 10 - x;
 
