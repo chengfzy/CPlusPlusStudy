@@ -68,10 +68,13 @@ int main(int argc, const char* argv[]) {
         LOG(INFO) << Section("boost Time");
         boost::posix_time::ptime dateTime0 = boost::posix_time::microsec_clock::local_time();
         LOG(INFO) << format("dateTime0 = {}", dateTime0);
-        boost::posix_time::time_duration time(10, 20, 12, 134);
         boost::gregorian::date date(2018, 1, 18);
+        boost::posix_time::time_duration time(10, 20, 12, 134.61);  // float fractional second is unnecessary
         boost::posix_time::ptime dateTime(date, time);
         LOG(INFO) << format("datetime = {}", dateTime);
+        LOG(INFO) << format("time = {}", time);
+        // add time
+        time += boost::posix_time::seconds(20);
         LOG(INFO) << format("time = {}", time);
         time += boost::posix_time::milliseconds(56);
         LOG(INFO) << format("time = {}", time);
