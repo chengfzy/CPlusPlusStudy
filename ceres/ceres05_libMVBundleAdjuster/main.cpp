@@ -4,10 +4,10 @@
  */
 #include <ceres/ceres.h>
 #include <ceres/rotation.h>
+#include <gflags/gflags.h>
+#include <glog/logging.h>
+#include <common/common.hpp>
 #include <fstream>
-#include "common/common.hpp"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 
 using namespace std;
 using namespace ceres;
@@ -15,7 +15,7 @@ using namespace Eigen;
 using namespace common;
 
 DEFINE_string(fileName, "./ceres/data/libmv-ba-problems/problem_02.bin", "Input file name");
-DEFINE_string(refineInstrinsics, "all", "camera intrinsics to be refined. Options are: '', 'none', 'radial', 'all'");
+DEFINE_string(refineIntrinsics, "all", "camera intrinsics to be refined. Options are: '', 'none', 'radial', 'all'");
 
 using Vector6d = Eigen::Matrix<double, 6, 1>;
 
@@ -241,7 +241,7 @@ Vector3d ReadVector3d(const EndianAwareFileReader& fileReader) {
 /**
  * @brief Reads a bundle adjustment problem from the file
  * @param fileName          Denotes from which file to read the problem
- * @param isImageSpace      Track point is image space(in pixel) or noramlized image space
+ * @param isImageSpace      Track point is image space(in pixel) or normalized image space
  * @param cameraIntrinsics  Contain initial camera intrinsics values
  * @param cameras           A vector of all reconstructed cameras to be optimized, vector element with number i will
  * contain camera for image i
@@ -384,7 +384,7 @@ struct ReprojectionError {
 };
 
 // print a log message containing which camera intrinsics are gonna to be optimized
-void logBundleCameraIntrincs(const int bundleIntrinsics) {
+void logBundleCameraIntrinsics(const int bundleIntrinsics) {
     if (bundleIntrinsics == BUNDLE_NO_INTRINSICS) {
         LOG(INFO) << "Bundling only camera positions";
     } else {
@@ -403,7 +403,6 @@ void logBundleCameraIntrincs(const int bundleIntrinsics) {
         APPEND_BUNDLING_INTRINSICS("k2", BUNDLE_RADIAL_K2);
         APPEND_BUNDLING_INTRINSICS("p1", BUNDLE_TANGENTIAL_P1);
         APPEND_BUNDLING_INTRINSICS("p2", BUNDLE_TANGENTIAL_P2);
-
 #undef APPEND_BUNDLING_INTRINSICS
 
         LOG(INFO) << "Bundling: " << str;
@@ -476,11 +475,11 @@ void euclideanBundleCommonIntrinsics(const vector<Marker>& markers, int bundleIn
     vector<Vector6d> cameraRts = packCamerasRotationTranslation(markers, cameras);
 
     // parameterization used to restrict camera motion for modal solvers
-    SubsetParameterization* constantTransformParamerization{nullptr};
+    SubsetManifold* constantTransformManifold{nullptr};
     if (bundleConstraints & BUNDLE_NO_TRANSLATION) {
         // first 3 elements are rotation, last three are translation
         vector<int> constTranslations{3, 4, 5};
-        constantTransformParamerization = new SubsetParameterization(6, constTranslations);
+        constantTransformManifold = new SubsetManifold(6, constTranslations);
     }
 
     int residualsNum{0};
@@ -506,7 +505,7 @@ void euclideanBundleCommonIntrinsics(const vector<Marker>& markers, int bundleIn
         }
 
         if (bundleConstraints & BUNDLE_NO_TRANSLATION) {
-            problem.SetParameterization(currentCameraRt, constantTransformParamerization);
+            problem.SetManifold(currentCameraRt, constantTransformManifold);
         }
         ++residualsNum;
     }
@@ -517,7 +516,7 @@ void euclideanBundleCommonIntrinsics(const vector<Marker>& markers, int bundleIn
         return;
     }
 
-    logBundleCameraIntrincs(bundleIntrinsics);
+    logBundleCameraIntrinsics(bundleIntrinsics);
 
     if (bundleIntrinsics == BUNDLE_NO_CONSTRAINTS) {
         // no camera intrinsics are being refined, set the whole parameter block as constant for best performance
@@ -543,8 +542,8 @@ void euclideanBundleCommonIntrinsics(const vector<Marker>& markers, int bundleIn
         // always set k3 constant, it's not used at the moment
         constantIntrinsics.emplace_back(OFFSET_K3);
 
-        SubsetParameterization* subsetParameterization = new SubsetParameterization(8, constantIntrinsics);
-        problem.SetParameterization(cameraIntrinsics, subsetParameterization);
+        auto subsetParameterization = new SubsetManifold(8, constantIntrinsics);
+        problem.SetManifold(cameraIntrinsics, subsetParameterization);
     }
 
     // configure the solver
@@ -591,16 +590,16 @@ int main(int argc, char** argv) {
     // using command line argument refine intrinsics will explicitly declare with intrinsics need to be refined and
     // in this case refining flags does not depend on problem at all
     int bundleIntrinsics = BUNDLE_NO_INTRINSICS;
-    if (FLAGS_refineInstrinsics.empty()) {
+    if (FLAGS_refineIntrinsics.empty()) {
         if (isImageSpace) {
             bundleIntrinsics = BUNDLE_FOCAL_LENGTH | BUNDLE_RADIAL;
         }
     } else {
-        if (FLAGS_refineInstrinsics == "none") {
+        if (FLAGS_refineIntrinsics == "none") {
             bundleIntrinsics = BUNDLE_NO_INTRINSICS;
-        } else if (FLAGS_refineInstrinsics == "radial") {
+        } else if (FLAGS_refineIntrinsics == "radial") {
             bundleIntrinsics = BUNDLE_FOCAL_LENGTH | BUNDLE_RADIAL;
-        } else if (FLAGS_refineInstrinsics == "all") {
+        } else if (FLAGS_refineIntrinsics == "all") {
             bundleIntrinsics = BUNDLE_FOCAL_LENGTH | BUNDLE_PRINCIPAL_POINT | BUNDLE_RADIAL | BUNDLE_TANGENTIAL;
         } else {
             LOG(ERROR) << "unsupported value for refine intrinsics";
