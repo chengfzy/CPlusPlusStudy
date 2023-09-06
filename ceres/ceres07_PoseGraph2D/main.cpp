@@ -2,8 +2,8 @@
 #include "AngleLocalParameterization.h"
 #include "G2OReader.h"
 #include "PoseGraph2DErrorTerm.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
+#include <gflags/gflags.h>
+#include <glog/logging.h>
 #include "types.h"
 
 using namespace ceres;

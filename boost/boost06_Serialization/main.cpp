@@ -10,7 +10,7 @@
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/vector.hpp>
 #include <iostream>
-#include "common/common.hpp"
+#include <common/common.hpp>
 
 using namespace std;
 using namespace boost::archive;

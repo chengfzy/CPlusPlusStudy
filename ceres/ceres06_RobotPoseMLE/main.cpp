@@ -5,11 +5,11 @@
  */
 
 #include <ceres/ceres.h>
+#include <gflags/gflags.h>
+#include <glog/logging.h>
+#include <common/common.hpp>
 #include <iostream>
 #include <random>
-#include "common/common.hpp"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 
 using namespace std;
 using namespace ceres;

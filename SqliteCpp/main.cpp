@@ -1,7 +1,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <fmt/format.h>
 #include <iostream>
-#include "common/common.hpp"
+#include <common/common.hpp>
 
 using namespace std;
 using namespace fmt;

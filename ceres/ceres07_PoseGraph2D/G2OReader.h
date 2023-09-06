@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "glog/logging.h"
+#include <glog/logging.h>
 
 // read a single pose from the input and inserts it into the map, return false if there is a duplicate entry
 template <typename Pose, typename Allocator>

@@ -102,7 +102,7 @@ struct SnavelyReprojectionError {
         const T& k2 = camera[7];
         const T& k4 = camera[8];
         T r2 = xp * xp + yp * yp;
-        T distortion = T(1.0) + r2 * (k2 + k4 * r2);
+        T distortion = 1.0 + r2 * (k2 + k4 * r2);
         const T& focal = camera[6];
         T predictedX = focal * distortion * xp;
         T predictedY = focal * distortion * yp;
@@ -128,7 +128,7 @@ int main(int argc, char** argv) {
     google::InitGoogleLogging(argv[0]);
 
     BALProblem balProblem;
-    if (!balProblem.loadFile("../../ceres/data/problem-49-7776-pre.txt")) {
+    if (!balProblem.loadFile("./ceres/data/problem-49-7776-pre.txt")) {
         cerr << "ERROR: unable to open file." << endl;
         return -1;
     }

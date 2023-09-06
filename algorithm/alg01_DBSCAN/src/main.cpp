@@ -6,7 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include "Dbscan.h"
-#include "common/common.hpp"
+#include <common/common.hpp>
 
 using namespace std;
 using namespace fmt;

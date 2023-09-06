@@ -8,7 +8,7 @@
 #include "PoseParameterization.hpp"
 #include "TransformationError.h"
 #include "TransformationErrorAuto.hpp"
-#include "common/common.hpp"
+#include <common/common.hpp>
 
 using namespace std;
 using namespace fmt;

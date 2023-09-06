@@ -4,7 +4,7 @@ project(VideoProcess04_FFmpegDecoder)
 find_package(TurboJpeg QUIET)                                 # turbojpeg
 find_package(FFmpeg COMPONENTS avutil avcodec avformat QUIET) # FFmpeg
 
-if(${FFmpeg_FOUND})
+if(${FFmpeg_FOUND} AND ${TurboJpeg_FOUND})
     list(APPEND DEPEND_INCLUDES ${FFmpeg_INCLUDE_DIRS} ${TurboJpeg_INCLUDE_DIRS})
     list(APPEND DEPEND_LIBS ${FFmpeg_LIBRARIES} ${TurboJpeg_LIBRARIES})
 

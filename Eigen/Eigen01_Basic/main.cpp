@@ -3,7 +3,7 @@
 #include <array>
 #include <iostream>
 #include <numeric>
-#include "common/common.hpp"
+#include <common/common.hpp>
 
 using namespace std;
 using namespace Eigen;

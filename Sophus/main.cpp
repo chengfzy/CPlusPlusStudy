@@ -1,7 +1,7 @@
 #include <Eigen/Core>
 #include <iostream>
 #include <sophus/so3.hpp>
-#include "common/common.hpp"
+#include <common/common.hpp>
 #include "unsupported/Eigen/MatrixFunctions"
 
 using namespace std;
