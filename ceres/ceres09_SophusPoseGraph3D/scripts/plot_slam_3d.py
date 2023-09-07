@@ -1,7 +1,7 @@
-# Plot the results from the 2D pose graph optimization.
+# Plot the results from the 3D pose graph optimization.
 # It will draw a line between consecutive vertices, the command line expects two optional filenames:
 #
-#   ./plot_slam_3d.py --initial_poses file1 --optimized_poses file2 --ground_truth file3
+#   ./plot_slam_3d.py --initial_poses file1 --optimized_poses file2
 #
 # The initial pose and optimized pose file have the following format:
 #   ID x y z q_x q_y q_z q_w
@@ -12,11 +12,13 @@ from mpl_toolkits.mplot3d import Axes3D
 from optparse import OptionParser
 
 parser = OptionParser()
-parser.add_option('--initial_poses', dest='initial_poses',
-                  default='../../cmake-build-release/bin/poses_3d_original.txt',
+parser.add_option('--initial_poses',
+                  dest='initial_poses',
+                  default='./poses_3d_original.txt',
                   help='the filename that contains the original poses')
-parser.add_option('--optimized_poses', dest='optimized_poses',
-                  default='../../cmake-build-release/bin/poses_3d_optimized.txt',
+parser.add_option('--optimized_poses',
+                  dest='optimized_poses',
+                  default='./poses_3d_optimized.txt',
                   help='the filename that contains the optimized poses')
 (options, args) = parser.parse_args()
 

@@ -1,15 +1,15 @@
 #include <ceres/ceres.h>
-#include "G2OReader.h"
-#include "PoseGraph3DErrorTerm.h"
-#include "PoseLocalParameterization.h"
 #include <gflags/gflags.h>
 #include <glog/logging.h>
+#include "G2OReader.h"
+#include "PoseGraph3DErrorTerm.h"
+#include "PoseManifold.h"
 #include "types.h"
 
 using namespace ceres;
 using namespace std;
 
-DEFINE_string(inputFile, "../../ceres/data/sphere2500.g2o", "pose graph definition filename in g2o format");
+DEFINE_string(inputFile, "./ceres/data/sphere2500.g2o", "pose graph definition filename in g2o format");
 
 // save poses to the file with format: ID x y yaw
 bool savePose(const string& filename, const MapOfPoses& poses) {
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
 
     // read data from file
     MapOfPoses poses;
-    VectorOfConstaints constraints;
+    VectorOfConstraints constraints;
     if (!readG2OFile(FLAGS_inputFile, poses, constraints)) {
         LOG(FATAL) << "read data from file failed";
     }
@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
     // build problem
     Problem problem;
     LossFunction* lossFunction = nullptr;
-    LocalParameterization* poseLocalParameterization = new PoseLocalParameterization;
+    auto poseManifold = new PoseManifold;
     for (auto& c : constraints) {
         auto itPoseBegin = poses.find(c.idBegin);
         CHECK(itPoseBegin != poses.end()) << "Pose with ID = " << c.idBegin << " not found";
@@ -58,8 +58,8 @@ int main(int argc, char* argv[]) {
         const Eigen::Matrix<double, 6, 6> sqrtInformation = c.information.llt().matrixL();
         CostFunction* costFunction = PoseGraph3DErrorTerm::create(c.t_be, sqrtInformation);
         problem.AddResidualBlock(costFunction, lossFunction, itPoseBegin->second.data(), itPoseEnd->second.data());
-        problem.SetParameterization(itPoseBegin->second.data(), poseLocalParameterization);
-        problem.SetParameterization(itPoseEnd->second.data(), poseLocalParameterization);
+        problem.SetManifold(itPoseBegin->second.data(), poseManifold);
+        problem.SetManifold(itPoseEnd->second.data(), poseManifold);
     }
 
     // constrain the gauge freedom by setting one of the poses as constant so the optimizer cannot change it
