@@ -1,15 +1,15 @@
 #include <ceres/ceres.h>
-#include "AngleLocalParameterization.h"
-#include "G2OReader.h"
-#include "PoseGraph2DErrorTerm.h"
 #include <gflags/gflags.h>
 #include <glog/logging.h>
+#include "AngleManifold.h"
+#include "G2OReader.h"
+#include "PoseGraph2DErrorTerm.h"
 #include "types.h"
 
 using namespace ceres;
 using namespace std;
 
-DEFINE_string(inputFile, "../../ceres/data/manhattan/originalDataset/g2o/manhattanOlson3500.g2o",
+DEFINE_string(inputFile, "./ceres/data/manhattan/originalDataset/g2o/manhattanOlson3500.g2o",
               "pose graph definition filename in g2o format");
 
 // save poses to the file with format: ID x y yaw
@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
     // build problem
     Problem problem;
     LossFunction* lossFunction = nullptr;
-    LocalParameterization* angleLocalParameterization = AngleLocalParameterization::create();
+    auto angleManifold = AngleManifold::create();
     for (auto& c : constraints) {
         auto itPoseBegin = poses.find(c.idBegin);
         CHECK(itPoseBegin != poses.end()) << "Pose with ID = " << c.idBegin << " not found";
@@ -61,8 +61,8 @@ int main(int argc, char* argv[]) {
                                  &itPoseBegin->second.yaw, &itPoseEnd->second.x, &itPoseEnd->second.y,
                                  &itPoseEnd->second.yaw);
 
-        problem.SetParameterization(&itPoseBegin->second.yaw, angleLocalParameterization);
-        problem.SetParameterization(&itPoseEnd->second.yaw, angleLocalParameterization);
+        problem.SetManifold(&itPoseBegin->second.yaw, angleManifold);
+        problem.SetManifold(&itPoseEnd->second.yaw, angleManifold);
     }
     // constrain the gauge freedom by setting one of the poses as constant so the optimizer cannot change it
     auto itPoseStart = poses.begin();
