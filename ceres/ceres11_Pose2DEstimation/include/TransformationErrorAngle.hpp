@@ -60,7 +60,7 @@ class TransformationErrorAngle {
         Eigen::Matrix<T, 2, 2> R;
         T cosTheta = ceres::cos(theta[0]);
         T sinTheta = ceres::sin(theta[0]);
-        R << cosTheta, sinTheta, -sinTheta, cosTheta;
+        R << cosTheta, -sinTheta, sinTheta, cosTheta;
 
         // translation, p
         Eigen::Map<const Eigen::Matrix<T, 2, 1>> p(translation);

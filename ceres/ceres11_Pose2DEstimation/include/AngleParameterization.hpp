@@ -16,10 +16,20 @@ class AngleParameterization {
      * @return True fo calculate success, otherwise return false
      */
     template <typename T>
-    bool operator()(const T* theta, const T* deltaTheta, T* thetaPlusDelta) const {
+    bool Plus(const T* theta, const T* deltaTheta, T* thetaPlusDelta) const {
         // normalize the angle between [-pi, pi)
         T twoPi(2.0 * M_PI);
-        *thetaPlusDelta = twoPi * ceres::floor((*theta + *deltaTheta + T(M_PI)) / twoPi);
+        T r = *theta + *deltaTheta;
+        *thetaPlusDelta = r - twoPi * ceres::floor((r + T(M_PI)) / twoPi);
+        return true;
+    }
+
+    template <typename T>
+    bool Minus(const T* y, const T* x, T* y_minus_x) const {
+        // normalize the angle between [-pi, pi)
+        T twoPi(2.0 * M_PI);
+        T r = *y - *x;
+        *y_minus_x = r - twoPi * ceres::floor((r + T(M_PI)) / twoPi);
         return true;
     }
 
@@ -28,7 +38,5 @@ class AngleParameterization {
      *
      * @return  Local parameterization pointer
      */
-    static ceres::LocalParameterization* create() {
-        return (new ceres::AutoDiffLocalParameterization<AngleParameterization, 1, 1>);
-    }
+    static ceres::Manifold* create() { return new ceres::AutoDiffManifold<AngleParameterization, 1, 1>; }
 };

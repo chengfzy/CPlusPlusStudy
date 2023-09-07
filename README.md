@@ -112,7 +112,7 @@ Some C++ syntax demo
     The code using two method to optimize this problem,
     - Analytical Jacobian with pose parameterization (R, p)
     - ceres auto Jacobian with pose parameterization (R, p)
-    - ceres auto Jacobian with angle parameterization (theta, p). This method don't work correctly.
+    - ceres auto Jacobian with angle parameterization (theta, p).
 1. ceres12_Pose3DEstimation \
     Similar to ceres11_Pose2DEstimation but with 3D transformation. Consider we have two matched 3D points pair $\mathbf{p}_A \leftrightarrow \mathbf{p}_B$, and want to estimate the 3D transformation $\mathbf{R} \in SO(3), \mathbf{p} \in \mathbb{R}^3$ between the points, i.e.,
     $$
@@ -121,6 +121,12 @@ Some C++ syntax demo
     The problem is also named after ICP, the code using two method to optimize this problem,
     - Analytical Jacobian with pose parameterization (R, p)
     - ceres auto Jacobian with pose parameterization (R, p)
+### Note
+1. Migrate code from `ceres 1.x` to `ceres 2.x`, the main difference is using `Manifold` instead of `LocalParameterization`
+    - `GlobalSize` => `AmbientSize`
+    - `LocalSize` => `TangentSize`
+    - `ComputeJacobian` => `PlusJacobian`
+    - add `Minus` and `MinusJacobian`, but these two method don't used currently, could just `return true;` right now
 
 ## g2o
 1. g2o01_CircleFit \

@@ -9,7 +9,7 @@
  *  R1 = R0 * Exp(phi)
  *  p1 = p0 + dP
  */
-class Pose2DParameterization : public ceres::LocalParameterization {
+class Pose2DManifold : public ceres::Manifold {
   public:
     /**
      * @brief Generalization of the addition operation, x_plus_delta = Plus(x, delta)
@@ -32,7 +32,7 @@ class Pose2DParameterization : public ceres::LocalParameterization {
      * @brief  The jacobian of Plus(x, delta) w.r.t delta at delta = 0
      * @param jacobian  A row-major GlobalSize() x LocalSize() matrix
      */
-    bool ComputeJacobian(const double* x, double* jacobian) const override {
+    bool PlusJacobian(const double* x, double* jacobian) const override {
         Eigen::Map<const Sophus::SO2d> r(x);
         Eigen::Map<Eigen::Matrix<double, 4, 3, Eigen::RowMajor>> J(jacobian);
 
@@ -44,13 +44,27 @@ class Pose2DParameterization : public ceres::LocalParameterization {
         return true;
     }
 
+    bool Minus(const double* y, const double* x, double* y_minus_x) const override {
+        Eigen::Map<const Sophus::SO2d> ry(y);
+        Eigen::Map<const Eigen::Vector2d> py(y + 2);
+        Eigen::Map<const Sophus::SO2d> rx(x);
+        Eigen::Map<const Eigen::Vector2d> px(x + 2);
+        double& dR = y_minus_x[0];
+        Eigen::Map<Eigen::Vector2d> dP(y_minus_x + 1);
+        dR = (rx.inverse() * ry).log();
+        dP = py - px;
+        return true;
+    }
+
+    bool MinusJacobian(const double* x, double* jacobian) const override { return true; }
+
     /**
      * @brief Size of x.
      */
-    int GlobalSize() const override { return 4; };
+    int AmbientSize() const override { return 4; };
 
     /**
      * @brief Size of delta
      */
-    int LocalSize() const override { return 3; };
+    int TangentSize() const override { return 3; };
 };

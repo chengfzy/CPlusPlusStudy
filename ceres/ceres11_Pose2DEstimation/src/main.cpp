@@ -2,15 +2,15 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 #include <Eigen/Core>
+#include <common/common.hpp>
 #include <iostream>
 #include <sophus/se2.hpp>
 #include <tuple>
 #include "AngleParameterization.hpp"
-#include "Pose2DParameterization.hpp"
+#include "Pose2DManifold.hpp"
 #include "TransformationError.h"
 #include "TransformationErrorAngle.hpp"
 #include "TransformationErrorAuto.hpp"
-#include <common/common.hpp>
 
 using namespace std;
 using namespace fmt;
@@ -54,13 +54,13 @@ void generateData(MatrixX2d& pointsA, MatrixX2d& pointsB) {
  * @param pointsA   Points A
  * @param pointsB   Points B
  */
-void optimize(const MatrixX2d& pointsA, const MatrixX2d& pointsB) {
+void optimizePose(const MatrixX2d& pointsA, const MatrixX2d& pointsB) {
     cout << Section("Optimization using Analytical Jacobians");
     ceres::Problem problem;
     // pose
     Sophus::SE2d pose;
-    auto pose2DParameterization = new Pose2DParameterization();
-    problem.AddParameterBlock(pose.data(), 4, pose2DParameterization);
+    auto pose2DManifold = new Pose2DManifold();
+    problem.AddParameterBlock(pose.data(), 4, pose2DManifold);
     cout << format("before optimization, theta = {:.5f} deg, p = [{}]", pose.so2().log() / M_PI * 180.,
                    pose.translation().transpose())
          << endl;
@@ -112,8 +112,8 @@ void optimizeAuto(const MatrixX2d& pointsA, const MatrixX2d& pointsB) {
     ceres::Problem problem;
     // pose
     Sophus::SE2d pose;
-    auto pose2DParameterization = new Pose2DParameterization();
-    problem.AddParameterBlock(pose.data(), 4, pose2DParameterization);
+    auto pose2DManifold = new Pose2DManifold();
+    problem.AddParameterBlock(pose.data(), 4, pose2DManifold);
     cout << format("before optimization, theta = {:.5f} deg, p = [{}]", pose.so2().log() / M_PI * 180.,
                    pose.translation().transpose())
          << endl;
@@ -210,8 +210,8 @@ int main(int argc, char* argv[]) {
     MatrixX2d pointsA, pointsB;
     generateData(pointsA, pointsB);
 
-    // STEP 2, optimize
-    optimize(pointsA, pointsB);
+    // optimize
+    optimizePose(pointsA, pointsB);
     optimizeAuto(pointsA, pointsB);
     optimizeAngle(pointsA, pointsB);
 
