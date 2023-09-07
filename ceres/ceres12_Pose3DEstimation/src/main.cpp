@@ -2,13 +2,13 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 #include <Eigen/Core>
+#include <common/common.hpp>
 #include <iostream>
 #include <sophus/se3.hpp>
 #include <tuple>
-#include "PoseParameterization.hpp"
+#include "PoseManifold.hpp"
 #include "TransformationError.h"
 #include "TransformationErrorAuto.hpp"
-#include <common/common.hpp>
 
 using namespace std;
 using namespace fmt;
@@ -54,13 +54,13 @@ void generateData(MatrixX3d& pointsA, MatrixX3d& pointsB) {
  * @param pointsA   Points A
  * @param pointsB   Points B
  */
-void optimize(const MatrixX3d& pointsA, const MatrixX3d& pointsB) {
+void optimizePose(const MatrixX3d& pointsA, const MatrixX3d& pointsB) {
     cout << Section("Optimization using Analytical Jacobians");
     ceres::Problem problem;
     // pose
     Sophus::SE3d pose;
-    auto poseParameterization = new PoseParameterization();
-    problem.AddParameterBlock(pose.data(), 7, poseParameterization);
+    auto poseManifold = new PoseManifold();
+    problem.AddParameterBlock(pose.data(), 7, poseManifold);
     cout << format("before optimization, angle = [{}] deg, p = [{}]", pose.so3().log().transpose() / M_PI * 180.,
                    pose.translation().transpose())
          << endl;
@@ -113,8 +113,8 @@ void optimizeAuto(const MatrixX3d& pointsA, const MatrixX3d& pointsB) {
     ceres::Problem problem;
     // pose
     Sophus::SE3d pose;
-    auto poseParameterization = new PoseParameterization();
-    problem.AddParameterBlock(pose.data(), 7, poseParameterization);
+    auto poseManifold = new PoseManifold();
+    problem.AddParameterBlock(pose.data(), 7, poseManifold);
     cout << format("before optimization, angle = [{}] deg, p = [{}]", pose.so3().log().transpose() / M_PI * 180.,
                    pose.translation().transpose())
          << endl;
@@ -162,7 +162,7 @@ int main(int argc, char* argv[]) {
     generateData(pointsA, pointsB);
 
     // STEP 2, optimize
-    optimize(pointsA, pointsB);
+    optimizePose(pointsA, pointsB);
     optimizeAuto(pointsA, pointsB);
 
     return 0;

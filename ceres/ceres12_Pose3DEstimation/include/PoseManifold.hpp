@@ -3,13 +3,13 @@
 #include <sophus/so3.hpp>
 
 /**
- * @brief Parameterization for pose.
+ * @brief Manifold for pose.
  *
  * Pose = [R, p], where R is SO3.
  *  R1 = R0 * Exp(phi)
  *  p1 = p0 + dP
  */
-class PoseParameterization : public ceres::LocalParameterization {
+class PoseManifold : public ceres::Manifold {
   public:
     /**
      * @brief Generalization of the addition operation, x_plus_delta = Plus(x, delta)
@@ -32,7 +32,7 @@ class PoseParameterization : public ceres::LocalParameterization {
      * @brief  The jacobian of Plus(x, delta) w.r.t delta at delta = 0
      * @param jacobian  A row-major GlobalSize() x LocalSize() matrix
      */
-    bool ComputeJacobian(const double* x, double* jacobian) const override {
+    bool PlusJacobian(const double* x, double* jacobian) const override {
         Eigen::Map<const Sophus::SO3d> r(x);
         Eigen::Map<const Eigen::Vector3d> p(x + 4);
         Eigen::Map<Eigen::Matrix<double, 7, 6, Eigen::RowMajor>> J(jacobian);
@@ -45,13 +45,39 @@ class PoseParameterization : public ceres::LocalParameterization {
         return true;
     }
 
+    virtual bool Minus(const double* y, const double* x, double* y_minus_x) const override {
+        Eigen::Map<const Sophus::SO3d> ry(y);
+        Eigen::Map<const Eigen::Vector3d> py(y + 4);
+        Eigen::Map<const Sophus::SO3d> rx(x);
+        Eigen::Map<const Eigen::Vector3d> px(x + 4);
+        Eigen::Map<Eigen::Vector3d> dR(y_minus_x);
+        Eigen::Map<Eigen::Vector3d> dP(y_minus_x + 3);
+
+        dR = (rx.inverse() * ry).log();
+        dP = py - px;
+
+        return true;
+    };
+
+    virtual bool MinusJacobian(const double* x, double* jacobian) const override {
+        Eigen::Map<const Sophus::SO3d> r(x);
+        Eigen::Map<const Eigen::Vector3d> p(x + 4);
+        Eigen::Map<Eigen::Matrix<double, 6, 7, Eigen::RowMajor>> J(jacobian);
+
+        J.setZero();
+        J.block<3, 4>(0, 0) = r.Dx_log_this_inv_by_x_at_this();
+        J.block<3, 3>(3, 4).setIdentity();
+
+        return true;
+    }
+
     /**
      * @brief Size of x.
      */
-    int GlobalSize() const override { return 7; };
+    int AmbientSize() const override { return 7; };
 
     /**
      * @brief Size of delta
      */
-    int LocalSize() const override { return 6; };
+    int TangentSize() const override { return 6; };
 };

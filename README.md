@@ -102,7 +102,7 @@ Some C++ syntax demo
 1. ceres09_SophusPoseGraph3D    \
     Same as ceres08_PoseGraph3D, but use Sophus::SO3 to represent the rotation.
 1. ceres10_CovarianceEstimation \
-    Calculate the covariance of estimated value. Here we only take 1 parameter as example, more parameters and complex problem(have information matrix in problem, local parameterization) could also be calculated.
+    Calculate the covariance of estimated value. Here we only take 1 parameter as example, more parameters and complex problem(have information matrix in problem, manifold) could also be calculated.
     Ref: http://ceres-solver.org/nnls_covariance.html#covariance
 1. ceres11_Pose2DEstimation \
     Consider we have two matched 2D points pair $\mathbf{p}_A \leftrightarrow \mathbf{p}_B$, and want to estimate the 2D transformation $\mathbf{R} \in SO(2), \mathbf{p} \in \mathbb{R}^2$ between the points, i.e.,
@@ -110,23 +110,23 @@ Some C++ syntax demo
     \mathbf{e} = \sum_{n=0}^{N} (\mathbf{R} \mathbf{p}_{A,n}+ \mathbf{p} - \mathbf{p}_{B,n})
     $$
     The code using two method to optimize this problem,
-    - Analytical Jacobian with pose parameterization (R, p)
-    - ceres auto Jacobian with pose parameterization (R, p)
-    - ceres auto Jacobian with angle parameterization (theta, p).
+    - Analytical Jacobian with pose manifold (R, p)
+    - ceres auto Jacobian with pose manifold (R, p)
+    - ceres auto Jacobian with angle manifold (theta, p).
 1. ceres12_Pose3DEstimation \
     Similar to ceres11_Pose2DEstimation but with 3D transformation. Consider we have two matched 3D points pair $\mathbf{p}_A \leftrightarrow \mathbf{p}_B$, and want to estimate the 3D transformation $\mathbf{R} \in SO(3), \mathbf{p} \in \mathbb{R}^3$ between the points, i.e.,
     $$
     \mathbf{e} = \sum_{n=0}^{N} (\mathbf{R} \mathbf{p}_{A,n}+ \mathbf{p} - \mathbf{p}_{B,n})
     $$
     The problem is also named after ICP, the code using two method to optimize this problem,
-    - Analytical Jacobian with pose parameterization (R, p)
-    - ceres auto Jacobian with pose parameterization (R, p)
+    - Analytical Jacobian with pose manifold (R, p)
+    - ceres auto Jacobian with pose manifold (R, p)
 ### Note
 1. Migrate code from `ceres 1.x` to `ceres 2.x`, the main difference is using `Manifold` instead of `LocalParameterization`
     - `GlobalSize` => `AmbientSize`
     - `LocalSize` => `TangentSize`
     - `ComputeJacobian` => `PlusJacobian`
-    - add `Minus` and `MinusJacobian`, but these two method don't used currently, could just `return true;` right now
+    - add `Minus` and `MinusJacobian`, but these two method don't used currently, could just `return true;` right now(see [github issue](https://github.com/ceres-solver/ceres-solver/issues/1003))
 
 ## g2o
 1. g2o01_CircleFit \
