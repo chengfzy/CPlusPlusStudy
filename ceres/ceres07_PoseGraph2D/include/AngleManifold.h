@@ -2,7 +2,7 @@
 #include <ceres/ceres.h>
 #include "NormalizeAngle.h"
 
-// define a local parameterization for updating the angle to be constrained in [-pi, pi)
+// define a local manifold for updating the angle to be constrained in [-pi, pi)
 class AngleManifold {
   public:
     template <typename T>

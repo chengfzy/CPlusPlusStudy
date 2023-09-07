@@ -474,7 +474,7 @@ void euclideanBundleCommonIntrinsics(const vector<Marker>& markers, int bundleIn
     // Block for minimization has got the following structure: <3 elements for angle-axis> <3 elements for translations>
     vector<Vector6d> cameraRts = packCamerasRotationTranslation(markers, cameras);
 
-    // parameterization used to restrict camera motion for modal solvers
+    // manifold used to restrict camera motion for modal solvers
     SubsetManifold* constantTransformManifold{nullptr};
     if (bundleConstraints & BUNDLE_NO_TRANSLATION) {
         // first 3 elements are rotation, last three are translation
@@ -542,8 +542,8 @@ void euclideanBundleCommonIntrinsics(const vector<Marker>& markers, int bundleIn
         // always set k3 constant, it's not used at the moment
         constantIntrinsics.emplace_back(OFFSET_K3);
 
-        auto subsetParameterization = new SubsetManifold(8, constantIntrinsics);
-        problem.SetManifold(cameraIntrinsics, subsetParameterization);
+        auto subsetManifold = new SubsetManifold(8, constantIntrinsics);
+        problem.SetManifold(cameraIntrinsics, subsetManifold);
     }
 
     // configure the solver

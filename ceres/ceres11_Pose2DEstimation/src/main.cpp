@@ -6,7 +6,7 @@
 #include <iostream>
 #include <sophus/se2.hpp>
 #include <tuple>
-#include "AngleParameterization.hpp"
+#include "AngleManifold.hpp"
 #include "Pose2DManifold.hpp"
 #include "TransformationError.h"
 #include "TransformationErrorAngle.hpp"
@@ -156,18 +156,18 @@ void optimizeAuto(const MatrixX2d& pointsA, const MatrixX2d& pointsB) {
 }
 
 /**
- * @brief Optimize with auto Jacobians and angle parameterization
+ * @brief Optimize with auto Jacobians and angle manifold
  * @param pointsA   Points A
  * @param pointsB   Points B
  */
 void optimizeAngle(const MatrixX2d& pointsA, const MatrixX2d& pointsB) {
-    cout << Section("Optimization using Auto Jacobians and Angle Parameterization");
+    cout << Section("Optimization using Auto Jacobians and Angle Manifold");
     ceres::Problem problem;
     // pose
     double theta{0};
     Vector2d trans = Vector2d::Zero();
-    auto angleParameterization = AngleParameterization::create();
-    problem.AddParameterBlock(&theta, 1, angleParameterization);
+    auto angleManifold = AngleManifold::create();
+    problem.AddParameterBlock(&theta, 1, angleManifold);
     cout << format("before optimization, theta = {:.5f} deg, p = [{}]", theta / M_PI * 180., trans.transpose()) << endl;
 
     Matrix2d cov = Matrix2d::Identity();

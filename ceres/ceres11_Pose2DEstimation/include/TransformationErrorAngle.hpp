@@ -23,7 +23,7 @@
 // }  // namespace Eigen
 
 /**
- * @brief 2D transformation error with (angle, translation) parameterization
+ * @brief 2D transformation error with (angle, translation) manifold
  *
  * This error is used to calculate the 2D transformation (R, p) between two matched image points p1 = (x1, y1) and p2 =
  * (x2, y2), the residual will be write as r = R * p1 + p - p2.

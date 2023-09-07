@@ -2,9 +2,9 @@
 #include <ceres/ceres.h>
 
 /**
- * @brief Define a local parameterization for updating the angle to be constrained in [-pi, pi)
+ * @brief Define a manifold for updating the angle to be constrained in [-pi, pi)
  */
-class AngleParameterization {
+class AngleManifold {
   public:
     /**
      * @brief Operator to calculate theta + delta theta
@@ -34,9 +34,9 @@ class AngleParameterization {
     }
 
     /**
-     * @brief Get the local parameterization pointer
+     * @brief Get the manifold pointer
      *
-     * @return  Local parameterization pointer
+     * @return  Manifold pointer
      */
-    static ceres::Manifold* create() { return new ceres::AutoDiffManifold<AngleParameterization, 1, 1>; }
+    static ceres::Manifold* create() { return new ceres::AutoDiffManifold<AngleManifold, 1, 1>; }
 };

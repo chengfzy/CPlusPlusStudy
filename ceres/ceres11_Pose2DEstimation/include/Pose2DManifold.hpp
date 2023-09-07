@@ -3,7 +3,7 @@
 #include <sophus/so2.hpp>
 
 /**
- * @brief Parameterization for 2D pose.
+ * @brief Manifold for 2D pose.
  *
  * Pose = [R, p], where R is SO2.
  *  R1 = R0 * Exp(phi)
@@ -56,7 +56,14 @@ class Pose2DManifold : public ceres::Manifold {
         return true;
     }
 
-    bool MinusJacobian(const double* x, double* jacobian) const override { return true; }
+    bool MinusJacobian(const double* x, double* jacobian) const override {
+        Eigen::Map<const Sophus::SO2d> r(x);
+        Eigen::Map<Eigen::Matrix<double, 3, 4, Eigen::RowMajor>> J(jacobian);
+        J.setZero();
+        J.block<1, 2>(0, 0) = r.Dx_log_this_inv_by_x_at_this();
+        J.block<2, 2>(1, 2).setIdentity();
+        return true;
+    }
 
     /**
      * @brief Size of x.
