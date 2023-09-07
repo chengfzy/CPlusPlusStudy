@@ -41,7 +41,7 @@ struct Constraint3d {
 };
 
 using MapOfPoses = std::map<int, Pose3d, std::less<int>, Eigen::aligned_allocator<std::pair<const int, Pose3d>>>;
-using VectorOfConstaints = std::vector<Constraint3d, Eigen::aligned_allocator<Constraint3d>>;
+using VectorOfConstraints = std::vector<Constraint3d, Eigen::aligned_allocator<Constraint3d>>;
 
 // read for Pose2d
 std::istream& operator>>(std::istream& is, Pose3d& pose) {
