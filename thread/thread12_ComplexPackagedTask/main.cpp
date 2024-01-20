@@ -15,7 +15,9 @@
 
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <fmt/std.h>
 #include <chrono>
+#include <common/common.hpp>
 #include <condition_variable>
 #include <future>
 #include <iostream>
@@ -23,7 +25,6 @@
 #include <queue>
 #include <string>
 #include <thread>
-#include <common/common.hpp>
 
 using namespace std;
 using namespace fmt;

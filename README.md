@@ -65,7 +65,9 @@ Some C++ syntax demo
 1. Eigen02_LinearEquationSolver \
     Solve linear system equations use Eigen
 1. Eigen03_Interpolation    \
-    Use interpolation method in Eigen  
+    Using interpolation method in Eigen
+1. Eigen04_Format   \
+    Using fmt::format to format Eigen::Vector and Eigen::Matrix
         
 ## Sophus
 1. SophusStudy  \

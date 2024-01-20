@@ -1,11 +1,12 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <fmt/std.h>
 #include <chrono>
+#include <common/common.hpp>
 #include <future>
 #include <iostream>
 #include <string>
 #include <thread>
-#include <common/common.hpp>
 
 using namespace std;
 using namespace fmt;

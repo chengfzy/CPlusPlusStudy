@@ -1,6 +1,6 @@
 #include <any>
-#include <iostream>
 #include <common/common.hpp>
+#include <iostream>
 
 using namespace std;
 using namespace fmt;
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
         data.emplace_back(MessageData{MessageType::MessageB, 2, MessageB{124.1, 3464576.1}});
         // print
         for (auto& v : data) {
-            cout << format("msg type = {}, t = {}. ", v.msgType, v.t);
+            cout << format("msg type = {}, t = {}. ", static_cast<uint8_t>(v.msgType), v.t);
 
             switch (v.msgType) {
                 case MessageType::MessageA: {
