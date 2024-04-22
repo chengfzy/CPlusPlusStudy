@@ -12,11 +12,13 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 find_package(Gflags REQUIRED)                                   # gflags
 find_package(Glog REQUIRED)                                     # glog
 find_package(fmt REQUIRED)                                      # format
+find_package(Eigen3 REQUIRED)                                   # Eigen
 
 # prive dependency include directories and libraries
 list(APPEND DEPEND_INCLUDES
     ${GFLAGS_INCLUDE_DIRS}
     ${GLOG_INCLUDE_DIRS}
+    ${EIGEN3_INCLUDE_DIRS}
 )
 list(APPEND DEPEND_LIBS
     ${GFLAGS_LIBRARIES}
@@ -27,7 +29,7 @@ list(APPEND DEPEND_LIBS
 ###############################################################################
 # Project Setting
 ###############################################################################
-# default build type
+# default build type 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()

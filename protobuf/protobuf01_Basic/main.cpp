@@ -13,7 +13,8 @@ void printAddressBook(const cc::AddressBook& addressBook) {
         auto& person = addressBook.people(i);
         cout << format("ID = {}, name = {}, email = {}", person.id(), person.name(), person.email()) << endl;
         for (size_t j = 0; j < person.phones_size(); ++j) {
-            cout << format("\t[{}] type = {}, number = {}", j, person.phones(j).type(), person.phones(j).number())
+            cout << format("\t[{}] type = {}, number = {}", j, cc::Person_PhoneType_Name(person.phones(j).type()),
+                           person.phones(j).number())
                  << endl;
         }
     }
