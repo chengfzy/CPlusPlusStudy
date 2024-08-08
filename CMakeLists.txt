@@ -58,6 +58,7 @@ add_subdirectory(Sophus)            # Sophus study
 add_subdirectory(ceres)             # Ceres study
 # add_subdirectory(g2o)               # g2o study
 add_subdirectory(pcl)               # PCL study
+add_subdirectory(clipper)           # clipper study
 add_subdirectory(algorithm)         # algorithm
 add_subdirectory(Pangolin)          # Pangolin study
 add_subdirectory(boost)             # boost study
