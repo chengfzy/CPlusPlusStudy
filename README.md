@@ -166,6 +166,13 @@ Some algorithm
 1. alg02_BinarySearch \
     Search value $y_1$, $y_2$ in data to ensure $y_1 \le x < y_2$
 
+
+## math
+1. math01_CatmullRomSpline \
+    Curve fitting using Catmull-Rom Spline
+    - `scripts/analyze.py`: draw the fitting resulting
+    - `scripts/analyze.ipynb`: symbol verification: cannot insert a control point into CR spline and also keep curve unchanged
+
 ## Pangolin
 1. Pangolin01_HelloPangolin \
     Draw and show cube using pangolin.

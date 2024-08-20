@@ -60,6 +60,7 @@ add_subdirectory(ceres)             # Ceres study
 add_subdirectory(pcl)               # PCL study
 add_subdirectory(clipper)           # clipper study
 add_subdirectory(algorithm)         # algorithm
+add_subdirectory(math)              # math    
 add_subdirectory(Pangolin)          # Pangolin study
 add_subdirectory(boost)             # boost study
 add_subdirectory(cxxopts)           # cxxopts study
