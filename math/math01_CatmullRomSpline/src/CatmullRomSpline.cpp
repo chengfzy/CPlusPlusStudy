@@ -55,11 +55,13 @@ void CatmullRomSpline::samplePointForFindU(int num) {
     std::vector<Eigen::Vector2d> points;
     sampledPoints_.clear();
 
+    int numDuringSegment = num - 1;  // 中间片段(除开最后一个片段)的点数
+
     // sample u and calculate matrix U
     Eigen::VectorXd sampledU = Eigen::VectorXd::LinSpaced(num, 0.0, 1.0);
     std::vector<Eigen::Vector4d> allMatU;
-    allMatU.reserve(sampledU.size() - 1);  // 不包括最后一个点, 避免多个segment时前后点重复
-    for (int i = 0; i < sampledU.size() - 1; ++i) {
+    allMatU.reserve(num);  // 不包括最后一个点, 避免多个segment时前后点重复
+    for (int i = 0; i < num; ++i) {
         allMatU.emplace_back(
             Eigen::Vector4d(1, sampledU[i], sampledU[i] * sampledU[i], sampledU[i] * sampledU[i] * sampledU[i]));
     }
@@ -74,7 +76,8 @@ void CatmullRomSpline::samplePointForFindU(int num) {
             matCtrlPoints.row(static_cast<Eigen::Index>(i)) = ctrlPoints_[m + i].transpose();
         }
 
-        for (std::size_t n = 0U; n < allMatU.size(); ++n) {
+        double calNum = m + 4U == ctrlPoints_.size() ? num : numDuringSegment;
+        for (std::size_t n = 0U; n < calNum; ++n) {
             sampledPoints_.emplace_back(SampledPoint{
                 .u = sampledU[n], .value = allMatU[n].transpose() * matTau_ * matCtrlPoints, .ctrlPointIndex = m});
         }
@@ -108,6 +111,7 @@ std::optional<double> CatmullRomSpline::findParamU(const Eigen::Vector2d& pt, st
     auto pp2 = p2 - pt;
     if (pp2.dot(pp1) / pp2.norm() / pp1.norm() > std::cos(20.0 / 180.0 * M_PI)) {
         // pt is not in the middle of P1P2
+        double temp = pp2.dot(pp1) / pp2.norm() / pp1.norm();
         return std::nullopt;
     }
 
