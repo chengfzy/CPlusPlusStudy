@@ -1,6 +1,7 @@
 # Curve Fitting using Catmull-Rom Spline
 
 # find package
+find_package(cxxopts QUIET)
 find_package(Ceres QUIET)
 find_package(Eigen3 QUIET)
 find_package(
@@ -8,7 +9,8 @@ find_package(
     COMPONENTS filesystem
     QUIET)
 
-if(${Ceres_FOUND}
+if(${cxxopts_FOUND}
+   AND ${Ceres_FOUND}
    AND ${Eigen3_FOUND}
    AND ${Boost_FOUND})
     list(APPEND DEPEND_INCLUDES ${EIGEN3_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})

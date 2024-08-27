@@ -12,6 +12,11 @@ const CatmullRomSpline& Optimizer::fit(const std::vector<Eigen::Vector2d>& obser
     // init control points
     initCtrlPoints();
 
+    // delete control point manually
+    // for (auto& v : {17, 15, 4, 13, 12, 10}) {
+    //     spline_.ctrlPoints_.erase(spline_.ctrlPoints_.begin() + v);
+    // }
+
     splineBeforeOpt_ = spline_;
     optimize();
 
@@ -20,27 +25,121 @@ const CatmullRomSpline& Optimizer::fit(const std::vector<Eigen::Vector2d>& obser
 
 void Optimizer::initCtrlPoints() {
     // auto factors = calculateFactor01();
-    auto factors = calculateFactor02();
+    auto distances = calculateCtrlPointDist();
 
-    constexpr double kDistThresh{0.5};  // dist threshold to init control points
-    LOG(INFO) << fmt::format("init control points, thresh: {:.5f}", kDistThresh);
+    constexpr double kEndPointThresh{3.0};  // dist threshold in the end point
 
-    Eigen::Vector2d lastPoint = Eigen::Vector2d::Zero();
-    for (std::size_t i = 0U; i < observations_.size(); ++i) {
-        if (i == 0) {
-            spline_.ctrlPoints_.emplace_back(observations_[i]);
-            lastPoint = observations_[i];
-        } else {
-            double thresh = kDistThresh * factors[i];
-            double dist = (lastPoint - observations_[i]).norm();
-            if (dist > thresh) {
+    int method{2};
+    if (method == 0) {  // 使用计算的阈值进行判断
+        Eigen::Vector2d lastPoint = Eigen::Vector2d::Zero();
+        for (std::size_t i = 0U; i < observations_.size(); ++i) {
+            if (i == 0) {
                 spline_.ctrlPoints_.emplace_back(observations_[i]);
                 lastPoint = observations_[i];
-            } else if (spline_.ctrlPoints().size() == 1 || i == observations_.size() - 1) {
-                if (dist > thresh * 0.5) {
-                    // add second or last control points
+            } else {
+                const double& thresh = distances[i];
+                double dist = (lastPoint - observations_[i]).norm();
+                if (dist > thresh /* || (2 * distances[i - 1] < thresh && dist > distances[i - 1]) */) {
+                    LOG(INFO) << fmt::format("[{}] add control point, distance: {:.3f}", i, distances[i]);
                     spline_.ctrlPoints_.emplace_back(observations_[i]);
                     lastPoint = observations_[i];
+                } else if ((spline_.ctrlPoints().size() == 1 || i == observations_.size() - 1) &&
+                           dist > kEndPointThresh) {
+                    // add second or last control points
+                    LOG(INFO) << fmt::format("[{}] add control point, distance: {:.3f}", i, distances[i]);
+                    spline_.ctrlPoints_.emplace_back(observations_[i]);
+                    lastPoint = observations_[i];
+                }
+            }
+        }
+    } else if (method == 1) {  // 使用计算的阈值进行判断, 并且使用区域内阈值的最小值
+        Eigen::Vector2d lastPoint = Eigen::Vector2d::Zero();
+        double thresh = std::numeric_limits<double>::max();
+        for (std::size_t i = 0U; i < observations_.size(); ++i) {
+            if (i == 0) {
+                spline_.ctrlPoints_.emplace_back(observations_[i]);
+                lastPoint = observations_[i];
+            } else {
+                thresh = std::min(distances[i], thresh);
+                double dist = (lastPoint - observations_[i]).norm();
+                if (dist > thresh) {
+                    LOG(INFO) << fmt::format("[{}] add control point, distance: {:.3f}", i, distances[i]);
+                    spline_.ctrlPoints_.emplace_back(observations_[i]);
+                    lastPoint = observations_[i];
+                    thresh = std::numeric_limits<double>::max();
+                } else if ((spline_.ctrlPoints().size() == 1 || i == observations_.size() - 1) &&
+                           dist > kEndPointThresh) {
+                    // add second or last control points
+                    LOG(INFO) << fmt::format("[{}] add control point, distance: {:.3f}", i, distances[i]);
+                    spline_.ctrlPoints_.emplace_back(observations_[i]);
+                    lastPoint = observations_[i];
+                    thresh = std::numeric_limits<double>::max();
+                }
+            }
+        }
+    } else if (method == 2) {  // 使用前面两个控制点阈值的最小值来判断
+        Eigen::Vector2d lastPoint = Eigen::Vector2d::Zero();
+        double lastThresh1{std::numeric_limits<double>::max()};  // last thresh
+        double lastThresh2{std::numeric_limits<double>::max()};  // last last thresh
+        for (std::size_t i = 0U; i < observations_.size(); ++i) {
+            if (i == 0) {
+                spline_.ctrlPoints_.emplace_back(observations_[i]);
+                lastPoint = observations_[i];
+            } else {
+                double thresh = std::min({distances[i], lastThresh1, lastThresh2});
+                double dist = (lastPoint - observations_[i]).norm();
+                if (dist > thresh /* || (2 * distances[i - 1] < thresh && dist > distances[i - 1]) */) {
+                    LOG(INFO) << fmt::format("[{}] add control point, distance: {:.3f}", i, distances[i]);
+                    spline_.ctrlPoints_.emplace_back(observations_[i]);
+                    lastPoint = observations_[i];
+                    lastThresh2 = lastThresh1;
+                    lastThresh1 = distances[i];
+                } else if ((spline_.ctrlPoints().size() == 1 || i == observations_.size() - 1) &&
+                           dist > kEndPointThresh) {
+                    // add second or last control points
+                    LOG(INFO) << fmt::format("[{}] add control point, distance: {:.3f}", i, distances[i]);
+                    spline_.ctrlPoints_.emplace_back(observations_[i]);
+                    lastPoint = observations_[i];
+                    lastThresh2 = lastThresh1;
+                    lastThresh1 = distances[i];
+                }
+            }
+        }
+    } else {  // 根据p'(0) = tau * (p2 - p1), 即计算切向量才计算距离
+        std::optional<Eigen::Vector2d> p1;
+        std::optional<Eigen::Vector2d> p2;
+        for (std::size_t i = 0U; i < observations_.size(); ++i) {
+            if (i == 0) {
+                spline_.ctrlPoints_.emplace_back(observations_[i]);
+                p2 = observations_[i];
+            } else {
+                double thresh = 2 * distances[i];
+                double dist{0};
+                if (spline_.ctrlPoints_.size() <= 3) {
+                    dist = 2 * (p2.value() - observations_[i]).norm();
+                    LOG(INFO) << fmt::format("[{}] dist: {:.3f}, thresh: {:.3f}", i, dist, thresh);
+                } else if (p1) {
+                    dist = (p1.value() - observations_[i]).norm();
+                    LOG(INFO) << fmt::format("[{}] dist: {:.3f}, thresh: {:.3f}", i, dist, thresh);
+                } else {
+                    dist = (p2.value() - observations_[i]).norm();
+                    LOG(INFO) << fmt::format("[{}] dist: {:.3f}, thresh: {:.3f}", i, dist, thresh);
+                }
+
+                if (dist > thresh) {
+                    spline_.ctrlPoints_.emplace_back(observations_[i]);
+                    p1 = p2;
+                    p2 = observations_[i];
+                    LOG(INFO) << fmt::format("add control point, p1: {::.3f}, p2: {::.3f}", p1.value(), p2.value());
+                } else if ((spline_.ctrlPoints().size() == 1 && dist > kEndPointThresh) ||
+                           i == observations_.size() - 1) {
+                    if (dist > kEndPointThresh) {
+                        // add second or last control points
+                        spline_.ctrlPoints_.emplace_back(observations_[i]);
+                        p1 = p2;
+                        p2 = observations_[i];
+                        LOG(INFO) << fmt::format("add control point, p1: {::.3f}, p2: {::.3f}", p1.value(), p2.value());
+                    }
                 }
             }
         }
@@ -90,9 +189,9 @@ std::vector<double> Optimizer::calculateFactor01() {
     return factors;
 }
 
-std::vector<double> Optimizer::calculateFactor02() {
-    // calculate factors to scale the distance thresh for initializing control points, based on the curvature(radius)
-    std::vector<double> factors(observations_.size(), 1.0);
+std::vector<double> Optimizer::calculateCtrlPointDist() {
+    // calculate the min distance between each ctrl points, based on the curvature(radius)
+    std::vector<double> distances(observations_.size(), 1.0);
     for (std::size_t i = 1U; i + 1 < observations_.size(); ++i) {
         auto& pA = observations_[i - 1];
         auto& pB = observations_[i];
@@ -102,47 +201,56 @@ std::vector<double> Optimizer::calculateFactor02() {
         double CA = (pC - pA).norm();
         double s = 0.5 * (AB + BC + CA);
         double area = std::sqrt(s * (s - AB) * (s - BC) * (s - CA));
-        double curvature = 4 * area / (AB * BC * CA);
-        // R = [2.0 - 0.5]  <=> [1.0 - 0.25]
-        constexpr double kCurvature0 = 1.0 / 2.0;
-        constexpr double kCurvature1 = 1.0 / 0.5;
-        constexpr double kFactor0{1.0};
-        constexpr double kFactor1{0.25};
-        double factor{0.0};
-        if (kCurvature0 < curvature && curvature < kCurvature1) {
-            double ratio = (curvature - kCurvature0) / (kCurvature1 - kCurvature0);
-            factor = kFactor0 * (1 - ratio) + kFactor1 * ratio;
-        } else if (curvature <= kCurvature0) {
-            factor = kFactor0;
-        } else {
-            factor = kFactor1;
-        }
-        factors[i] = factor;
+        double radius = AB * BC * CA / 4 / area;
+        // 直线时比较远, 弯道较密, R <=> distance: [50.0 - 20.0 - 5.0]  <=> [50 - 10 - 1.0]
+        // 距离适中, R <=> distance: [20.0 - 10.0 - 3.0]  <=> [30 - 10 - 1.0]
+        // 直线不太远， 弯道适中, R <=> distance: [30.0 - 10.0 - 5.0]  <=> [25 - 10 - 1.0]
+        constexpr double kRadius0 = 30.0;
+        constexpr double kRadius1 = 20.0;
+        constexpr double kRadius2 = 5.0;
+        constexpr double kDistance0{25.0};
+        constexpr double kDistance1{10.0};
+        constexpr double kDistance2{1.0};
+        double dist{0.0};
 
-        LOG(INFO) << fmt::format("curvature: {:.5f}, factor: {:.5f}, curvature0/curvature1 = [{:.5f}, {:.5f}]",
-                                 curvature, factor, kCurvature0, kCurvature1);
+        if (radius >= kRadius0) {
+            dist = kDistance0;
+        } else if (kRadius1 < radius && radius <= kRadius0) {
+            double ratio = (radius - kRadius0) / (kRadius1 - kRadius0);
+            dist = kDistance0 * (1 - ratio) + kDistance1 * ratio;
+        } else if (kRadius2 < radius && radius <= kRadius1) {
+            double ratio = (radius - kRadius1) / (kRadius2 - kRadius1);
+            dist = kDistance1 * (1 - ratio) + kDistance2 * ratio;
+        } else {
+            dist = kDistance2;
+        }
+        distances[i] = dist;
+
+        LOG(INFO) << fmt::format("[{}] radius: {:.3f} m, dist: {:.3f}", i, radius, dist);
     }
 
     // first and last
-    if (!factors.empty()) {
-        factors[0] = factors[1];
-        if (factors.size() > 2) {
-            factors.back() = factors[factors.size() - 2];
+    if (!distances.empty()) {
+        distances[0] = distances[1];
+        if (distances.size() > 2) {
+            distances.back() = distances[distances.size() - 2];
         }
     }
-    LOG(INFO) << fmt::format("control points factors: {}", factors);
+    LOG(INFO) << fmt::format("min control points distance: {}", distances);
 
-    // average
-    std::vector<double> avgFactors = factors;
-    constexpr std::size_t kHalfWinSize{3};
-    constexpr std::size_t kWindSize{2 * kHalfWinSize + 1};
-    for (std::size_t i = kHalfWinSize; i + kWindSize < factors.size(); ++i) {
-        auto itMin = std::min_element(factors.begin() + i, factors.begin() + i + kWindSize);
-        avgFactors[i] = *itMin;
+    // filter, using the min one, average
+    std::vector<double> filteredDistance = distances;
+    constexpr int kHalfWinSize{10};
+    for (std::size_t i = 0U; i < distances.size(); ++i) {
+        int i0 = std::max(0, static_cast<int>(i) - kHalfWinSize);
+        int i1 = std::min(static_cast<int>(i) + kHalfWinSize + 1, static_cast<int>(distances.size()));
+        auto itMin = std::min_element(distances.begin() + i0, distances.begin() + i1);
+        filteredDistance[i] = *itMin;
     }
-    LOG(INFO) << fmt::format("after average, control points factors: {}", avgFactors);
 
-    return avgFactors;
+    LOG(INFO) << fmt::format("after average, min control points distance: {}", filteredDistance);
+
+    return filteredDistance;
 }
 
 void Optimizer::optimize() {
@@ -170,7 +278,8 @@ void Optimizer::optimize() {
             Eigen::Vector2d est = spline_.evaluateAt(u.value(), firstCtrlPointIndex);
             Eigen::Vector2d error = est - obs;
             LOG(INFO) << fmt::format(
-                "obs: {::.5f}, estimated point: {::.5f}, error: {::.5f}, |error|: {:.5f}, control point idx: {}, u: "
+                "obs: {::.5f}, estimated point: {::.5f}, error: {::.5f}, |error|: {:.5f}, control point idx: {}, "
+                "u: "
                 "{:.5f}",
                 obs, est, error, error.norm(), firstCtrlPointIndex, u.value());
             // add spline factor
@@ -187,8 +296,8 @@ void Optimizer::optimize() {
         params.emplace_back(std::make_tuple(u, firstCtrlPointIndex, blockId));
     }
 
-    // set first control point fixed
-    problem.SetParameterBlockConstant(ctrlPoints.front().data());
+    // set first control point fixed, 加不加不影响最终结果
+    // problem.SetParameterBlockConstant(ctrlPoints[1].data());
 
     // calculate error before optimization
     double errorBeforeOpt = calculateError(spline_, params, estimatedPointsBeforeOpt_, true);
@@ -216,6 +325,7 @@ double Optimizer::calculateError(
     // calculate error for each block
     double sumError{0.0};
     estimatedPoints.resize(observations_.size(), Eigen::Vector2d::Zero());
+    std::vector<double> errors;
     for (std::size_t i = 0U; i < params.size(); ++i) {
         auto u = std::get<0>(params[i]);
         if (u.has_value()) {
@@ -224,6 +334,7 @@ double Optimizer::calculateError(
             Eigen::Vector2d est = spline.evaluateAt(u.value(), index);
             estimatedPoints[i] = est;
             Eigen::Vector2d error = est - observations_[i];
+            errors.emplace_back(error.norm());
             sumError += error.squaredNorm();
             LOG_IF(INFO, print) << fmt::format("[{}] obs: {::.5f}, est: {::.5f}, error: {::.5f}, |error|: {:.5f}", i,
                                                observations_[i], est, error, error.norm());
@@ -235,6 +346,8 @@ double Optimizer::calculateError(
             // LOG(INFO) << fmt::format("\tresidual: {::.5f}, cost: {:.5f}", residual, cost);
         }
     }
+    LOG(INFO) << fmt::format("average error: {:.5f}",
+                             std::accumulate(errors.begin(), errors.end(), 0.0) / errors.size());
 
     return std::sqrt(sumError);
 }

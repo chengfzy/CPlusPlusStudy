@@ -43,7 +43,7 @@ class Analyzer:
     def run(self) -> None:
         # load points
         self.__raw_points = self.__load_point(self.data_folder / 'RawPoints.csv')
-        self.__raw_ctrl_points = self.__load_point(self.data_folder / 'RawCtrlPoints.csv')
+        # self.__raw_ctrl_points = self.__load_point(self.data_folder / 'RawCtrlPoints.csv')
         self.__opt_points_before_opt = self.__load_point(self.data_folder / 'OptPointsBeforeOpt.csv')
         self.__estimated_points_before_opt = self.__load_point(self.data_folder / 'EstimatedPointsBeforeOpt.csv')
         self.__opt_ctrl_points_before_opt = self.__load_point(self.data_folder / 'OptCtrlPointsBeforeOpt.csv')
@@ -58,7 +58,7 @@ class Analyzer:
 
     def __load_point(self, file: Path) -> np.ndarray:
         if not file.exists():
-            logging.fatal(f"input file don't exist: {file}")
+            logging.error(f"input file don't exist: {file}")
             return None
 
         data = np.loadtxt(file, comments='#', delimiter=',')
@@ -68,53 +68,59 @@ class Analyzer:
         # plot
         fig = plt.figure('Catmull-Rom Spline Analyzer', figsize=self.__figsize)
         ax = fig.subplots(1, 1)
-        ax.plot(self.__raw_points[:, 0], self.__raw_points[:, 1], 'bo-', markersize=4, label='Raw Points')
-        ax.plot(
-            self.__raw_ctrl_points[:, 0], self.__raw_ctrl_points[:, 1], 'b*', markersize=10, label='Raw Ctrl Points'
-        )
-        # before opt
-        ax.plot(
-            self.__opt_points_before_opt[:, 0],
-            self.__opt_points_before_opt[:, 1],
-            'c.-',
-            markersize=7,
-            label='Optimized Points before Opt',
-        )
-        ax.plot(
-            self.__opt_ctrl_points_before_opt[:, 0],
-            self.__opt_ctrl_points_before_opt[:, 1],
-            'c*',
-            markersize=12,
-            label='Opt Ctrl Points before Opt',
-        )
-        if self.__estimated_points_before_opt is not None:
+        ax.plot(self.__raw_points[:, 0], self.__raw_points[:, 1], 'bo-', markersize=5, label='Raw Points')
+        if self.__raw_ctrl_points is not None:
             ax.plot(
-                self.__estimated_points_before_opt[:, 0],
-                self.__estimated_points_before_opt[:, 1],
+                self.__raw_ctrl_points[:, 0], self.__raw_ctrl_points[:, 1], 'b*', markersize=10, label='Raw Ctrl Points'
+            )
+
+        # before opt
+        if self.__opt_points_before_opt is not None:
+            ax.plot(
+                self.__opt_points_before_opt[:, 0],
+                self.__opt_points_before_opt[:, 1],
+                'c.-',
+                markersize=7,
+                label='Optimized Points before Opt',
+            )
+        if self.__opt_ctrl_points_before_opt is not None:
+            ax.plot(
+                self.__opt_ctrl_points_before_opt[:, 0],
+                self.__opt_ctrl_points_before_opt[:, 1],
+                'c*',
+                markersize=12,
+                label='Opt Ctrl Points before Opt',
+            )
+        if self.__estimated_points_before_opt is not None:
+            estimated_points_before_opt = self.__estimated_points_before_opt[
+                np.linalg.norm(self.__estimated_points_before_opt, axis=1) != 0, :
+            ]
+            ax.plot(
+                estimated_points_before_opt[:, 0],
+                estimated_points_before_opt[:, 1],
                 'co',
                 markersize=5,
                 label='Estimated Points before Opt',
             )
             # line
             for p0, p1 in zip(self.__raw_points, self.__estimated_points_before_opt):
-                if p1[0] != 0 and p1[1] != 0:
+                if np.linalg.norm(p1) != 0:
                     ax.plot([p0[0], p1[0]], [p0[1], p1[1]], 'c--')
+
         # after opt
-        ax.plot(self.__opt_points[:, 0], self.__opt_points[:, 1], 'r-', markersize=7, label='Optimized Points')
-        ax.plot(
-            self.__opt_ctrl_points[:, 0], self.__opt_ctrl_points[:, 1], 'r*', markersize=12, label='Opt Ctrl Points'
-        )
-        if self.__estimated_points is not None:
+        if self.__opt_points is not None:
+            ax.plot(self.__opt_points[:, 0], self.__opt_points[:, 1], 'r-', markersize=7, label='Optimized Points')
+        if self.__opt_ctrl_points is not None:
             ax.plot(
-                self.__estimated_points[:, 0],
-                self.__estimated_points[:, 1],
-                'ro',
-                markersize=5,
-                label='Estimated Points',
+                self.__opt_ctrl_points[:, 0], self.__opt_ctrl_points[:, 1], 'r*', markersize=12, label='Opt Ctrl Points'
             )
+        if self.__estimated_points is not None:
+            # filter zero data
+            estimated_points = self.__estimated_points[np.linalg.norm(self.__estimated_points, axis=1) != 0, :]
+            ax.plot(estimated_points[:, 0], estimated_points[:, 1], 'ro', markersize=5, label='Estimated Points')
             # line
             for p0, p1 in zip(self.__raw_points, self.__estimated_points):
-                if p1[0] != 0 and p1[1] != 0:
+                if np.linalg.norm(p1) != 0:
                     ax.plot([p0[0], p1[0]], [p0[1], p1[1]], 'r--')
 
         # title and legend
@@ -133,7 +139,7 @@ if __name__ == '__main__':
         description='Catmull-Rom Spline Analyzer',
         formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=40, width=120),
     )
-    parser.add_argument('--path', default='./data/CatmullRomSpline', help='data folder(default: %(default)s)')
+    parser.add_argument('--path', default='./temp/CatmullRomSpline', help='data folder(default: %(default)s)')
     args = parser.parse_args()
     print(args)
 

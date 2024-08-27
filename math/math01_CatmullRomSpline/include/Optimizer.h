@@ -21,7 +21,9 @@ class Optimizer {
 
     // calculate factor to each points
     std::vector<double> calculateFactor01();
-    std::vector<double> calculateFactor02();
+
+    // calculate the min distance between each control points
+    std::vector<double> calculateCtrlPointDist();
 
     void optimize();
 
