@@ -242,7 +242,7 @@ ModelManifest.xml
 .fake/
 
 # user defined
-data/*
+temp/*
 logs/
 
 # IDE and build
