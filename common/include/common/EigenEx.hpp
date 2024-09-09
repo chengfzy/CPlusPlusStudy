@@ -202,8 +202,6 @@ struct fmt::formatter<Matrix, Char,
         auto out = ctx.out();
         out = detail::copy_str<Char>(opening_bracket_, out);
         if (rows == 1 || cols == 1) {
-            auto out = ctx.out();
-            out = detail::copy_str<Char>(opening_bracket_, out);
             for (int i = 0; i < mat.size(); ++i) {
                 if (i > 0) {
                     out = detail::copy_str<Char>(separator_, out);

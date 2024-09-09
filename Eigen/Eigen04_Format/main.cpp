@@ -40,6 +40,10 @@ int main(int argc, char* argv[]) {
     m2.setRandom();
     cout << fmt::format("m2: {}", m2) << endl;
     cout << fmt::format("m2: {::.3f}", m2) << endl;
+    MatrixXd m3(1, 4);
+    m3.setRandom();
+    cout << fmt::format("m3: {}", m3) << endl;
+    cout << fmt::format("m3: {::.3f}", m3) << endl;
 
     return 0;
 }
