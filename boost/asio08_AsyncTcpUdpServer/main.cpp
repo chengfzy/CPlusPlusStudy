@@ -83,7 +83,7 @@ class UdpServer {
             auto message = format("count = {}", count++);
             LOG(INFO) << format("UDP send message: \"{}\"", message);
 
-            LOG(INFO) << format("remote endpoint: {}", remoteEndPoint_);
+            LOG(INFO) << format("remote endpoint: {}", fmt::streamed(remoteEndPoint_));
             socket_.async_send_to(buffer(message), remoteEndPoint_, std::bind(&UdpServer::handleSend, this));
             startReceive();
         }

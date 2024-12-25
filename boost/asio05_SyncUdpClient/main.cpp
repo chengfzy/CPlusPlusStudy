@@ -18,15 +18,15 @@ int main(int argc, const char* argv[]) {
         ip::udp::socket socket(io);
         socket.open(ip::udp::v4());
 
-        LOG(INFO) << format("initiate contact with endpoint {}", receiveEndPoint);
+        LOG(INFO) << format("initiate contact with endpoint {}", fmt::streamed(receiveEndPoint));
         std::array<char, 1> sendBuf = {{0}};
         socket.send_to(buffer(sendBuf), receiveEndPoint);
-        LOG(INFO) << format("receive endpoint: {}", receiveEndPoint);
+        LOG(INFO) << format("receive endpoint: {}", fmt::streamed(receiveEndPoint));
 
         std::array<char, 128> recvBuf;
         ip::udp::endpoint sendEndPoint;
         auto len = socket.receive_from(buffer(recvBuf), sendEndPoint);
-        LOG(INFO) << format("receive data from {}: {}", sendEndPoint, std::string(recvBuf.data(), len));
+        LOG(INFO) << format("receive data from {}: {}", fmt::streamed(sendEndPoint), std::string(recvBuf.data(), len));
     } catch (const std::exception& e) {
         LOG(ERROR) << format("error: {}", e.what());
     }

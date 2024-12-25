@@ -108,7 +108,7 @@ class Session : public enable_shared_from_this<Session> {
             return error(ec, "close");
         }
 
-        LOG(INFO) << format("receive text: {}", beast::make_printable(buffer_.data()));
+        LOG(INFO) << format("receive text: {}", fmt::streamed(beast::make_printable(buffer_.data())));
     }
 
     void error(const beast::error_code& ec, const string& type) {

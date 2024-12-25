@@ -22,7 +22,7 @@ int main(int argc, const char* argv[]) {
             std::array<char, 1> recvBuf;
             ip::udp::endpoint remoteEndPoint;
             socket.receive_from(buffer(recvBuf), remoteEndPoint);
-            LOG(INFO) << format("remote endpoint: {}", remoteEndPoint);
+            LOG(INFO) << format("remote endpoint: {}", fmt::streamed(remoteEndPoint));
 
             auto message = dayTimeStrFunc();
             boost::system::error_code ec;

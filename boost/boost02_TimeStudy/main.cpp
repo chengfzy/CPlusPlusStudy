@@ -67,22 +67,24 @@ int main(int argc, const char* argv[]) {
     {
         LOG(INFO) << Section("boost Time");
         boost::posix_time::ptime dateTime0 = boost::posix_time::microsec_clock::local_time();
-        LOG(INFO) << format("dateTime0 = {}", dateTime0);
+        LOG(INFO) << format("dateTime0 = {}", fmt::streamed(dateTime0));
         boost::gregorian::date date(2018, 1, 18);
         boost::posix_time::time_duration time(10, 20, 12, 134.61);  // float fractional second is unnecessary
         boost::posix_time::ptime dateTime(date, time);
-        LOG(INFO) << format("datetime = {}", dateTime);
-        LOG(INFO) << format("time = {}", time);
+        LOG(INFO) << format("datetime = {}", fmt::streamed(dateTime));
+        LOG(INFO) << format("time = {}", fmt::streamed(time));
         // add time
         time += boost::posix_time::seconds(20);
-        LOG(INFO) << format("time = {}", time);
+        LOG(INFO) << format("time = {}", fmt::streamed(time));
         time += boost::posix_time::milliseconds(56);
-        LOG(INFO) << format("time = {}", time);
+        LOG(INFO) << format("time = {}", fmt::streamed(time));
         // format date
         auto t0 = boost::posix_time::microsec_clock::local_time();
-        LOG(INFO) << format("current time t0: {}-{}-{} {}:{}:{}.{}", t0.date().year(), t0.date().month(),
-                            t0.date().day(), t0.time_of_day().hours(), t0.time_of_day().minutes(),
-                            t0.time_of_day().seconds(), t0.time_of_day().fractional_seconds());
+        LOG(INFO) << format("current time t0: {}-{}-{} {}:{}:{}.{}", fmt::streamed(t0.date().year()),
+                            fmt::streamed(t0.date().month()), fmt::streamed(t0.date().day()),
+                            fmt::streamed(t0.time_of_day().hours()), fmt::streamed(t0.time_of_day().minutes()),
+                            fmt::streamed(t0.time_of_day().seconds()),
+                            fmt::streamed(t0.time_of_day().fractional_seconds()));
         // format chrono
         auto t1 = chrono::system_clock::now();
         LOG(INFO) << format("current time t1: {:%Y-%m-%d_%H:%M:%S}", t1);

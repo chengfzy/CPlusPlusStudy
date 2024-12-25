@@ -81,7 +81,7 @@ class Session : public enable_shared_from_this<Session> {
         }
 
         // print the message
-        LOG(INFO) << format("receive response:\n{}", res_);
+        LOG(INFO) << format("receive response:\n{}", fmt::streamed(res_));
 
         // gracefully close the socket
         stream_.socket().shutdown(tcp::socket::shutdown_both, ec);

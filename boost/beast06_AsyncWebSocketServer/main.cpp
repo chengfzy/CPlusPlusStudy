@@ -28,7 +28,8 @@ class Session : public enable_shared_from_this<Session> {
   public:
     // take ownership of the socket
     explicit Session(tcp::socket&& socket) : ws_(move(socket)) {
-        LOG(INFO) << format("new session coming, address: {}", ws_.next_layer().socket().remote_endpoint());
+        LOG(INFO) << format("new session coming, address: {}",
+                            fmt::streamed(ws_.next_layer().socket().remote_endpoint()));
     }
 
   public:
@@ -82,7 +83,7 @@ class Session : public enable_shared_from_this<Session> {
             return error(ec, "read");
         }
 
-        LOG(INFO) << format("receive text: {}", beast::make_printable(buffer_.data()));
+        LOG(INFO) << format("receive text: {}", fmt::streamed(beast::make_printable(buffer_.data())));
 
         // echo the message back
         ws_.text(ws_.got_text());
@@ -118,7 +119,7 @@ class Session : public enable_shared_from_this<Session> {
 class Listener : public enable_shared_from_this<Listener> {
   public:
     Listener(asio::io_context& io, const tcp::endpoint& endpoint) : io_(io), acceptor_(io) {
-        LOG(INFO) << format("server address: {}", endpoint);
+        LOG(INFO) << format("server address: {}", fmt::streamed(endpoint));
         beast::error_code ec;
 
         // open the acceptor

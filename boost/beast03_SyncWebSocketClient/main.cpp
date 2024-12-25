@@ -59,7 +59,7 @@ int main(int argc, const char* argv[]) {
             beast::flat_buffer buffer;
             // read a message into our buffer
             ws.read(buffer);
-            LOG(INFO) << format("receive text: {}", beast::make_printable(buffer.data()));
+            LOG(INFO) << format("receive text: {}", fmt::streamed(beast::make_printable(buffer.data())));
 
             std::this_thread::sleep_for(1s);
         }

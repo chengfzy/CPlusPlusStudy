@@ -58,25 +58,25 @@ add_subdirectory(Sophus)            # Sophus study
 add_subdirectory(ceres)             # Ceres study
 # add_subdirectory(g2o)               # g2o study
 add_subdirectory(pcl)               # PCL study
-add_subdirectory(clipper)           # clipper study
+# add_subdirectory(clipper)           # clipper study
 add_subdirectory(algorithm)         # algorithm
 add_subdirectory(math)              # math    
-add_subdirectory(Pangolin)          # Pangolin study
+# add_subdirectory(Pangolin)          # Pangolin study
 add_subdirectory(boost)             # boost study
-add_subdirectory(cxxopts)           # cxxopts study
-add_subdirectory(spdlog)            # spdlog study
-add_subdirectory(json)              # json(nlohmann/json) study
-add_subdirectory(jsoncpp)           # jsoncpp study
-add_subdirectory(yaml)              # YAML study
-add_subdirectory(protobuf)          # protobuf study
-add_subdirectory(SqliteCpp)         # SQLiteCpp study
-add_subdirectory(SqliteOrm)         # SQLite ORM study
-add_subdirectory(SqliteModernCpp)   # SqliteModernCpp study
-add_subdirectory(archive)           # libarchive study
-add_subdirectory(httplib)           # httplib
-add_subdirectory(hv)                # libhv
-add_subdirectory(TurboJpeg)         # TurboJpeg study
-add_subdirectory(VideoProcess)      # video process
-add_subdirectory(system)            # system applications
-add_subdirectory(pybind)            # pybind study
-add_subdirectory(others)            # others
+# add_subdirectory(cxxopts)           # cxxopts study
+# add_subdirectory(spdlog)            # spdlog study
+# add_subdirectory(json)              # json(nlohmann/json) study
+# add_subdirectory(jsoncpp)           # jsoncpp study
+# add_subdirectory(yaml)              # YAML study
+# add_subdirectory(protobuf)          # protobuf study
+# add_subdirectory(SqliteCpp)         # SQLiteCpp study
+# add_subdirectory(SqliteOrm)         # SQLite ORM study
+# add_subdirectory(SqliteModernCpp)   # SqliteModernCpp study
+# add_subdirectory(archive)           # libarchive study
+# add_subdirectory(httplib)           # httplib
+# add_subdirectory(hv)                # libhv
+# add_subdirectory(TurboJpeg)         # TurboJpeg study
+# add_subdirectory(VideoProcess)      # video process
+# add_subdirectory(system)            # system applications
+# add_subdirectory(pybind)            # pybind study
+# add_subdirectory(others)            # others

@@ -35,7 +35,7 @@ void doSession(tcp::socket&& socket) {
             beast::flat_buffer buffer;
             // read a message into our buffer
             ws.read(buffer);
-            LOG(INFO) << format("receive text: {}", beast::make_printable(buffer.data()));
+            LOG(INFO) << format("receive text: {}", fmt::streamed(beast::make_printable(buffer.data())));
 
             // echo the message back
             ws.text(ws.got_text());
@@ -74,7 +74,7 @@ int main(int argc, const char* argv[]) {
 
             // block until we get a connection
             acceptor.accept(socket);
-            LOG(INFO) << format("new session coming, address: {}", socket.remote_endpoint());
+            LOG(INFO) << format("new session coming, address: {}", fmt::streamed(socket.remote_endpoint()));
 
             thread t(&doSession, move(socket));
             t.detach();

@@ -1,12 +1,13 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <fmt/std.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
+#include <common/common.hpp>
 #include <fstream>
 #include <iostream>
 #include "Dbscan.h"
-#include <common/common.hpp>
 
 using namespace std;
 using namespace fmt;
@@ -15,7 +16,7 @@ using namespace common;
 namespace fs = boost::filesystem;
 
 vector<Vector3d> readPoints(const fs::path& file) {
-    LOG(INFO) << format("read points from file {}", file);
+    LOG(INFO) << format("read points from file {}", fmt::streamed(file));
     CHECK(fs::exists(file)) << format("data file {} don't exist", file);
 
     vector<Vector3d> points;
