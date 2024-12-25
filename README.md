@@ -203,6 +203,13 @@ Some algorithm
 1. boost07_Process \
     Start multiple process from current process using `boost::process`
 
+### geometry
+1. geometry01_ConvexHull \
+    Using `boost::geometry` to calculate the 2D convex hull
+    Ref: 
+        - https://zhuanlan.zhihu.com/p/508781004
+        - https://live.boost.org/doc/libs/1_85_0/libs/geometry/doc/html/geometry/reference/algorithms/convex_hull/convex_hull_2.html
+
 ### asio
 1. asio01_Basic \
     Basic skills and concepts required for asio.

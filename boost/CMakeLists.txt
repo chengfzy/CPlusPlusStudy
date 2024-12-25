@@ -14,6 +14,9 @@ if(${Boost_FOUND})
     add_subdirectory(boost06_Serialization)     # serialization
     add_subdirectory(boost07_Process)           # process
     add_subdirectory(boost08_CompresssFile)     # compress file
+
+    # geometry
+    add_subdirectory(geometry01_ConvexHull)     # convex hull
     
     # asio and beast
     if(${Boost_VERSION} VERSION_GREATER_EQUAL "1.69.0")
